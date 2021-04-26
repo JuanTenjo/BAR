@@ -108,83 +108,86 @@
 
 
 
-
 		<div class="row">
 			<?php if (isset($productos)) { ?>
 				<h5>Lista de productos </h5>
-
 				<div class="table-responsive">
-					<form action="<?php echo base_url() ?>index.php/administrador/registrar_productos" method="post">
-						<table class="table">
-							<thead class="head">
-								<tr>
-									<th scope="col">Categoria</th>
-									<th scope="col">Nombre Producto</th>
-									<th scope="col">Ingredientes</th>
-									<th scope="col">Cantidad</th>
-									<th scope="col">Precio</th>
-									<th scope="col">Modificar</th>
-									<th scope="col">Eliminar</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								if (isset($productos))
-									foreach ($productos->result() as $row) {
-								?>
-									<form action="#" method="post" data-ajax="false">
-										<tr>
-											<th scope="row">
-												<div class="form-group">
-													<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
-													<select name="categoriaProducto" class="form-control" id="exampleFormControlSelect1">
-														<option value="1" disabled selected>Categoria</option>
-													</select>
-												</div>
-											</th>
-											<td>
-												<div class="form-group">
-													<input type="text" value="<?php echo ($row->NombreProducto) ?>" class="form-control" placeholder="Nombre del producto">
-												</div>
-											</td>
-											<td>
-												<div class="form-group">
-													<input type="text" value="<?php echo ($row->Ingredientes) ?>" class="form-control" placeholder="Nombre del producto">
-												</div>
-											</td>
-											<td>
-												<div class="form-group">
-													<input type="number" value="<?php echo ($row->Cantidad) ?>" class="form-control" placeholder="Ingredientes">
-												</div>
-											</td>
-											<td>
-												<div class="form-group">
-													<input type="number" value="<?php echo ($row->Precio) ?>" class="form-control" placeholder="Cantidad">
-												</div>
-											</td>
-											<td>
-												<div class="form-group">
-													<center>
-														<button type="submit" class="btn btn-warning center-block">Modificar</button>
-													</center>
-												</div>
-											</td>
-									</form>
-									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
+					<table class="table">
+						<thead class="head">
+							<tr>
+								<th scope="col">Categoria</th>
+								<th scope="col">Nombre Producto</th>
+								<th scope="col">Ingredientes</th>
+								<th scope="col">Cantidad</th>
+								<th scope="col">Precio</th>
+								<th scope="col">Modificar</th>
+								<th scope="col">Eliminar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								foreach ($productos->result() as $row) {
+							?>
+
+									<tr>
+										<th scope="row">
+											<div class="form-group">
+												
+												<!-- <input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria"> -->
+												<select name="categoriaProductos" class="form-control" id="ad">
+												<option value="<?php echo ($row->ID_Categoria); ?>"><?php echo ($row->NombreCate); ?></option>
+												<?php foreach ($categorias->result() as $raw) { ?>
+													<option value="<?php echo ($raw->ID_Categoria); ?>"><?php echo ($raw->NombreCate); ?></option>
+												<?php } ?>
+												</select>
+											</div>
+										</th>
 										<td>
+											<div class="form-group">
+												<input type="text" value="<?php echo ($row->NombreProducto) ?>" class="form-control" placeholder="Nombre del producto">
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input type="text" value="<?php echo ($row->Ingredientes) ?>" class="form-control" placeholder="Nombre del producto">
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input type="number" value="<?php echo ($row->Cantidad) ?>" class="form-control" placeholder="Ingredientes">
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<input type="number" value="<?php echo ($row->Precio) ?>" class="form-control" placeholder="Cantidad">
+											</div>
+										</td>
+					
+									<td>
+										<form action="<?php echo base_url() ?>index.php/Administrador/ModificarProducto" method="post" data-ajax="false">
+											<div class="form-group">
+												<center>
+													<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
+													<button type="submit" class="btn btn-warning center-block">Modificar</button>
+												</center>
+											</div>
+										</form>
+									</td>
+								
+									<td>
+										<form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
 											<div class="form-group">
 												<center>
 													<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
 													<button type="submit" class="btn btn-danger center-block">Eliminar</button>
 												</center>
 											</div>
-										</td>
-									</form>
-									</tr>
-								<?php } ?>
-							</tbody>
-						</table>
-					</form>
+										</form>
+									</td>								
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
 				</div>
 			<?php } else { ?>
 				<p> No existe nigun producto</p>

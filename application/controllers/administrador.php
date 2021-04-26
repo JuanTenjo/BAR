@@ -67,6 +67,19 @@ class Administrador extends CI_Controller {
 
     }
 
+	public function ModificarProducto(){
+		try{
+
+			echo "Todo bien";
+
+		}catch(Exception $e){
+
+			log_message('Error', $e->getMessage());
+			return;
+			
+		}
+	}
+
 	public function EliminarProducto(){
         $ID_Producto = $this->input->post('ID_Producto');
         $re = $this->Model_Admin->EliminarProducto($ID_Producto);
