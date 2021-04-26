@@ -1,115 +1,147 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>CraftBurguer</title>
-  <link rel="stylesheet" href="css/disenoo.css" data-ajax="false">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>Jquerymobile/jquery.mobile-1.4.5.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>Jquerymobile/jquery.mobile.icons-1.4.5.min.css">
-  <link rel="stylesheet" href="<?php echo base_url(); ?>Jquerymobile/jquery.mobile.structure-1.4.5.min.css">
-  <script type="text/javascript" src="<?php echo base_url(); ?>Jquerymobile/jquery.js"></script>
-  <script type="text/javascript" src="<?php echo base_url(); ?>Jquerymobile/jquery.mobile-1.4.5.js"></script>
+  <link rel="styleshhet" href="<?php echo base_url() ?>css/diseno.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="<?php echo base_url() ?>../Style/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
+  <title>Inicio</title>
 </head>
+<style>
+  *{
+    font-family: 'Coming Soon', cursive;
+  }
+  body{
+    background-color:#E5E7E9;
+  }
+  .formulario{
+    background-color: #FFFFFF;
+  }
+  nav{
+    background-color: black;
+  }
+  .boton{
+    background-color: #576aff;
+    color:blanchedalmond;
+  }
+  label{
+    font-weight: bold;
+  }
+  .radio{
+    font-weight: lighter;
+  }
+  .imagen{
+    margin:auto;
+    margin-top: 20%;
+  }
+  img{
+    border-radius: 3%;
+  }
+</style>
 <body>
-  <!-- INICIO__________________________________________________________________________________________________-->
-  <div data-role="page" id="inicio">
-    <div data-role="header" style="background-color:#000">
-      <a href="#inicio.php" data-icon="home">Inicio</a>
-      <h1><a href="#inicio.php"><img src="imagenes/logo.jpg" height=200px></a></h1>
-      <a href="<?php echo base_url() ?>index.php/inicie_sesion" data-icon="user" data-ajax=false>Inicie Sesión</a>
-      <div data-role="navbar">
-        <ul>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#registro">Registro</a></li>
+  <div class="container">
+  <header>
+    <div style="margin:auto;">
+      <nav class="navbar nav">
+        <a class="btn btn-outline-primary" href="<?php echo base_url() ?>index.php/inicie_sesion/recarga_inicio" role="button" style="float:left"><b>Inicio</b></a>
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+          <a href="<?php echo base_url() ?>index.php/inicie_sesion" class="btn btn-outline-primary" role="button" aria-pressed="true">Administrar Tienda</a>
+
+          </li>
         </ul>
-      </div>
+      </nav>
     </div>
-    <div data-role="main" style="background-image:url('imagenes/fondo.jpg');width:100%;height:400px";>
-      <h1><img style="margin:10px;float:left"; src="imagenes/presentacion1.png" ></h1>
-      <center>
-        <br><br><br><br>
-        <div class="textocentral">
+  </header><br>
+  <div class="row">
 
-          <h2 style="width:90%";>Bienvenido a Craft Burger<br>Entra y registrate<br> para ser parte de nuestra empresa</h2>
-
+  </div>
+  </div><br>
+  <div class="main">
+    <div class="container">
+      <div class="row">
+      <article class="col-xs-6 col-sm-6 col-md-6" style="align-content: center; display: flex; align-items: center">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:100%;" >
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="<?php echo base_url() ?>imagenes/logo.png	" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="<?php echo base_url() ?>imagenes/logo.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="<?php echo base_url() ?>imagenes/logo.png" class="d-block w-100" alt="...">
+          </div>
         </div>
-      </center>
-    </div>
-    <div data-role="footer"  style="background-image:url('imagenes/fondo.jpg');width:100%;height:200px";>
-      <div class="columnas">
-
-        <h3>Informacion</h3>
-        <h3>Contacto</h3>
-        <h3>Ubicacion</h3>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
       </div>
-      <div class="columnas2">
-        <p style="background-color:#000; box-shadow:1px 2px 1px orange">Craft Burguer es una empresa local de
-          <br>de Guadalupe(HUILA), con gran<br>
-          corazon quiere llegar a ustedes</p>
-          <p style="background-color:#000; box-shadow:1px 2px 1px orange" ><i>Correo:</i> CraftBurguer@gmail.com
-            <br><i>Celular:</i>3204519083<br></p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1993.6618987355012!2d-75.75640011651595!3d2.0261772998153673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e251e5ea3307bc9%3A0xc5c53c533214939a!2sCra.+4+%234-111+a+4-1%2C+Guadalupe%2C+Huila!5e0!3m2!1ses!2sco!4v1552626675686" width="250" height="130" frameborder="0" style="border:2" allowfullscreen></iframe>
-          </div>
 
-        </div>
-      </div>
-      <!-- REGISTRO__________________________________________________________________________________________________-->
-      <div data-role="page" id="registro">
-        <div data-role="header" style="background-color:#000">
-          <a href="#inicio.php" data-icon="home">Inicio</a>
-          <h1><a href="#inicio.php"><img src="imagenes/logo.jpg" height=200px></a></h1>
-          <a href="<?php echo base_url() ?>index.php/inicie_sesion" data-ajax=false data-icon="user">Inicie Sesión</a>
-          <div data-role="navbar">
-            <ul>
-              <li><a href="#inicio">Inicio</a></li>
-              <li><a href="#registro">Registro</a></li>
-            </ul>
-          </div>
-        </div>
-        <div data-role="main" style="background-image:url('imagenes/fondo.jpg');width:100%;height:400px";>
-          <div class="iu-content">
-            <form class="" action="<?php echo base_url() ?>index.php/registro/registro" method="post" data-ajax="false">
-              <fieldset>
-                <legend><h2 style="color:orange; font-size:150%; text-align: center;">REGISTRATE</h2></legend>
-              <input type="text" name="user" value="" placeholder="usuario" required >
-              <br>
-              <input type="password" name="pass" value="" placeholder="contraseña" required >
-              <small style="color:#fff">Nunca compartiremos su informacion con alguien mas </small>
-              <br>
-              <input type="checkbox" name="checkbox-mini-0" id="checkbox-mini-0" data-mini="true" name="terminos" required>
-              <label for="checkbox-mini-0">Aceptar</label> <a href="#terminos" data-ajax=false>Terminos y condiciones</a>
-              <button type="submit" class="ui-btn ui-btn-b" name="action">REGISTRARSE</button>
-            </fieldset>
-            </form>
-          </div>
-        </div>
-        <div data-role="footer" style="background-image:url('imagenes/fondo.jpg');width:100%;height:200px";>
-          <div class="columnas">
-
-            <h3>Informacion</h3>
-            <h3>Contacto</h3>
-            <h3>Ubicacion</h3>
-          </div>
-          <div class="columnas2">
-            <p style="background-color:#000; box-shadow:1px 2px 1px orange">Craft Burguer es una empresa local de
-              <br>de Guadalupe(HUILA), con gran<br>
-              corazon quiere llegar a ustedes</p>
-              <p style="background-color:#000; box-shadow:1px 2px 1px orange" ><i>Correo:</i> CraftBurguer@gmail.com
-                <br><i>Celular:</i>3204519083<br></p>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1993.6618987355012!2d-75.75640011651595!3d2.0261772998153673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e251e5ea3307bc9%3A0xc5c53c533214939a!2sCra.+4+%234-111+a+4-1%2C+Guadalupe%2C+Huila!5e0!3m2!1ses!2sco!4v1552626675686" width="250" height="130" frameborder="0" style="border:2" allowfullscreen></iframe>
-              </div>
+      </article>
+      <article class="col-xs-6 col-sm-6 col-md-6 formulario">
+        <br>
+          <form action="<?php echo base_url() ?>index.php/registro/registro" method="post" data-ajax="false">
+            <div style="max-width:80%;margin:auto">
+            <div class="form-group"> 
+              <label >Correo electrónico</label>
+              <input type="email" minlength="11" maxlength="50" name="correo" required class="form-control" placeholder="Ejemplo: juantenjo@gmail.com">
             </div>
+            <div class="form-group">
+              <label >Usuario</label>
+              <input type="Text" minlength="5" maxlength="50" name="user" required class="form-control" placeholder="Ejemplo: JuanTenjo">
+            </div>
+            <div class="form-group">
+              <label >Contraseña</label>
+              <input type="password" minlength="8" maxlength="20" name="pass" required  id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Ejemplo: juan423534 ">
+              <small id="passwordHelpBlock" class="form-text text-muted">
+              Su contraseña debe tener entre 8 y 20 caracteres, contener letras y números, y no debe contener espacios, caracteres especiales o emoji.
+              </small>
+            </div>
+            <div class="form-group">
+            <label>Genero</label>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" name="genero" id="customRadioInline1" value="Hombre" class="custom-control-input">
+              <label class="custom-control-label radio" for="customRadioInline1">Hombre</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" name="genero" id="customRadioInline2" value="Mujer"  class="custom-control-input">
+              <label class="custom-control-label radio" for="customRadioInline2">Mujer</label>
+            </div>
+            </div>
+            <div class="form-group">
+            <label>Fecha de nacimiento</label>
+            <input type="date" name="fecha_nacimiento" name="fecha_nacimiento" max="3000-12-31" 
+             min="1900-01-01" class="form-control" required />
           </div>
-          <div data-role="page" id="terminos">
-              <div data-role="main">
-                <h1>Terminos y condiciones</h1>
-                <p style="tex-align:justify; margin:10px,10px,10px;"> En el presente documento se exhiben los términos y condiciones de nuestros servicios bajo los cuales CraftBurguer realizará la prestación de sus servicios. Todo contratista (descrito más abajo como “el cliente”, “usted” y “el usuario”)
-                  deberá aceptarlos antes de adquirir cualquiera de nuestros servicios:
-                  CraftBurguer (descrito más abajo como “la empresa”, “nuestro”, y “nosotros”) es una empresa de servicios de Web hosting, software,
-                  publicidad y afines. Todas las cuentas en nuestros servidores Web así como todos los servicios presentes y futuros incluyendo solo dominio,
-                  hospedajes personalizados, revendedor y cuentas revendidas, están sujetas a los términos y a las condiciones descritas en este documento.
-                  Bajo los términos de este acuerdo el cliente acepta haber leído, entendido, y aceptado sin restricción alguna todos los términos y condiciones
-                  que nosotros exponemos en el siguiente documento.</p>
-              </div>
-        </body>
-        </html>
+             <button type="submit" class="btn boton btn-lg btn-block shadow-none p-3 mb-5rounded">Registrate</button>
+            </div>
+          </form><br>
+      </article>
+      </div>
+      <div class="row">
+          <footer>
+            <p><i>©JuanPimentel</i></p>
+          </footer>
+      </div>
+    </div>
+  </div>   
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

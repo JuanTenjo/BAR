@@ -1,0 +1,33 @@
+
+.menu a {
+	background-color: transparent;
+	text-align: center;  
+	color: black;
+	text-decoration:none;
+	font-family: 'Coming Soon', cursive;;
+}
+.menu a:hover {
+	background-color:rgb(228, 252, 11);
+	color: black;
+	text-decoration:none;
+}
+.menu .salir:hover {
+	background-color:#D82B2B;
+	color: white;
+	text-decoration:none;	
+}
+
+#textoParteDerechaAdmin{
+	font-size: 15PX;
+	font-family: 'Courier New', Courier, monospace;
+	text-align: justify;
+}
+
+.SaludoAdministrador{
+	font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.head tr th{
+	text-align: center;
+}
+

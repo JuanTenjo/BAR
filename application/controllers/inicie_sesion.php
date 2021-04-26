@@ -6,35 +6,79 @@ class Inicie_Sesion extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('model_inicio');
+		$this->load->model('model_pedidos');
+		$this->load->model('model_mostrar_productos');
 	}
 	public function index()
 	{
+		//header
 		$this->load->view('view_iniciesesion');
+	}
+	
+	public function recarga_inicio(){
+		$this->load->view('inicio');
 	}
 	public function modificar()
 	{
-		$rol=$this->input->post('rol');
 		$id=$this->input->post('id');
-		$act = $this->model_inicio->modificar_rol($rol,$id);
-		redirect("".base_url()."index.php/inicie_sesion/carga_admin");
+		$act = $this->model_inicio->modificar($id);
+			$datos = array(
+				'id' => $act->id,
+				'correo' =>$act->correo,
+				'usuario' => $act->user,
+				'genero' => $act->genero,
+				'fecha_nacimiento' => $act->fecha_nacimiento,
+				'contrasena' => $act->pass,
+				'nombre_rol' => $act->nombre_rol,
+				'id_rol' => $act->id_rol,
+			);
+		$this->load->view('view_editar_registro',$datos);
+	}
+	public function modificar_registro(){
+		$id = $this->input->post("id");
+		$usuario = $this->input->post("usuario");
+		$correo = $this->input->post("correo");
+		$genero = $this->input->post("genero");
+		$fecha = $this->input->post("fecha");
+		$contrasena = $this->input->post("contrasena");
+		$rol = $this->input->post("rol");
+		$mof = $this->model_inicio->modificar_registro($id,$usuario,$correo,$contrasena,$rol,$genero,$fecha);
+	}
+	public function eliminar_registro(){
+		$id=$this->input->post("id");
+		$eli = $this->model_inicio->eliminar_registro($id);
 	}
 	public function carga_admin()
 	{
 		if ($this->session->userdata('is_logged_in')) {
-			$data['usuario'] = $this->model_inicio->MostrarUsuarios();
-			$this->load->view('view_admin',$data);
+			$this->load->view('VistasAdmin/View_Inicio');
+			//$this->load->view('view_admin',$data);
+		}else{	
+			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
 	public function carga_mesero()
 	{
 		if ($this->session->userdata('is_logged_in')) {
-			$this->load->view('view_mesero');
+			$datos = array(
+				'zonas' => $this->model_pedidos->Mostrarzonas(),
+				'mesas' => $this->model_pedidos->Mostrarmesas(),
+				'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar()
+			);
+			$this->load->view('view_mesero',$datos);
+		}else{	
+			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
-	public function carga_cocina()
+	public function carga_facturador()
 	{
 		if ($this->session->userdata('is_logged_in')) {
-			$this->load->view('view_cocina');
+			$data = array(
+				'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar()
+			);
+			$this->load->view('view_facturador',$data);
+		}else{	
+			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
 	public function olvidar_contra()
@@ -81,9 +125,9 @@ class Inicie_Sesion extends CI_Controller {
 				if ($this->session->userdata('is_logged_in')) {
 					redirect("".base_url()."index.php/inicie_sesion/carga_mesero");
 				}
-			}elseif ($result->nombre_rol == "cocina") {
+			}elseif ($result->nombre_rol == "facturador") {
 				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/carga_cocina");
+					redirect("".base_url()."index.php/inicie_sesion/carga_facturador");
 				}
 			}
 		}else{

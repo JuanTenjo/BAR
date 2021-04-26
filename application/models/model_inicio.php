@@ -30,16 +30,30 @@ class  Model_Inicio extends CI_Model {
     $this->load->view('view_iniciesesion');
   }
   public function MostrarUsuarios(){
-    $query = $this->db->get('usuario');
+    $sql = "SELECT u.id,u.correo,u.user,u.pass,r.nombre_rol,u.genero,u.fecha_nacimiento
+   FROM usuario u, roles r 
+   where u.id_rol=r.id_rol;";
+    $query=$this->db->query($sql);
     if ($query->num_rows() > 0) {
       return $query;
     }else{
       return false;
     }
   }
-  public function modificar_rol($rol=null,$id=null){
-        $sql= "UPDATE usuario set id_rol = $rol where id=$id";
-        $query=$this->db->query($sql);
+  public function modificar($id=null){
+    $sql = "SELECT u.id,u.correo,u.user,u.pass,r.nombre_rol,u.id_rol,u.genero,u.fecha_nacimiento FROM usuario u, roles r where u.id_rol=r.id_rol and u.id='$id';";
+    $query=$this->db->query($sql);
+    return $query->row();
+  }
+  public function modificar_registro($id=null,$usuario=null,$correo=null,$contrasena=null,$rol=null,$genero=null,$fecha=null){
+    $sql = "UPDATE usuario SET user='$usuario',pass='$contrasena',genero='$genero',fecha_nacimiento='$fecha',id_rol='$rol',correo='$correo' WHERE id ='$id' ;";
+    $query=$this->db->query($sql);
+    redirect("".base_url()."index.php/inicie_sesion/carga_admin");
+  }
+  public function eliminar_registro($id=null){
+    $sql = "DELETE FROM usuario where id='$id'";
+    $query=$this->db->query($sql);
+    redirect("".base_url()."index.php/inicie_sesion/carga_admin");
   }
 
 }

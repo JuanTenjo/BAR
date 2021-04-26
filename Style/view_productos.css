@@ -1,0 +1,52 @@
+* {
+    font-family: 'Coming Soon', cursive;
+}
+
+h3 {
+    font-family: 'Oleo Script';
+}
+
+.boton {
+    display: inline-block;
+}
+
+.linea {
+    display: inline-block;
+}
+
+.eligemesa {
+    float: right;
+}
+
+.nav {
+    background-color: #BAEEA0;
+}
+
+.tabla {
+    text-align: center;
+    width: 100%;
+}
+
+table th {
+    padding: 0px;
+}
+
+input {
+    width: auto;
+}
+
+.encabezado {
+    text-align: center;
+}
+
+.lista_factura {
+    list-style: none;
+}
+
+.table {
+    text-align: center;
+}
+
+.productos {
+    text-align: center;
+}
