@@ -70,7 +70,23 @@ class Administrador extends CI_Controller {
 	public function ModificarProducto(){
 		try{
 
-			echo "Todo bien";
+			// $IDProducto = $this->input->post('ID_Producto');
+			// $IDCategoria = $this->input->post('IDCategoria');
+			// $NombreProducto = $this->input->post('NombreProduc');
+			// $PrecioProducto = $this->input->post('Precio');
+			// $IngredientesProducto = $this->input->post('Ingredientes');
+			// $CantidadProdcuto = $this->input->post('Cantidad');
+
+			$array = [
+				'IDProducto' => $this->input->post('ID_Producto'),
+				'IDCategoria' => $this->input->post('IDCategoria'),
+				'NombreProduc' => $this->input->post('NombreProduc'),
+				'Precio' => $this->input->post('Precio'),
+				'Ingredientes' => $this->input->post('Ingredientes'),
+				'Cantidad' => $this->input->post('Cantidad')
+			];
+
+			$re = $this->Model_Admin->ActualizarProducto($array);
 
 		}catch(Exception $e){
 

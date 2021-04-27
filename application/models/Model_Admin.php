@@ -30,6 +30,16 @@ class Model_Admin extends CI_Model{
 
 	}
 
+	public function ActualizarProducto($array = null){
+
+		$sql = "UPDATE producto SET ID_Categoria = ($array[IDCategoria]) ,NombreProducto = ('$array[NombreProduc]'),Ingredientes = ('$array[Ingredientes]'),Cantidad = ('$array[Cantidad]'),Precio = ($array[Precio]) WHERE ID_Producto = ($array[ID_Producto])";
+
+		$query = $this->db->query($sql);
+
+		redirect("".base_url()."index.php4/administrador/Productos");
+		
+	}
+
 	public function EliminarProducto($ID_Producto = null){
 
 		$sql= "DELETE FROM producto WHERE ID_Producto = ('$ID_Producto') ";
