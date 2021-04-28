@@ -26,17 +26,18 @@ class Model_Admin extends CI_Model{
 
 		$sql= "INSERT INTO producto(ID_Categoria,NombreProducto,Ingredientes,Cantidad,Precio) VALUES ('$categoriaProducto','$nombreProducto','$ingredientesProducto','$cantidadProducto','$precioProducto')";
 		$query=$this->db->query($sql);
-		redirect("".base_url()."index.php/administrador/Productos");
+
+		redirect("".base_url()."index.php/Administrador/Productos");
 
 	}
 
 	public function ActualizarProducto($array = null){
 
-		$sql = "UPDATE producto SET ID_Categoria = ($array[IDCategoria]) ,NombreProducto = ('$array[NombreProduc]'),Ingredientes = ('$array[Ingredientes]'),Cantidad = ('$array[Cantidad]'),Precio = ($array[Precio]) WHERE ID_Producto = ($array[ID_Producto])";
+		$sql = "UPDATE producto SET ID_Categoria = ($array[IDCategoria]) ,NombreProducto = ('$array[NombreProduc]'),Ingredientes = ('$array[Ingredientes]'),Cantidad = ('$array[Cantidad]'),Precio = ($array[Precio]) WHERE ID_Producto = ($array[IDProducto])";
 
 		$query = $this->db->query($sql);
 
-		redirect("".base_url()."index.php4/administrador/Productos");
+		redirect("".base_url()."index.php/Administrador/Productos");
 		
 	}
 
@@ -45,7 +46,7 @@ class Model_Admin extends CI_Model{
 		$sql= "DELETE FROM producto WHERE ID_Producto = ('$ID_Producto') ";
 		$query=$this->db->query($sql);
 
-		redirect("".base_url()."index.php4/administrador/Productos");
+		redirect("".base_url()."index.php/Administrador/Productos");
 	}
 
 
@@ -64,7 +65,7 @@ class Model_Admin extends CI_Model{
 		$sql= "INSERT INTO categorias(NombreCate,DescripcionCate) VALUES ('$nombreCategoria','$descripcionCategoria')";
 		$query=$this->db->query($sql);
 
-		redirect("".base_url()."index.php/administrador/Categorias");
+		redirect("".base_url()."index.php/Administrador/Categorias");
 	}
 
 	

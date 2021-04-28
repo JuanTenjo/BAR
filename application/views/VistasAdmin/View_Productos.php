@@ -4,7 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>Style/StylesAdmin/style.css" type="text/css">
+	<link rel="stylesheet" href="<?php
+
+									use PhpOffice\PhpSpreadsheet\Worksheet\Row;
+
+									echo base_url(); ?>Style/StylesAdmin/style.css" type="text/css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
@@ -107,93 +111,113 @@
 		</div>
 
 
-
 		<div class="row">
-			<?php if (isset($productos)) { ?>
-				<h5>Lista de productos </h5>
-				<div class="table-responsive">
-					<table class="table">
-						<thead class="head">
-							<tr>
-								<th scope="col">Categoria</th>
-								<th scope="col">Nombre Producto</th>
-								<th scope="col">Ingredientes</th>
-								<th scope="col">Cantidad</th>
-								<th scope="col">Precio</th>
-								<th scope="col">Modificar</th>
-								<th scope="col">Eliminar</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-								foreach ($productos->result() as $row) {
-							?>
 
-									<tr>
-									<form action="<?php echo base_url() ?>index.php/Administrador/ModificarProducto" method="post" data-ajax="false">
-										<th scope="row">
-											<div class="form-group">
-												
-												<!-- <input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria"> -->
-												<select name="IDCategoria" class="form-control" id="ad" required>
-												<option value="<?php echo ($row->ID_Categoria); ?>"><?php echo ($row->NombreCate); ?></option>
-												<?php foreach ($categorias->result() as $raw) { ?>
-													<option value="<?php echo ($raw->ID_Categoria); ?>"><?php echo ($raw->NombreCate); ?></option>
-												<?php } ?>
-												</select>
-											</div>
-										</th>
-										<td>
-											<div class="form-group">
-												<input type="text" required name="NombreProduc" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
-											</div>
-										</td>
-										<td>
-											<div class="form-group">
-												<input type="text" required name="Ingredientes" value="<?php echo ($row->Ingredientes) ?>" class="form-control">
-											</div>
-										</td>
-										<td>
-											<div class="form-group">
-												<input type="number" required name="Cantidad" value="<?php echo ($row->Cantidad) ?>" class="form-control" ">
-											</div>
-										</td>
-										<td>
-											<div class="form-group">
-												<input type="number" required name="Precio" value="<?php echo ($row->Precio) ?>" class="form-control" ">
-											</div>
-										</td>
-										<td>							
-											<div class="form-group">
-												<center>
-													<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
-													<button type="submit" class="btn btn-warning center-block">Modificar</button>
-												</center>
-											</div>				
-										</td>
-									</form> <!--Se hace un form hasta el boton de Modificar para tener  -->
-									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
-										<td>							
-											<div class="form-group">
-												<center>
-													<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
-													<button type="submit" class="btn btn-danger center-block">Eliminar</button>
-												</center>
-											</div>	
-										</td>	
-									</form>							
-								</tr>
-							<?php } ?>
-						</tbody>
-					</table>
+			<?php foreach ($categorias->result() as $raw) { ?>
+
+				<a class="btn btn-primary" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
+					<?php echo ($raw->NombreCate); ?>
+				</a>
+
+				<div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">
+					<div class="card card-body">
+
+						<?php foreach ($productos->result() as $row) {
+
+							if ($row->ID_Categoria == $raw->ID_Categoria) { ?>
+
+								<h5>Lista de <?php echo ($raw->NombreCate); ?> </h5>
+
+								<div class="table-responsive">
+									<table class="table">
+										<thead class="head">
+											<tr>
+												<th scope="col">Categoria</th>
+												<th scope="col">Nombre Producto</th>
+												<th scope="col">Ingredientes</th>
+												<th scope="col">Cantidad</th>
+												<th scope="col">Precio</th>
+												<th scope="col">Modificar</th>
+												<th scope="col">Eliminar</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<tr>
+												<form action="<?php echo base_url() ?>index.php/Administrador/ModificarProducto" method="post" data-ajax="false">
+													<th scope="row">
+														<div class="form-group">
+
+															<select name="IDCategoria" class="form-control" id="ad" required>
+																<option value="<?php echo ($row->ID_Categoria); ?>"><?php echo ($row->NombreCate); ?></option>
+																<?php foreach ($categorias->result() as $rew) { ?>
+																	<option value="<?php echo ($rew->ID_Categoria); ?>"><?php echo ($rew->NombreCate); ?></option>
+																<?php } ?>
+															</select>
+														</div>
+													</th>
+													<td>
+														<div class="form-group">
+															<input type="text" required name="NombreProduc" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
+														</div>
+													</td>
+													<td>
+														<div class="form-group">
+															<input type="text" required name="Ingredientes" value="<?php echo ($row->Ingredientes) ?>" class="form-control">
+														</div>
+													</td>
+													<td>
+														<div class="form-group">
+															<input type="number" required name="Cantidad" value="<?php echo ($row->Cantidad) ?>" class="form-control" ">
+												</div>
+											</td>
+											<td>
+												<div class=" form-group">
+															<input type="number" required name="Precio" value="<?php echo ($row->Precio) ?>" class="form-control" ">
+												</div>
+											</td>
+											<td>							
+												<div class=" form-group">
+															<center>
+																<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
+																<button type="submit" class="btn btn-warning center-block">Modificar</button>
+															</center>
+														</div>
+													</td>
+												</form>
+												<!--Se hace un form hasta el boton de Modificar para tener  -->
+												<form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
+													<td>
+														<div class="form-group">
+															<center>
+																<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
+																<button type="submit" class="btn btn-danger center-block">Eliminar</button>
+															</center>
+														</div>
+													</td>
+												</form>
+											</tr>
+
+
+
+										</tbody>
+									</table>
+								</div>
+			
+			<?php } //Fin del if 
+			?>
+		<?php } //Fin del ciclo productos 
+		?>
 				</div>
-			<?php } else { ?>
-				<p> No existe nigun producto</p>
-			<?php } ?>
+				</div>
+	<?php } //Fin del ciclo categorias  
+	?>
+
 
 
 
 		</div>
+
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
