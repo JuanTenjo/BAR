@@ -31,3 +31,23 @@
 	text-align: center;
 }
 
+#NombreCate{
+	font-weight: bold;
+	float: left;
+
+	
+}
+
+#BotonCategoria{
+	margin-top: 4px;
+	
+}
+
+#CabecerasCateProductos th{
+	text-align: center;
+}
+
+#CentrarBotonEnTabla{
+	display: flex;
+	justify-content: center;
+}

@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>Style/StylesAdmin/style.css" type="text/css">
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>Imagenes/FondoNegro.ico" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/Style/StylesAdmin/style.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
-	<title>Administracion</title>
+	<title>Gestion Categorias</title>
 </head>
 
 <body>
@@ -54,9 +55,9 @@
 					<table class="table ">
 						<thead class="table-dark head">
 							<tr>
-								<th scope="col">Nombre Categoria</th>
-								<th scope="col">Descripcion Categoria</th>
-								<th scope="col">Agregar</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Descripcion</th>
+								<th scope="col">Guardar</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,10 +73,8 @@
 									</div>
 								</td>
 								<td>
-									<div class="form-group" >
-									<center>
-										<button type="submit" class="btn btn-success center-block">Agregar</button>
-									</center>
+									<div class="form-group" id="CentrarBotonEnTabla">
+										<button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Guardar.png" alt=""></button>
 									</div>
 								</td>
 							</tr>
@@ -89,60 +88,56 @@
 
 
 		<div class="row">
-		<?php if(isset($categorias)){ ?>
-		<h5>Lista de categorias</h5>
-		<div class="table-responsive">
-				<form action="<?php echo base_url() ?>index.php/administrador/registrar_productos" method="post">
-					<table class="table">
-						<thead class="head">
-							<tr>		
-								<th scope="col">Nombre Categoria</th>
-								<th scope="col">Descripcion</th>
-								<th scope="col">Modificar</th>
-								<th scope="col">Eliminar</th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php foreach ($categorias->result() as $row) { ?>
-							<form action="#" method="post" data-ajax="false">
-							<tr>
-								<th scope="row">
-									<div class="form-group">
-										<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
-									</div>
-								</th>
-								<th scope="row">
-									<div class="form-group">
-										<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
-									</div>
-								</th>
-								<td>
-									<div class="form-group">
-										<center>
-										<button type="submit" class="btn btn-warning center-block">Modificar</button>
-										</center>
-									</div>
-								</td>
-						</form>
-								<form action="<?php echo base_url() ?>index.php/Administrador/EliminarCategoria" method="post" data-ajax="false">		
-									<td>
-										<div class="form-group" >
-											<center>
-											<input type="text" name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
-											<button type="submit" class="btn btn-danger center-block">Eliminar</button>
-											</center>
-										</div>
-									</td>
-								</form>
-							</tr>		
-						<?php } ?>
-						</tbody>
-					</table>
-				</form>
-			</div>	
-			<?php }else{ ?>
-			<p> No existe niguna categoria</p>
-			<?php } ?>					
+			<?php if (isset($categorias)) { ?>
+				<h5>Lista de categorias</h5>
+				<div class="table-responsive">
+					<form action="<?php echo base_url() ?>index.php/administrador/registrar_productos" method="post">
+						<table class="table">
+							<thead class="head">
+								<tr>
+									<th scope="col">Nombre Categoria</th>
+									<th scope="col">Descripcion</th>
+									<th scope="col">Modificar</th>
+									<th scope="col">Eliminar</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($categorias->result() as $row) { ?>
+									<form action="#" method="post" data-ajax="false">
+										<tr>
+											<th scope="row">
+												<div class="form-group">
+													<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
+												</div>
+											</th>
+											<th scope="row">
+												<div class="form-group">
+													<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
+												</div>
+											</th>
+											<td>
+												<div class="form-group" id="CentrarBotonEnTabla">
+													<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
+												</div>
+											</td>
+									</form>
+									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarCategoria" method="post" data-ajax="false">
+										<td>
+											<div class="form-group" id="CentrarBotonEnTabla">
+												<input type="text" name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
+												<button type="submit" class="btn btn-danger center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button>
+											</div>
+										</td>
+									</form>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			<?php } else { ?>
+				<p> No existe niguna categoria</p>
+			<?php } ?>
 		</div>
 	</div>
 

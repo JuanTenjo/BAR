@@ -4,15 +4,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="<?php
-
-									use PhpOffice\PhpSpreadsheet\Worksheet\Row;
-
-									echo base_url(); ?>Style/StylesAdmin/style.css" type="text/css">
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>Imagenes/FondoNegro.ico" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/Style/StylesAdmin/style.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
-	<title>Administracion</title>
+	<title>Gestion Productos</title>
 </head>
 
 <body>
@@ -49,6 +46,7 @@
 			</div>
 		</div>
 	</div>
+
 	<br>
 	<div class="container-fluid">
 		<div class="row">
@@ -59,17 +57,17 @@
 						<thead class="table-dark head">
 							<tr>
 								<th scope="col">Categoria</th>
-								<th scope="col">Nombre Producto</th>
+								<th scope="col">Nombre</th>
 								<th scope="col">Ingredientes</th>
 								<th scope="col">Cantidad</th>
 								<th scope="col">Precio</th>
-								<th scope="col">Agregar</th>
+								<th scope="col">Guardar</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<th scope="row">
-									<select name="categoriaProducto" class="form-control" id="exampleFormControlSelect1">
+									<select required name="categoriaProducto" class="form-control" id="exampleFormControlSelect1">
 										<option value="1" disabled selected>Categoria</option>
 										<?php foreach ($categorias->result() as $row) { ?>
 											<option value="<?php echo ($row->ID_Categoria); ?>"><?php echo ($row->NombreCate); ?></option>
@@ -78,29 +76,27 @@
 								</th>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" name="nombreProducto" placeholder="Nombre del producto">
+										<input required type="text" class="form-control" name="nombreProducto" placeholder="Nombre del producto">
 									</div>
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" name="ingredientesProducto" placeholder="Ingredientes">
+										<input required type="text" class="form-control" name="ingredientesProducto" placeholder="Ingredientes">
 									</div>
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="number" class="form-control" name="cantidadProducto" placeholder="Cantidad">
+										<input required type="number" class="form-control" name="cantidadProducto" placeholder="Cantidad">
 									</div>
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="number" class="form-control" name="precioProducto" placeholder="Precio">
+										<input required type="number" class="form-control" name="precioProducto" placeholder="Precio">
 									</div>
 								</td>
 								<td>
-									<div class="form-group">
-										<center>
-											<button type="submit" class="btn btn-success center-block">Agregar</button>
-										</center>
+									<div class="form-group" id="CentrarBotonEnTabla">
+										<button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Guardar.png" alt=""></button>
 									</div>
 								</td>
 							</tr>
@@ -109,117 +105,112 @@
 				</form>
 			</div>
 		</div>
+	</div>
 
+	<div class="container-fluid">
 
 		<div class="row">
 
-			<?php foreach ($categorias->result() as $raw) { ?>
+			<?php if (isset($productos)) { ?>
 
-				<a class="btn btn-primary" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
-					<?php echo ($raw->NombreCate); ?>
-				</a>
+				<h5>Despliega los productos por categoria.</h5>
+				<p></p>
 
-				<div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">
-					<div class="card card-body">
 
-						<?php foreach ($productos->result() as $row) {
+				<?php foreach ($categorias->result() as $raw) { ?>
 
-							if ($row->ID_Categoria == $raw->ID_Categoria) { ?>
+					<a class="btn btn-outline-primary " id="BotonCategoria" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
+						<label id="NombreCate"><?php echo ($raw->NombreCate); ?> ↓</label>
+					</a>
 
-								<h5>Lista de <?php echo ($raw->NombreCate); ?> </h5>
+					<div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">
+						<div class="card card-body">
+							<h5>Lista de <?php echo ($raw->NombreCate); ?> </h5>
+							<div class="table-responsive">
+								<table class="table" id="TableCate">
 
-								<div class="table-responsive">
-									<table class="table">
-										<thead class="head">
-											<tr>
-												<th scope="col">Categoria</th>
-												<th scope="col">Nombre Producto</th>
-												<th scope="col">Ingredientes</th>
-												<th scope="col">Cantidad</th>
-												<th scope="col">Precio</th>
-												<th scope="col">Modificar</th>
-												<th scope="col">Eliminar</th>
-											</tr>
-										</thead>
-										<tbody>
+									<thead>
+										<tr id="CabecerasCateProductos">
+											<th scope="col">Categoria</th>
+											<th scope="col">Nombre</th>
+											<th scope="col">Ingredientes</th>
+											<th scope="col">Cantidad</th>
+											<th scope="col">Precio</th>
+											<th scope="col">Actualizar</th>
+											<th scope="col">Eliminar</th>
+										</tr>
+									</thead>
 
-											<tr>
-												<form action="<?php echo base_url() ?>index.php/Administrador/ModificarProducto" method="post" data-ajax="false">
-													<th scope="row">
-														<div class="form-group">
-
-															<select name="IDCategoria" class="form-control" id="ad" required>
-																<option value="<?php echo ($row->ID_Categoria); ?>"><?php echo ($row->NombreCate); ?></option>
-																<?php foreach ($categorias->result() as $rew) { ?>
-																	<option value="<?php echo ($rew->ID_Categoria); ?>"><?php echo ($rew->NombreCate); ?></option>
-																<?php } ?>
-															</select>
-														</div>
-													</th>
-													<td>
-														<div class="form-group">
-															<input type="text" required name="NombreProduc" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
-														</div>
-													</td>
-													<td>
-														<div class="form-group">
-															<input type="text" required name="Ingredientes" value="<?php echo ($row->Ingredientes) ?>" class="form-control">
-														</div>
-													</td>
-													<td>
-														<div class="form-group">
-															<input type="number" required name="Cantidad" value="<?php echo ($row->Cantidad) ?>" class="form-control" ">
-												</div>
-											</td>
-											<td>
-												<div class=" form-group">
-															<input type="number" required name="Precio" value="<?php echo ($row->Precio) ?>" class="form-control" ">
-												</div>
-											</td>
-											<td>							
-												<div class=" form-group">
-															<center>
+									<tbody>
+										<?php foreach ($productos->result() as $row) {
+											if ($row->ID_Categoria == $raw->ID_Categoria) { ?>
+												<tr>
+													<form action="<?php echo base_url() ?>index.php/Administrador/ModificarProducto" method="post" data-ajax="false">
+														<td>
+															<div class="form-group">
+																<select name="IDCategoria" class="form-control" id="ad" required>
+																	<option value="<?php echo ($row->ID_Categoria); ?>"><?php echo ($row->NombreCate); ?></option>
+																	<?php foreach ($categorias->result() as $rew) { ?>
+																		<option value="<?php echo ($rew->ID_Categoria); ?>"><?php echo ($rew->NombreCate); ?></option>
+																	<?php } ?>
+																</select>
+															</div>
+														</td>
+														<td>
+															<div class="form-group">
+																<input type="text" required name="NombreProduc" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
+															</div>
+														</td>
+														<td>
+															<div class="form-group">
+																<input type="text" required name="Ingredientes" value="<?php echo ($row->Ingredientes) ?>" class="form-control">
+															</div>
+														</td>
+														<td>
+															<div class="form-group">
+																<input type="number" required name="Cantidad" value="<?php echo ($row->Cantidad) ?>" class="form-control">
+															</div>
+														</td>
+														<td>
+															<div class=" form-group">
+																<input type="number" required name="Precio" value="<?php echo ($row->Precio) ?>" class="form-control">
+															</div>
+														</td>
+														<td>
+															<div class="form-group" id="CentrarBotonEnTabla">
 																<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
-																<button type="submit" class="btn btn-warning center-block">Modificar</button>
-															</center>
-														</div>
-													</td>
-												</form>
-												<!--Se hace un form hasta el boton de Modificar para tener  -->
-												<form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
-													<td>
-														<div class="form-group">
-															<center>
+																<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
+															</div>
+														</td>
+													</form>
+													<!--Se hace un form hasta el boton de Modificar para tener  -->
+													<form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
+														<td>
+															<div class="form-group" id="CentrarBotonEnTabla">
 																<input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
-																<button type="submit" class="btn btn-danger center-block">Eliminar</button>
-															</center>
-														</div>
-													</td>
-												</form>
-											</tr>
-
-
-
-										</tbody>
-									</table>
-								</div>
-			
-			<?php } //Fin del if 
-			?>
-		<?php } //Fin del ciclo productos 
-		?>
-				</div>
-				</div>
-	<?php } //Fin del ciclo categorias  
-	?>
-
-
-
+																<button type="submit" class="btn btn-danger center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button>
+															</div>
+														</td>
+													</form>
+												</tr>
+											<?php } //Fin del if 
+											?>
+										<?php } //Fin del ciclo productos 
+										?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				<?php } //Fin del ciclo categorias  
+				?>
+			<?php } else { ?>
+				<h5>No existen productos registrados</h5>
+				<p></p>
+			<?php } ?>
 
 		</div>
-
 	</div>
-
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
