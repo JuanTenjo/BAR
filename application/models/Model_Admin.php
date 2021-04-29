@@ -51,7 +51,7 @@ class Model_Admin extends CI_Model{
 
 
 	public function MostrarCategorias(){
-    $query = $this->db->query("SELECT ID_Categoria, NombreCate FROM categorias ORDER BY NombreCate ASC");
+    $query = $this->db->query("SELECT ID_Categoria, NombreCate, DescripcionCate  FROM categorias ORDER BY NombreCate ASC");
     if ($query->num_rows() > 0) {
       return $query;
     }else{
@@ -68,18 +68,50 @@ class Model_Admin extends CI_Model{
 		redirect("".base_url()."index.php/Administrador/Categorias");
 	}
 
+  public function ActualizarCategoria($array = null){
+    try{
+
+      $sql = "UPDATE categorias SET NombreCate = ('$array[NombreCate]'), DescripcionCate = ('$array[Descripcion]') WHERE ID_Categoria = ($array[IDCategoria])";
+
+      $query = $this->db->query($sql);
+  
+      redirect("".base_url()."index.php/Administrador/Categorias");
+      
+		}catch(Exception $e){ 
+      echo $e->getMessage();
+		}
+  }
+
 	
 	public function EliminarCategoria($ID_Categoria = null){
+    try{
+      
+      $ValProduc = "SELECT COUNT(ID_Producto) as CantidadProduc FROM categorias AS C, producto AS P WHERE C.ID_Categoria = P.ID_Categoria AND C.ID_Categoria  = ('$ID_Categoria')";
 
-		$sql= "DELETE FROM categorias WHERE ID_Categoria = ('$ID_Categoria') ";
-		$query=$this->db->query($sql);
-
-		redirect("".base_url()."index.php/administrador/Categorias");
+      $Val1 = $this->db->query($ValProduc);
+  
+      $result = $Val1->row();
+  
+      $CantidadProductos = $result->CantidadProduc;
+  
+      if($CantidadProductos > 0){
+          echo "Lo siento pero esta categoria tiene " . $CantidadProductos . " productos registrados, por lo tanto no se puede eliminar.";
+          echo "<br>";
+          echo "Primero elimine los productos asociados a esta categoria.";
+      }else{
+  
+        $sql= "DELETE FROM categorias WHERE ID_Categoria = ('$ID_Categoria') ";
+        $query=$this->db->query($sql);
+        redirect("".base_url()."index.php/administrador/Categorias");
+      }
+    }catch(Exception $e){ 
+			echo $e->getMessage();
+		}
 	}
 
 	
   public function MostrarMesas(){
-    $query = $this->db->query("SELECT z.idzonas, z.nombre, count(m.idzonas) as numerodemesas FROM zonas as z, mesas as m where z.idzonas = m.idzonas Group by z.nombre	");
+    $query = $this->db->query("SELECT z.idzonas, z.nombre, z.numMesas FROM zonas as z WHERE Habilitada = 1 order by z.nombre asc");
     if ($query->num_rows() > 0) {
       return $query;
     }else{
@@ -114,18 +146,34 @@ class Model_Admin extends CI_Model{
   }
 
 	public function Eliminarzona($ID_Zonas = null){
+    try{
 
-    $query = $this->db->query("DELETE FROM mesas where idzonas = ('$ID_Zonas')");
+      //En la tabla de mesas se eliminaran automaticamente por que tiene una llave foranea en cascada
+      $Val =  $this->db->query("SELECT count(m.idzonas) as MesasOcupadas
+                                FROM zonas AS z, mesas AS m 
+                                WHERE z.idzonas = m.idzonas AND m.idzonas = ($ID_Zonas) and m.numpedido <> 0");
 
+      $result = $Val->row();
+      
+      $MesasOcupada = $result->MesasOcupadas;
 
-    if ($query->num_rows() > 0) {
-      return $query;
-    }else{
-      false;
-    }
+      if($MesasOcupada > 0){
+        echo "No puedes anular esta zona porque una de sus mesas tiene un pedido pendiente";
+      }else{
 
+        $query = $this->db->query("UPDATE zonas SET Habilitada = false where idzonas = ('$ID_Zonas')");
 
-    
+        $query4 = $this->db->query("DELETE FROM mesas where idzonas = ('$ID_Zonas') and numpedido = 0");
+
+        redirect("".base_url()."index.php/administrador/Mesas");
+      }
+
+    }catch(Exception $e){ 
+
+			echo $e->getMessage();
+
+		}
+
   }
 
 

@@ -91,7 +91,6 @@
 			<?php if (isset($categorias)) { ?>
 				<h5>Lista de categorias</h5>
 				<div class="table-responsive">
-					<form action="<?php echo base_url() ?>index.php/administrador/registrar_productos" method="post">
 						<table class="table">
 							<thead class="head">
 								<tr>
@@ -103,20 +102,21 @@
 							</thead>
 							<tbody>
 								<?php foreach ($categorias->result() as $row) { ?>
-									<form action="#" method="post" data-ajax="false">
+									<form action="<?php echo base_url() ?>index.php/Administrador/ModificarCategoria" method="post" data-ajax="false">
 										<tr>
 											<th scope="row">
 												<div class="form-group">
-													<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
+													<input type="text" required name="NombreCate" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
 												</div>
 											</th>
 											<th scope="row">
 												<div class="form-group">
-													<input type="text" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
+													<input type="text" required name="Descripcion" value="<?php echo ($row->DescripcionCate) ?>" class="form-control" placeholder="Categoria">
 												</div>
 											</th>
 											<td>
 												<div class="form-group" id="CentrarBotonEnTabla">
+													<input type="text" name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
 													<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
 												</div>
 											</td>
@@ -133,7 +133,6 @@
 								<?php } ?>
 							</tbody>
 						</table>
-					</form>
 				</div>
 			<?php } else { ?>
 				<p> No existe niguna categoria</p>

@@ -19,6 +19,7 @@ class Administrador extends CI_Controller {
 		}
     }
 
+	
 	public function Categorias()
 	{
 		if ($this->session->userdata('is_logged_in')) {
@@ -30,7 +31,6 @@ class Administrador extends CI_Controller {
 			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
     }
-
 	public function Productos()
 	{
 		if ($this->session->userdata('is_logged_in')) {
@@ -43,7 +43,6 @@ class Administrador extends CI_Controller {
 			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
     }
-
 	public function Mesas()
 	{
 		if ($this->session->userdata('is_logged_in')) {
@@ -56,6 +55,8 @@ class Administrador extends CI_Controller {
 		}
     }
 
+
+
     public function RegistraProducto(){
         $categoriaProducto = $this->input->post('categoriaProducto');
         $nombreProducto = $this->input->post('nombreProducto');
@@ -66,7 +67,6 @@ class Administrador extends CI_Controller {
         $re = $this->Model_Admin->RegistraProducto($categoriaProducto,$nombreProducto,$ingredientesProducto,$precioProducto,$cantidadProducto);
 
     }
-
 	public function ModificarProducto(){
 		try{
 			
@@ -88,11 +88,12 @@ class Administrador extends CI_Controller {
 			
 		}
 	}
-
 	public function EliminarProducto(){
         $ID_Producto = $this->input->post('ID_Producto');
         $re = $this->Model_Admin->EliminarProducto($ID_Producto);
     }
+
+
 
 
     public function RegistraCategoria(){
@@ -100,11 +101,34 @@ class Administrador extends CI_Controller {
 		$descripcionCategoria = $this->input->post('descripcionCategoria');
         $re = $this->Model_Admin->RegistraCategoria($nombreCategoria,$descripcionCategoria);
     } 
+	public function ModificarCategoria(){
+		try{
+			$array = [
+				'IDCategoria' => $this->input->post('ID_Categoria'),
+				'NombreCate' => $this->input->post('NombreCate'),
+				'Descripcion' => $this->input->post('Descripcion')
+			];
 
+			$re = $this->Model_Admin->ActualizarCategoria($array);
+
+		}catch(Exception $e){
+			echo $e->getMessage();
+		}
+	}
     public function EliminarCategoria(){
+		try{
+
         $ID_Categoria = $this->input->post('ID_Categoria');
+
         $re = $this->Model_Admin->EliminarCategoria($ID_Categoria);
+
+
+		}catch(Exception $e){
+			echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: EliminarCategoria. Error: ' . $e->getMessage();
+		}
     }
+
+
 
 
     public function RegistraZona(){
@@ -113,10 +137,12 @@ class Administrador extends CI_Controller {
        $re = $this->Model_Admin->RegistrarZona($NombreZona,$NumeroMesas);
     }
 
+
     public function EliminarZona(){
         $ID_Zonas = $this->input->post('ID_Zonas');
         $re = $this->Model_Admin->Eliminarzona($ID_Zonas);
     }
+
 
     public function Salir(){
 

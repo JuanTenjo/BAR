@@ -7,7 +7,9 @@ class Mesero extends CI_Controller {
         $this->load->model('model_pedidos');
         $this->load->model('model_mostrar_productos');
     }
-public function mesa()
+
+    
+    public function mesa()
 	{   
         $estado = $this->input->post("estado");
         $zona = $this->input->post("zona");
@@ -48,8 +50,9 @@ public function recargar(){
         'productos' => $this->model_mostrar_productos->MostrarProductos(),
         'pedido' => $this->model_pedidos->MostrarPedido($num_pedido)
     );
+
     $this->load->view('view_producto',$data);
-    //$this->load->view('imprimir2',$data);
+
 }
 public function confirmarPedido(){
 
