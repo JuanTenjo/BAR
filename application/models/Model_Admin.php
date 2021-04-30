@@ -7,6 +7,66 @@ class Model_Admin extends CI_Model{
     parent::__construct();
   }
 
+  // USUARIOS
+  public function MostrarUsuario(){
+
+    $query = $this->db->query("SELECT u.id as IdUsuario, u.user, u.correo, u.genero, DATE_FORMAT(u.fecha_nacimiento,'%Y-%m-%d') AS FechaNacimiento, u.id_rol, r.nombre_rol
+                                FROM usuario as u, roles as r 
+                                WHERE u.id_rol = r.id_rol ORDER BY  u.user ");
+    if ($query->num_rows() > 0) {
+      return $query;
+    }else{
+      false;
+    }
+
+  }
+
+  public function MostrarRoles(){
+    
+    $query = $this->db->query("SELECT * FROM roles order by nombre_rol");
+    if ($query->num_rows() > 0) {
+      return $query;
+    }else{
+      false;
+    }
+
+  }
+
+	public function RegistraUsuario($array = null){
+    try{
+			
+		$sql = "INSERT INTO usuario(user,pass,correo,genero,fecha_nacimiento,id_rol) VALUES (('$array[usuario]'),('$array[password]'),('$array[Email]'),('$array[Genero]'),('$array[FechaNacimiento]'),($array[ID_Rol]))";
+
+		$query=$this->db->query($sql);
+
+		redirect("".base_url()."index.php/Administrador/Usuarios");
+
+    }catch(Exception $e){
+
+      log_message('Error', $e->getMessage());
+      return;
+      
+    }
+	}
+
+	public function ActualizarUsuario($array = null){
+
+		$sql = "UPDATE usuario SET id_rol = ($array[ID_Rol]) ,user = ('$array[usuario]'),correo = ('$array[Email]'),genero = ('$array[Genero]'),fecha_nacimiento = ('$array[FechaNacimiento]') WHERE id = ($array[ID_Usuario])";
+
+		$query = $this->db->query($sql);
+
+		redirect("".base_url()."index.php/Administrador/Usuarios");
+		
+	}
+
+	public function EliminarUsuario($ID_Usuario = null){
+
+		$sql= "DELETE FROM usuario WHERE id = ('$ID_Usuario') ";
+		$query=$this->db->query($sql);
+
+		redirect("".base_url()."index.php/Administrador/Usuarios");
+	}
+
 	//PRODUCTOS 
 
 
@@ -49,6 +109,8 @@ class Model_Admin extends CI_Model{
 		redirect("".base_url()."index.php/Administrador/Productos");
 	}
 
+
+    //CATEGORIAS
 
 	public function MostrarCategorias(){
     $query = $this->db->query("SELECT ID_Categoria, NombreCate, DescripcionCate  FROM categorias ORDER BY NombreCate ASC");
@@ -109,7 +171,9 @@ class Model_Admin extends CI_Model{
 		}
 	}
 
-	
+	//MESAS
+
+
   public function MostrarMesas(){
     $query = $this->db->query("SELECT z.idzonas, z.nombre, z.numMesas FROM zonas as z WHERE Habilitada = 1 order by z.nombre asc");
     if ($query->num_rows() > 0) {
@@ -145,6 +209,49 @@ class Model_Admin extends CI_Model{
     }   
   }
 
+  public function ModificarZona($array = null){
+    try{
+
+
+      //En la tabla de mesas se eliminaran automaticamente por que tiene una llave foranea en cascada
+      $Val =  $this->db->query("SELECT count(m.idzonas) as MesasOcupadas
+                                FROM zonas AS z, mesas AS m 
+                                WHERE z.idzonas = m.idzonas AND m.idzonas = ($array[IDZona]) and m.numpedido <> 0");
+
+      $result = $Val->row();
+      
+      $MesasOcupada = $result->MesasOcupadas;
+
+      if($MesasOcupada > 0){
+        echo "No puedes modificar esta zona porque " . $MesasOcupada . "mesas tienen un pedido pendiente";
+      }else{
+
+        $query4 = $this->db->query("DELETE FROM mesas where idzonas = ($array[IDZona]) and numpedido = 0");
+
+        $query = $this->db->query("UPDATE zonas SET nombre = ('$array[NombreZona]'), numMesas = ($array[NumeroDeMesas]) where idzonas = ($array[IDZona])");
+
+        $NumeroMesas = $array['NumeroDeMesas'];
+
+        for($i = 1; $i <= $NumeroMesas; $i++){
+
+          $sql = "INSERT INTO mesas(idzonas,nummesa) VALUES (('$array[IDZona]'),'$i')";
+
+          $query=$this->db->query($sql);  
+
+        }
+
+        redirect("".base_url()."index.php/administrador/Mesas");
+
+      }
+
+    }catch(Exception $e){ 
+
+			echo $e->getMessage();
+
+		}
+
+  }
+
 	public function Eliminarzona($ID_Zonas = null){
     try{
 
@@ -158,7 +265,7 @@ class Model_Admin extends CI_Model{
       $MesasOcupada = $result->MesasOcupadas;
 
       if($MesasOcupada > 0){
-        echo "No puedes anular esta zona porque una de sus mesas tiene un pedido pendiente";
+        echo "No puedes modificar esta zona porque " . $MesasOcupada . "mesas tienen un pedido pendiente";
       }else{
 
         $query = $this->db->query("UPDATE zonas SET Habilitada = false where idzonas = ('$ID_Zonas')");

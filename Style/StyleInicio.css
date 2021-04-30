@@ -1,0 +1,12 @@
+*{
+    font-family: "Oswal", sans-serif;
+}
+
+
+#ImagenFondo{
+    background-image: url("../Imagenes/FondoInicio2.jpg");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}

@@ -7,6 +7,6 @@ class Inicio extends CI_Controller {
 	{
 		//$this->load->view('nav_view');
 		//$this->load->view('VistasAdmin/View_Inicio');
-		$this->load->view('Inicio');
+		$this->load->view('View_Inicio');
 	}
 }

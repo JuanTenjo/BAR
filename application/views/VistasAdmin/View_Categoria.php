@@ -37,6 +37,9 @@
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Mesas" tabindex="-1" aria-disabled="true">Zonas y mesas</a>
 								</li>
 								<li class="nav-item">
+									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
+								</li>
+								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Salir" tabindex="-1" aria-disabled="true">Salir</a>
 								</li>
 							</ul>
@@ -64,12 +67,12 @@
 							<tr>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" name="nombreCategoria" placeholder="Nombre categoria">
+										<input type="text" required class="form-control" name="nombreCategoria" placeholder="Nombre categoria">
 									</div>
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" name="descripcionCategoria" placeholder="Descripcion">
+										<input type="text" required class="form-control" name="descripcionCategoria" placeholder="Descripcion">
 									</div>
 								</td>
 								<td>
@@ -116,7 +119,7 @@
 											</th>
 											<td>
 												<div class="form-group" id="CentrarBotonEnTabla">
-													<input type="text" name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
+													<input type="text" required name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
 													<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
 												</div>
 											</td>
@@ -124,7 +127,7 @@
 									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarCategoria" method="post" data-ajax="false">
 										<td>
 											<div class="form-group" id="CentrarBotonEnTabla">
-												<input type="text" name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
+												<input type="text" required name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
 												<button type="submit" class="btn btn-danger center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button>
 											</div>
 										</td>

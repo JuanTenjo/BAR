@@ -37,6 +37,9 @@
 									<a class="nav-link active" href="<?php echo base_url() ?>index.php/Administrador/Mesas" tabindex="-1" aria-disabled="true">Zonas y mesas</a>
 								</li>
 								<li class="nav-item">
+									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
+								</li>
+								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Salir" tabindex="-1" aria-disabled="true">Salir</a>
 								</li>
 							</ul>
@@ -65,12 +68,12 @@
 							<tr>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" name="NombreZona" placeholder="Nombre de la zona">
+										<input type="text" required class="form-control" name="NombreZona" placeholder="Nombre de la zona">
 									</div>
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" minlength="1" maxlength="2"  pattern="^[0-20]+" name="NumeroMesas" placeholder="Numero de mesas">
+										<input type="text" required class="form-control" minlength="1" maxlength="2"  pattern="^[0-20]+" name="NumeroMesas" placeholder="Numero de mesas">
 										<small>Valor numerico</small>
 									</div>
 								</td>
@@ -113,16 +116,17 @@
 										<tr>
 											<th scope="row">
 												<div class="form-group">
-													<input type="text" value="<?php echo ($row->nombre) ?>" class="form-control" placeholder="Categoria">
+													<input type="text" required name="NombreZona" value="<?php echo ($row->nombre) ?>" class="form-control">
 												</div>
 											</th>
 											<td>
 												<div class="form-group">
-													<input type="text" value="<?php echo ($row->numMesas) ?>" class="form-control" placeholder="Nombre del producto">
+													<input type="text" required name="NumeroDeMesas" value="<?php echo ($row->numMesas) ?>" class="form-control">
 												</div>
 											</td>
 											<td>
 												<div class="form-group" id="CentrarBotonEnTabla">
+													<input type="text" required name="ID_Zonas" value="<?php echo ($row->idzonas) ?>" style="display: none;">
 													<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
 												</div>
 											</td>
@@ -130,7 +134,7 @@
 									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarZona" method="post" data-ajax="false">
 										<td>
 											<div class="form-group" id="CentrarBotonEnTabla">
-												<input type="text" name="ID_Zonas" value="<?php echo ($row->idzonas) ?>" style="display: none;">
+												<input type="text" required name="ID_Zonas" value="<?php echo ($row->idzonas) ?>" style="display: none;">
 												<button type="submit" class="btn btn-danger center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button>
 											</div>
 										</td>
