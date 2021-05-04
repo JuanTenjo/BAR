@@ -15,69 +15,32 @@
 </head>
 <style>
 
-  body{
-    background-color:#E5E7E9;
-  }
-  .formulario{
-    background-color: #FFFFFF;
-  }
-  nav{
-    background-color: black;
-  }
-  .boton{
-    background-color: #576aff;
-    color:blanchedalmond;
-  }
-  label{
-    font-weight: bold;
-  }
-  .radio{
-    font-weight: lighter;
-  }
-  .imagen{
-    margin:auto;
-    margin-top: 20%;
-  }
-  img{
-    border-radius: 3%;
-  }
+
 </style>
 <body>
+
 <div id="ImagenFondo" class="div">
 
 
   
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12">
-				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-					<div class="container-fluid">
-						<a class="navbar-brand" href="<?php echo base_url() ?>index.php/Inicio"><img src="<?php echo base_url() ?>Imagenes/FondoNegro.png" alt="Logo Cielo Abierto" width="40" height="34"></a>
+				<nav class="navbar navbar-expand-lg " id="nav">
+						<a class="navbar-brand" href="<?php echo base_url() ?>index.php/Inicio"><img src="<?php echo base_url() ?>Imagenes/FondoBlanco.png" alt="Logo Cielo Abierto" width="40" height="34"></a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="<?php echo base_url() ?>index.php/Administrador/Productos">Productos</a>
+								<li class="nav-item" id="ItemMenu">
+									<a class="nav-link active" aria-current="page" href="<?php echo base_url() ?>index.php/Administrador/Productos">Registrate</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Categorias">Categorias</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Mesas" tabindex="-1" aria-disabled="true">Zonas y mesas</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Salir" tabindex="-1" aria-disabled="true">Salir</a>
+								<li class="nav-item" id="ItemMenu">
+									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Categorias">Contactanos</a>
 								</li>
 							</ul>
 						</div>
-					</div>
 				</nav>
-			</div>
 		</div>
 	</div>
 
@@ -100,7 +63,7 @@
   <div class="main">
     <div class="container">
       <div class="row">
-      <article class="col-xs-6 col-sm-6 col-md-6" style="align-content: center; display: flex; align-items: center">
+      <!-- <article class="col-xs-6 col-sm-6 col-md-6" style="align-content: center; display: flex; align-items: center">
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:100%;" >
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -128,7 +91,7 @@
         </a>
       </div>
 
-      </article>
+      </article> -->
       <article class="col-xs-6 col-sm-6 col-md-6 formulario">
         <br>
           <form action="<?php echo base_url() ?>index.php/registro/registro" method="post" data-ajax="false">
@@ -164,7 +127,7 @@
             <input type="date" name="fecha_nacimiento" name="fecha_nacimiento" max="3000-12-31" 
              min="1900-01-01" class="form-control" required />
           </div>
-             <button type="submit" class="btn boton btn-lg btn-block shadow-none p-3 mb-5rounded">Registrate</button>
+             <button type="submit" class="btn btn-primary btn-lg btn-block shadow-none p-3 mb-5rounded">Registrate</button>
             </div>
           </form><br>
       </article>

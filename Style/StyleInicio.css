@@ -1,12 +1,64 @@
-*{
-    font-family: "Oswal", sans-serif;
+* {
+	font-family: "Oswal", sans-serif;
+}
+
+#ImagenFondo {
+	background-image: url("../Imagenes/FondoInicio.jpg");
+	background-image: no-repeat;
+	background-image: fixed;
+
+	background-color: black;
+	background-image: center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+#ImagenFondo image{
+	opacity: 0.5;
+}
+
+#nav:hover{
+	background-color: #cb4435;
 }
 
 
-#ImagenFondo{
-    background-image: url("../Imagenes/FondoInicio2.jpg");
-    background-color: transparent;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
+#nav{
+	background-color: #cb4435b4;
 }
+
+#ItemMenu a{
+	color: white;
+	font-weight: bold;
+	font-family: "Oswal", sans-serif;
+}
+
+#ItemMenu a:hover{
+	color: yellow;
+}
+
+
+
+.formulario {
+	background-color: #ffffff;
+}
+
+.boton {
+	background-color: #576aff;
+	color: blanchedalmond;
+}
+label {
+	font-weight: bold;
+}
+.radio {
+	font-weight: lighter;
+}
+.imagen {
+	margin: auto;
+	margin-top: 20%;
+}
+img {
+	border-radius: 3%;
+}
+
