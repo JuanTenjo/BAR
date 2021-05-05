@@ -1,4 +1,6 @@
-
+* {
+	font-family: "Oswal", sans-serif;
+}
 .menu a {
 	background-color: transparent;
 	text-align: center;  

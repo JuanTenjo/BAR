@@ -27,10 +27,10 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item" id="ItemMenu">
-                <a class="nav-link active" aria-current="page" href="<?php echo base_url() ?>index.php/Administrador/Productos">REGISTRATE</a>
+                <a class="nav-link active" aria-current="page" role="button" data-bs-toggle="modal" data-bs-target="#RegistrateModal">REGISTRATE</a>
               </li>
               <li class="nav-item" id="ItemMenu">
-                <a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Categorias">CONTACTO</a>
+                <a class="nav-link" href="#CONTACTO">CONTACTO</a>
               </li>
             </ul>
           </div>
@@ -41,35 +41,46 @@
         <!-- <div class="d-none d-sm-none d-md-block">Este texto solo visible para escritorio</div>
       <div class="d-block d-sm-block d-md-none">Este texto solo visible para smartphone</div> -->
         <div class="col-sm-12 col-md-8 col-lg-3" id="Formulario">
+
           <div class="text-center">
             <img src="<?php echo base_url() ?>Imagenes/LogoSinFondo2.png" width="80%" class="rounded img-fluid" alt="...">
           </div>
-          <form>
+
+          <form action="<?php echo base_url() ?>index.php/Inicie_sesion/inicio" method="post" data-ajax="false">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <input type="text" class="form-control" id="exampleInputEmail1" name="usuario" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
+              <input type="password" class="form-control" name="contrasena" id="exampleInputPassword1">
             </div>
-            <button type="submit" class="btn btn-danger btn-lg btn-block">Ingresar</button>
+            <?php
+            if ($sms <> null) { ?>
+              <small><?php echo $sms; ?></small>
+            <?php } ?>
+
+            <button type="submit" id="Ingresar" class="btn btn-danger btn-lg btn-block">Ingresar</button>
           </form>
 
           <!-- Button trigger modal -->
-          <p>¿No tienes usuario? <a style="color: red;" role="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Registrate </a> </p>
+          <p id="Registrate">¿No tienes usuario? <a style="color: red;" role="button" data-bs-toggle="modal" data-bs-target="#RegistrateModal"> Registrate </a> </p>
+
+          <div id="Olvidaste">
+            <a role="button">¿Olvidaste tu contraseña? </a>
+          </div>
 
 
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="RegistrateModal" tabindex="-1" aria-labelledby="Registrate" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
+                  <h5 class="modal-title" id="Registrate">Registro</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form action="<?php echo base_url() ?>index.php/registro/registro" method="post" data-ajax="false">
+                  <form action="<?php echo base_url() ?>index.php/Registro/Registro" method="post" data-ajax="false">
                     <div class="form-group">
                       <label>Correo electrónico</label>
                       <input type="email" minlength="11" maxlength="50" name="correo" required class="form-control" placeholder="Ejemplo: juantenjo@gmail.com">
@@ -104,35 +115,53 @@
                   </form>
 
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="button" class="btn btn-primary">Registrarse</button>
-                </div>
               </div>
             </div>
           </div>
 
-
-          <footer>
-
-            <ul class="RedesSociales">
-              <li><a href=""><img src="<?php echo base_url() ?>Imagenes/IconFace.png" class="rounded" alt="..."></a></li>
-              <li><a href=""><img src="<?php echo base_url() ?>Imagenes/IconInst.png" class="rounded" alt="..."></a></li>
-              <li><a href=""><img src="<?php echo base_url() ?>Imagenes/IconWha.png" class="rounded" alt="..."></a></li>
-            </ul>
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">© 2021 Copyright:
-              <a href="https://www.instagram.com/tenjo13/?hl=es-la"> JuanTenjo</a>
-            </div>
-
-
-
-          </footer>
-
+          <ul class="RedesSociales">
+            <li><a href=""><img src="<?php echo base_url() ?>Imagenes/IconFace.png" class="rounded" alt="..."></a></li>
+            <li><a href=""><img src="<?php echo base_url() ?>Imagenes/IconInst.png" class="rounded" alt="..."></a></li>
+            <li><a href=""><img src="<?php echo base_url() ?>Imagenes/IconWha.png" class="rounded" alt="..."></a></li>
+          </ul>
+          <!-- Copyright -->
 
         </div>
       </div>
 
+      <div class="row" id="Footer">
+        <div id="Column" class="col-sm-6 col-md-6 col-lg-3">
+          <h6 id="CONTACTO">CONTACTO</h6>
+          <hr>
+          <li><b>Lugar:</b> Guadalupe Huila</li>
+          <li><b>Direccion:</b> Cra 31 # 51-60</li>
+          <li><b>Telefono:</b> (+57) 3204519083</li>
+          <li><b>Correo:</b> cieloabierto@gmail.com</li>
+        </div>
+        <div id="Column" class="col-sm-6 col-md-6 col-lg-3">
+          <h6>¿QUE ENCONTRARAS?</h6>
+          <hr>
+          <li>Mira y descarga nuestra carta en el siguienet link:</li>
+          <li><a target="_blank" style="color: black;background:orange;padding:4px" href="https://drive.google.com/file/d/10fjpOPStxIAc1WrNETfb1dUE4S6Oe1BQ/view?usp=sharing">Descargar Carga</a></li>
+        </div>
+        <div id="Column" class="d-none d-sm-none d-md-none d-lg-block col-lg-3 ">
+          <h6>DISFRUTA</h6>
+          <hr>
+          <iframe width="300" height="200" src="https://www.youtube.com/embed/mFpvG80q1d8" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div id="Column" class="d-none d-sm-none d-md-none d-lg-block col-lg-3">
+          <h6>ENCUENTRANOS</h6>
+          <hr>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15949.300692271314!2d-75.7560455!3d2.0256185!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x79f0b1b78ff5a774!2sCIELO%20ABIERTO!5e0!3m2!1ses-419!2sco!4v1620225049603!5m2!1ses-419!2sco" width="300" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+
+
+      <div class="row" id="Copyright">
+        <div class="footer-copyright text-center py-3">© 2021 Copyright:
+          <a href="https://www.instagram.com/tenjo13/?hl=es-la"><i> JuanTenjo</i></a>
+        </div>
+      </div>
 
     </div>
 

@@ -48,7 +48,7 @@ class Inicie_Sesion extends CI_Controller {
 		$id=$this->input->post("id");
 		$eli = $this->model_inicio->eliminar_registro($id);
 	}
-	public function carga_admin()
+	public function Carga_admin()
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$this->load->view('VistasAdmin/View_Inicio');
@@ -57,7 +57,7 @@ class Inicie_Sesion extends CI_Controller {
 			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
-	public function carga_mesero()
+	public function Carga_mesero()
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$datos = array(
@@ -65,12 +65,12 @@ class Inicie_Sesion extends CI_Controller {
 				'mesas' => $this->model_pedidos->Mostrarmesas(),
 				'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar()
 			);
-			$this->load->view('view_mesero',$datos);
+			$this->load->view('VistasMesero/View_SeleccionarMesa',$datos);
 		}else{	
 			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
-	public function carga_facturador()
+	public function Carga_facturador()
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$data = array(
@@ -115,24 +115,29 @@ class Inicie_Sesion extends CI_Controller {
 			);
 			$this->session->set_userdata($session);
 			if ($result->nombre_rol == "sinAsignar") {
-					echo "'<b>'Espera que el Administrador le asigne un Servicio'</b>''";
+					$datos = array(
+						'sms' => "No tienes asignado ningun permiso"
+					); 
+					$this->load->view('View_Inicio',$datos);
 			}
 			elseif ($result->nombre_rol == "admin") {
 				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/carga_admin");
+					redirect("".base_url()."index.php/inicie_sesion/Carga_admin");
 				}
 			}elseif ($result->nombre_rol == "mesero") {
 				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/carga_mesero");
+					redirect("".base_url()."index.php/inicie_sesion/Carga_mesero");
 				}
 			}elseif ($result->nombre_rol == "facturador") {
 				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/carga_facturador");
+					redirect("".base_url()."index.php/inicie_sesion/Carga_facturador");
 				}
 			}
 		}else{
-			echo "Contrasena o usuario incorrecto, Intentelo de nuevo o Cambie su contrasena";
-			$this->load->view('view_iniciesesion');
+			$datos = array(
+				'sms' => "Contrasena o usuario incorrecto."
+			); 
+			$this->load->view('View_Inicio',$datos);
 		}
 	}
 }

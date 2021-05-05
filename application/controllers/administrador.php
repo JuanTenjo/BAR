@@ -219,7 +219,10 @@ class Administrador extends CI_Controller {
     public function Salir(){
 
 		$this->session->sess_destroy();
-        $this->load->view('View_Inicio');
+		$datos = array(
+			'sms' => null
+		);
+        $this->load->view('View_Inicio',$datos);
 
     }
 

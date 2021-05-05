@@ -12,6 +12,20 @@ class Model_pedidos extends CI_Model
     $this->load->view('welcome_message');
   }
 
+  public function GenerarConsecutivo(){
+    try{
+
+      $query  = $this->db->query("SELECT Prefijo, Numero FROM restaurantebar.consecutivos WHERE id_consecutivo = 1");
+
+      //traer y sumarle uno
+
+
+    }catch(Exception $e){ 
+			echo $e->getMessage();
+		}
+  }
+  
+
   public function registro_pedido($num_pedido, $mesa, $zona, $mesero, $fecha_actual)
   {
     $bandera = 0;

@@ -1,6 +1,9 @@
 * {
 	font-family: "Oswal", sans-serif;
+}
 
+body{
+	height: 100%;
 }
 
 #ImagenFondo {
@@ -16,17 +19,15 @@
 }
 
 #Formulario{
-	margin-top: 1%;
+	margin-top: 5%;
 }
 
 #nav:hover{
 	background-color: #cb4435;
 }
 
-footer{
 
-	bottom: 0;  
-}
+
 
 #nav{
 	background-color: #cb44356e;
@@ -53,6 +54,42 @@ footer{
 	margin-top: 30px;
 }
 
+#Registrate{
+	margin-top: 5%;
+}
 
+#Ingresar{
+	margin-top: 5%;
+}
+
+#Olvidaste{
+	text-align: center;
+	color: red;
+}
+
+#Footer{
+	flex-direction: row;
+	text-align: center;
+
+	background-color: rgba(0, 0, 0, 0.548);
+}
+
+#Copyright{
+	background-color: rgba(0, 0, 0, 0.548);
+	color: white;
+}
+
+#Column{
+	color: white;
+	padding: 10px;
+	
+}
+
+#Column li{
+	margin-left: 10px;
+	text-align: left;
+	list-style: none;
+	padding-top: 20px;
+}
 
 

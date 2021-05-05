@@ -7,11 +7,20 @@ class Model_Registro extends CI_Model{
     parent::__construct();
   }
 
-  public function registro($user=null,$pass=null,$correo=null,$genero=null,$fecha_nacimiento=null){
+  public function registroUser($user=null,$pass=null,$correo=null,$genero=null,$fecha_nacimiento=null){
+
+    //Falta hacer varias validaciones aun
+
     $sql= "INSERT INTO usuario(user,pass,correo,genero,fecha_nacimiento) VALUES ('$user','$pass','$correo','$genero','$fecha_nacimiento')";
     $query=$this->db->query($sql);
-    $this->load->view('inicio');
+
+    $datos = array(
+      'sms' => "Registro exitoso, ingresa con tus datos."
+    ); 
+    $this->load->view('View_Inicio',$datos);
+
   }
+
   public function registrar_productos($tipo=null,$nombre=null,$precio=null){
     $sql = "INSERT INTO productos(tipo,nombre,precio) VALUES ('$tipo','$nombre','$precio')";
     $query=$this->db->query($sql);

@@ -10,15 +10,14 @@ class registro extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('inicio');
+		$this->load->view('View_Inicio');
 	}
-  public function registro(){
+  public function Registro(){
     $user=$this->input->post('user');
     $pass=$this->input->post('pass');
     $correo=$this->input->post('correo');
     $genero=$this->input->post('genero');
     $fecha_nacimiento=$this->input->post('fecha_nacimiento');
-    $re = $this->model_registro->registro($user,$pass,$correo,$genero,$fecha_nacimiento);
-    echo "<script language='javascript'> alert('Registro Exitoso, Bienvenido!'); </script>";
+    $re = $this->model_registro->registroUser($user,$pass,$correo,$genero,$fecha_nacimiento);
   }
 }
