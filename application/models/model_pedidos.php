@@ -12,19 +12,55 @@ class Model_pedidos extends CI_Model
     $this->load->view('welcome_message');
   }
 
-  public function GenerarConsecutivo(){
-    try{
+  public function GenerarConsecutivo()
+  {
+    try {
+
+      //traer consecuivo actual y sumarle uno
 
       $query  = $this->db->query("SELECT Prefijo, Numero FROM restaurantebar.consecutivos WHERE id_consecutivo = 1");
+      
+      $result = $query->row();
 
-      //traer y sumarle uno
+      $Prefijo = $result->Prefijo;
+      $NumConse = $result->Numero;
 
+      $NumConse += 1;
+      
+      $NumPedido = "$Prefijo".$NumConse;
 
-    }catch(Exception $e){ 
-			echo $e->getMessage();
-		}
+      //Si todo sale bien actualizamos el consecutivo
+
+      $sql =  $this->db->query("UPDATE consecutivos SET Numero = ($NumConse) where id_consecutivo = 1");
+      
+      return $NumPedido;
+    
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    }
   }
-  
+
+  public function RegistrarPedido($array = null){
+    try{
+      
+      //Registramos el pedido
+
+      $sql = "INSERT INTO pedidos(num_pedido,mesero,mesa,zona,fecha) VALUES ('$array[Consecutivo]','$array[Mesero]',($array[Mesa]),($array[IDzona]),'$array[Fecha]')";
+
+      $query = $this->db->query($sql);
+
+      //Ocupamos la mesa
+
+      $sql2 = "UPDATE mesas SET numpedido = '$array[Consecutivo]' WHERE idzonas = ($array[IDzona]) and nummesa = ($array[Mesa])";
+
+      $query2 = $this->db->query($sql2);
+
+
+    }catch (Exception $e) {
+      echo $e->getMessage();
+    }
+  }
+
 
   public function registro_pedido($num_pedido, $mesa, $zona, $mesero, $fecha_actual)
   {

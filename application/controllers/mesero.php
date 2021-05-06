@@ -15,17 +15,27 @@ class Mesero extends CI_Controller
     {
         try {
 
-            $zona = $this->input->post("zona");
-            $idzona = $this->input->post("idzona");
-            $mesa = $this->input->post("mesa");
-            $num_pedido = $this->input->post("pedido");
-            $mesero = $this->session->userdata('USUARIO');
             date_default_timezone_set('America/Bogota');
-            $fecha_actual = date("Y/m/d");
+
+            $fecha_actual = date("Y/m/d H:i:s");
 
             $ConcecutivoPedido = $this->Model_pedidos->GenerarConsecutivo();
 
+            $array = [
+                'IDzona' => $this->input->post('idzona'),
+                'NombreZona' => $this->input->post('zona'),
+                'Mesa' => $this->input->post('mesa'),
+                'Consecutivo' => $ConcecutivoPedido,
+                'Mesero' =>  $this->session->userdata('USUARIO'),
+                'Fecha' =>  $fecha_actual
+            ];
 
+
+            $RegistrarPedido = $this->Model_pedidos->RegistrarPedido($array);
+
+
+            echo "Todo correcto al parecer";
+            
 
             // if($estado == 1){
             //     $DatosPedido = array(

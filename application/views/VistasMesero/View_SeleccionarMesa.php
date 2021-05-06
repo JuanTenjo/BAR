@@ -45,13 +45,11 @@
               foreach ($mesas->result() as $col) {
                 if ($row->idzonas == $col->idzonas) {
                   if ($col->numpedido == 0) {
-                    $pedido = rand(1, 9999);
               ?>
                     <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarPedido" method="post" data-ajax="false" style="display:inline">
                       <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
                       <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
                       <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
-                      <input type="number" name="pedido" value="<?php echo $pedido ?>" style="display:none" />
                       <button type="submit" class="btn btn-outline-success" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Disponible</button>
                     </form>
 
@@ -81,7 +79,7 @@
 
       <div class="row">
         <article class="col-12">
-          <a role="button" class="btn btn-outline-danger" href="<?php echo base_url() ?>index.php/mesero/salir">Cerrar Sesión</a>
+          <a role="button" class="btn btn-danger btn-block" href="<?php echo base_url() ?>index.php/mesero/salir">Cerrar Sesión</a>
         </article>
       </div>
 
