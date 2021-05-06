@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 class Mesero extends CI_Controller
 {
 
@@ -8,6 +9,7 @@ class Mesero extends CI_Controller
         parent::__construct();
         $this->load->model('Model_pedidos');
         $this->load->model('model_mostrar_productos');
+
     }
 
 
@@ -30,33 +32,13 @@ class Mesero extends CI_Controller
                 'Fecha' =>  $fecha_actual
             ];
 
-
             $RegistrarPedido = $this->Model_pedidos->RegistrarPedido($array);
 
+            $this->session->set_flashdata('Consecutivo', $ConcecutivoPedido);
 
-            echo "Todo correcto al parecer";
-            
+            redirect("".base_url()."index.php/mesero/CargarPedido");
 
-            // if($estado == 1){
-            //     $DatosPedido = array(
-            //         'mesa' => $mesa,
-            //         'pedido' => $num_pedido,
-            //         'zona' => $zona,
-            //         'idzona' => $idzona
-            //     );   
-            //     $this->session->set_userdata($DatosPedido);
-            //     redirect("".base_url()."index.php/mesero/recargar");  
-            // }else{
-            //     $DatosPedido = array(
-            //     'mesa' => $mesa,
-            //     'pedido' => $num_pedido,
-            //     'zona' => $zona,
-            //     'idzona' => $idzona
-            // );     
-            // $registro = $this->model_pedidos->registro_pedido($num_pedido,$mesa,$zona,$mesero,$fecha_actual);
-            // $this->session->set_userdata($DatosPedido);
-            // redirect("".base_url()."index.php/mesero/recargar");
-            // }
+           
         } catch (Exception $e) {
             echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: RegistrarPedido. Error: ' . $e->getMessage();
         }
@@ -75,43 +57,35 @@ class Mesero extends CI_Controller
             date_default_timezone_set('America/Bogota');
             $fecha_actual = date("Y/m/d");
 
-            // if ($estado == 1) {
-            //     $DatosPedido = array(
-            //         'mesa' => $mesa,
-            //         'pedido' => $num_pedido,
-            //         'zona' => $zona,
-            //         'idzona' => $idzona
-            //     );
-            //     $this->session->set_userdata($DatosPedido);
-            //     redirect("" . base_url() . "index.php/mesero/recargar");
-            // } else {
-            //     $DatosPedido = array(
-            //         'mesa' => $mesa,
-            //         'pedido' => $num_pedido,
-            //         'zona' => $zona,
-            //         'idzona' => $idzona
-            //     );
-            //     $registro = $this->model_pedidos->registro_pedido($num_pedido, $mesa, $zona, $mesero, $fecha_actual);
-            //     $this->session->set_userdata($DatosPedido);
-            //     redirect("" . base_url() . "index.php/mesero/recargar");
-            // }
         } catch (Exception $e) {
             echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: ModificarPedido. Error: ' . $e->getMessage();
         }
     }
 
 
-    public function recargar()
+    public function CargarPedido()
     {
-        $num_pedido = $this->session->userdata('pedido');
+    
+        $Consecutivo = $this->session->flashdata('Consecutivo');
+
+        $Pedido = $this->Model_pedidos->MostrarCabeceraPedido($Consecutivo);
+
         $data = array(
-            'categorias' => $this->model_mostrar_productos->MostrarCategorias(),
-            'productos' => $this->model_mostrar_productos->MostrarProductos(),
-            'pedido' => $this->model_pedidos->MostrarPedido($num_pedido)
+            'Categorias' => $this->Model_pedidos->MostrarCategorias(),
+            'Productos' => $this->Model_pedidos->MostrarProductos(),
+            'DetallePedido' => $this->Model_pedidos->MostrarDetallePedido($Consecutivo),
+            'Consecutivo' => $Pedido->num_pedido,
+            'Mesero' => $Pedido->mesero,
+            'Mesa' => $Pedido->mesa,
+            'Idzona' => $Pedido->zona,
+            'NombreZona' => $Pedido->nombreZona,
+            'Fecha' => $Pedido->fecha
         );
 
-        $this->load->view('view_producto', $data);
+        $this->load->view('VistasMesero/View_Productos', $data);
+
     }
+
     public function confirmarPedido()
     {
 
