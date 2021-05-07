@@ -9,7 +9,6 @@ class Mesero extends CI_Controller
         parent::__construct();
         $this->load->model('Model_pedidos');
         $this->load->model('model_mostrar_productos');
-
     }
 
 
@@ -36,9 +35,7 @@ class Mesero extends CI_Controller
 
             $this->session->set_flashdata('Consecutivo', $ConcecutivoPedido);
 
-            redirect("".base_url()."index.php/mesero/CargarPedido");
-
-           
+            redirect("" . base_url() . "index.php/mesero/CargarPedido");
         } catch (Exception $e) {
             echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: RegistrarPedido. Error: ' . $e->getMessage();
         }
@@ -56,7 +53,6 @@ class Mesero extends CI_Controller
             $mesero = $this->session->userdata('USUARIO');
             date_default_timezone_set('America/Bogota');
             $fecha_actual = date("Y/m/d");
-
         } catch (Exception $e) {
             echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: ModificarPedido. Error: ' . $e->getMessage();
         }
@@ -65,25 +61,55 @@ class Mesero extends CI_Controller
 
     public function CargarPedido()
     {
-    
-        $Consecutivo = $this->session->flashdata('Consecutivo');
+        try {
+            $Consecutivo = $this->session->flashdata('Consecutivo');
 
-        $Pedido = $this->Model_pedidos->MostrarCabeceraPedido($Consecutivo);
+            $Pedido = $this->Model_pedidos->MostrarCabeceraPedido($Consecutivo);
 
-        $data = array(
-            'Categorias' => $this->Model_pedidos->MostrarCategorias(),
-            'Productos' => $this->Model_pedidos->MostrarProductos(),
-            'DetallePedido' => $this->Model_pedidos->MostrarDetallePedido($Consecutivo),
-            'Consecutivo' => $Pedido->num_pedido,
-            'Mesero' => $Pedido->mesero,
-            'Mesa' => $Pedido->mesa,
-            'Idzona' => $Pedido->zona,
-            'NombreZona' => $Pedido->nombreZona,
-            'Fecha' => $Pedido->fecha
-        );
+            $data = array(
+                'Categorias' => $this->Model_pedidos->MostrarCategorias(),
+                'Productos' => $this->Model_pedidos->MostrarProductos(),
+                'DetallePedido' => $this->Model_pedidos->MostrarDetallePedido($Consecutivo),
+                'Consecutivo' => $Pedido->num_pedido,
+                'Mesero' => $Pedido->mesero,
+                'Mesa' => $Pedido->mesa,
+                'Idzona' => $Pedido->zona,
+                'NombreZona' => $Pedido->nombreZona,
+                'Fecha' => $Pedido->fecha
+            );
 
-        $this->load->view('VistasMesero/View_Productos', $data);
+            $this->load->view('VistasMesero/View_Productos', $data);
 
+        } catch (Exception $e) {
+            echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: CargarPedido. Error: ' . $e->getMessage();
+        }
+    }
+
+    public function RegistrarDetallePedido()
+    {
+        try {
+
+            $data = array(
+                'NombreProduc' => $this->input->post("NombreProduc"),
+                'Precio' => $this->input->post("Precio"),
+                'Cantidad' => $this->input->post("Cantidad"),
+                'Consecutivo' =>  $this->input->post("Consecutivo"),
+                'Categoria' =>  $this->input->post("Categoria")
+            );
+   
+            if ($data['Cantidad'] == 0) {
+                $data['Cantidad'] = 1;
+            }
+
+            $total = ($data['Precio'] * $data['Cantidad']);
+
+            $DetaPedido = $this->Model_pedidos->RegistrarDetalle($data,$total);
+
+            //$this->load->view('VistasMesero/View_Productos', $data);
+
+        } catch (Exception $e) {
+            echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: RegistrarDetallePedido. Error: ' . $e->getMessage();
+        }
     }
 
     public function confirmarPedido()

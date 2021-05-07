@@ -18,26 +18,29 @@
         $idzona = $Idzona;
         $zona = $NombreZona;
         $mesa = $Mesa;
-        $num_pedido = $Consecutivo;
+        $Consecutivo = $Consecutivo;
         $mesero = $Mesero;
         $fecha_actual =  $Fecha;
 
         ?>
+
         <div class="row">
-            <div class="col-12">
-                <header>
-                    <nav class="navbar nav">
-                        <ul class="nav justify-content-end">
-                            <li class="nav-item">
-                                <h2><b>Realizar pedido</b></h2>
-                            </li>
-                        </ul>
-                    </nav>
-                </header>
-            </div>
+            <article class="col-12">
+                <nav class="navbar nav2">
+                    <ul class="nav justify-content-end" style="background-color: rgb(75, 75, 75);">
+                        <li class="nav-item">
+                            <a class="navbar-brand" href="<?php echo base_url() ?>index.php/Mesero/CargarPedido"><img src="<?php echo base_url() ?>Imagenes/FondoBlanco.png" alt="Logo Cielo Abierto" width="35" height="30"></a>
+                        </li>
+                        <li class="nav-item">
+                            <p>Seleccionar Pedido</p>
+                        </li>
+                    </ul>
+                </nav>
+            </article>
         </div>
 
         <div class="row" id="bodyProductos">
+
             <article class="col-sm-12 col-md-12 col-lg-6">
 
                 <?php if (isset($Productos)) { ?>
@@ -48,24 +51,21 @@
 
                     <?php foreach ($Categorias->result() as $raw) { ?>
 
-                        <a class="btn btn-outline-primary btn-block " id="BotonCategoriaProductos" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
-                            <label id="NombreCate"><?php echo ($raw->NombreCate); ?> ↓</label>
+                        <a class="btn btn-primary btn-block " id="BotonCategoriaProductos" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
+                            <label id="NombreCate2"><?php echo ($raw->NombreCate); ?> ↓</label>
                         </a>
 
                         <div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">
                             <div class="card card-body">
-                                <h5>Lista de <?php echo ($raw->NombreCate); ?> </h5>
                                 <div class="table-responsive">
-                                    <table class="table" id="TableCate">
+                                    <table class="table" id="TableCate" style="text-align: center;">
 
                                         <thead>
                                             <tr id="CabecerasCateProductos">
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Ingredientes</th>
+                                                <th scope="col">Producto</th>
+                                                <th scope="col">Valor</th>
                                                 <th scope="col">Cantidad</th>
-                                                <th scope="col">Precio</th>
-                                                <th scope="col">Actualizar</th>
-                                                <th scope="col">Eliminar</th>
+                                                <th scope="col">Agregar</th>
                                             </tr>
                                         </thead>
 
@@ -73,40 +73,27 @@
                                             <?php foreach ($Productos->result() as $row) {
                                                 if ($row->ID_Categoria == $raw->ID_Categoria) { ?>
                                                     <tr>
-                                                        <form action="<?php echo base_url() ?>index.php/Administrador/ModificarProducto" method="post" data-ajax="false">
+                                                        <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarDetallePedido" method="post" data-ajax="false">
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input type="text" required name="NombreProduc" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
+                                                                    <input type="text" required name="NombreProduc" readonly="readonly" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input type="text" required name="Ingredientes" value="<?php echo ($row->Ingredientes) ?>" class="form-control">
+                                                                    <input type="text" required name="Precio" readonly="readonly" value="<?php echo ($row->Precio) ?>" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input type="number" required name="Cantidad" value="<?php echo ($row->Cantidad) ?>" class="form-control">
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class=" form-group">
-                                                                    <input type="number" required name="Precio" value="<?php echo ($row->Precio) ?>" class="form-control">
+                                                                    <input type="text" name="Cantidad" minlength="1" maxlength="2" min="1" max="2" value="1" pattern=[1-20]+ title="Un valor entre 1 y 20" required pattern="" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="form-group" id="CentrarBotonEnTabla">
-                                                                    <input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
-                                                                    <button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
-                                                                </div>
-                                                            </td>
-                                                        </form>
-                                                        <!--Se hace un form hasta el boton de Modificar para tener  -->
-                                                        <form action="<?php echo base_url() ?>index.php/Administrador/EliminarProducto" method="post" data-ajax="false">
-                                                            <td>
-                                                                <div class="form-group" id="CentrarBotonEnTabla">
-                                                                    <input type="text" name="ID_Producto" value="<?php echo ($row->ID_Producto) ?>" style="display: none;">
-                                                                    <button type="submit" class="btn btn-danger center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button>
+                                                                    <input type="hidden" name="Categoria" value="<?php echo ($raw->NombreCate); ?>">
+                                                                    <input type="hidden" name="Consecutivo" value="<?php echo ($Consecutivo) ?>">
+                                                                    <button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Agregar2.png" alt=""></button>
                                                                 </div>
                                                             </td>
                                                         </form>
@@ -120,73 +107,85 @@
                                 </div>
                             </div>
                         </div>
+
                     <?php } //Fin del ciclo categorias  
                     ?>
+
                 <?php } else { ?>
                     <h5>No existen productos registrados</h5>
                     <p></p>
                 <?php } ?>
 
             </article>
+
             <article class="col-sm-12 col-md-12 col-lg-6">
                 <div id="pedido">
                     <hr>
                     <div id="tabla">
-                        <table class="table  table-hover  table-bordered">
-                            <tr>
-                                <th colspan="2">Mesero: <?php echo $mesero; ?></th>
-                                <th colspan="1">Mesa: <?php echo $mesa; ?></th>
-                                <th colspan="1">Zona: <?php echo $zona; ?></th>
-                                <th colspan="1">Pedido: <?php echo $num_pedido; ?></th>
-
-                            </tr>
-                            <tr>
-                                <th scope="row">Producto</th>
-                                <th scope="row">Precio</th>
-                                <th scope="row">Cantidad</th>
-                                <th scope="row">Total</th>
-                                <th scope="row">Eliminar</th>
-                            </tr>
-                            <?php
-                            $total = 0;
-                            if (empty($DetallePedido)) {
-                                echo "Aun no tienes ningun pedido";
-                            } else {
-                                foreach ($DetallePedido->result() as $row) {
-                            ?>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td scope="col"><?php echo ($row->producto); ?></td>
-                                        <td scope="col"><?php echo ($row->precio); ?></td>
-                                        <td scope="col"><?php echo ($row->cantidad); ?></td>
-                                        <td scope="col"><?php echo ($row->total); ?></td>
-                                        <?php $total = $total + ($row->total); ?>
-                                        <form action="<?php echo base_url() ?>index.php/mesero/eliminarPedido" method="post" data-ajax="false">
-                                            <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="id" style="display: none;">
-                                            <td scope="col"><button type="submit" class="btn btn-danger">Quitar</button></td>
-                                        </form>
+                                        <th scope="row">Mesero: <?php echo $mesero; ?></th>
+                                        <th scope="row">Mesa: <?php echo $mesa; ?></th>
+                                        <th scope="row">Zona: <?php echo $zona; ?></th>
+                                        <th scope="row">Pedido: <?php echo $Consecutivo; ?></th>
                                     </tr>
-                            <?php
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table  table-hover  table-bordered">
+                                <tr class="table-secondary">
+                                    <th scope="row">Producto</th>
+                                    <th scope="row">Precio</th>
+                                    <th scope="row">Cantidad</th>
+                                    <th scope="row">Total</th>
+                                    <th scope="row">Eliminar</th>
+                                </tr>
+                                <?php
+                                $total = 0;
+                                if (empty($DetallePedido)) { ?>
+                                    <p id="NoProduct">Este pedido aun no tiene productos registrados</p>
+                                    <?php } else {
+                                    foreach ($DetallePedido->result() as $row) {
+                                    ?>
+                                        <tr>
+                                            <td scope="col"><?php echo ($row->producto); ?></td>
+                                            <td scope="col"><?php echo ($row->precio); ?></td>
+                                            <td scope="col"><?php echo ($row->cantidad); ?></td>
+                                            <td scope="col"><?php echo ($row->total); ?></td>
+                                            <?php $total = $total + ($row->total); ?>
+                                            <form action="<?php echo base_url() ?>index.php/mesero/eliminarPedido" method="post" data-ajax="false">
+                                                <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="id" style="display: none;">
+                                                <td scope="col"><button type="submit" class="btn btn-danger">Quitar</button></td>
+                                            </form>
+                                        </tr>
+                                <?php
+                                    }
                                 }
-                            }
-                            ?>
-                        </table>
+                                ?>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
+
                 <div class="opciones">
-                    <a href="<?php echo base_url() ?>index.php/inicie_sesion/carga_mesero" class="btn btn-primary" role="button" aria-pressed="true">Nuevo</a>
-                    <a href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary" role="button" aria-pressed="true">Confirmar Pedido</a>
-                    <label><b>Total:</b></label>
-                    <input type="text" style="width:17%" value="<?php echo $total ?>" readonly="readonly">
+                    <h5> Total: <?php echo $total ?></h5>       
+                    <a href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-block" role="button" aria-pressed="true">Confirmar</a>
 
                 </div>
+
+
             </article>
+
         </div>
 
-        <div class="row">
-            <article class="col-xs-12 col-sm-12 col-md-12">
+        <div class="row" id="BotonSalir">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                 <div class="form-group">
-                    <a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn btn-secondary " role="button" aria-pressed="true">Salir</a>
-
+                    <a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn btn-danger btn-block" role="button" aria-pressed="true">Salir</a>
                 </div>
             </article>
         </div>
@@ -209,7 +208,7 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
                     <form action="<?php echo base_url() ?>index.php/mesero/confirmarPedido" method="POST" data-ajax="false">
-                        <input type="text" value="<?php echo $num_pedido ?>" name="num_pedido" style="display: none;">
+                        <input type="text" value="<?php echo $Consecutivo ?>" name="num_pedido" style="display: none;">
                         <input type="text" value="<?php echo $mesa ?>" name="mesa" style="display: none;">
                         <input type="text" value="<?php echo $idzona ?>" name="idzona" style="display: none;">
                         <button type="submit" class="btn btn-success">Confirmar</button>

@@ -59,6 +59,21 @@ class Model_pedidos extends CI_Model
     }
   }
 
+  public function RegistrarDetalle($array = null,$total){
+    try {
+      
+      //Detalle del pedido
+
+      $sql = "INSERT INTO detallepedido(num_pedido,producto,categoria,cantidad,precio,total) VALUES ('$array[Consecutivo]','$array[Mesero]',($array[Mesa]),($array[IDzona]),'$array[Fecha]')";
+
+      $query = $this->db->query($sql);
+
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    }
+
+  }
+
   public function MostrarCategorias()
   {
     try {

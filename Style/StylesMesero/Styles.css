@@ -45,3 +45,36 @@
 #BotonCategoriaProductos{
     margin-top: 10px;
 }
+
+#NombreCate2{
+    font-size: 100%;
+    font-weight: bold;
+
+}
+
+#BotonSalir{
+    margin-top: 5px;
+}
+
+.nav2{
+    background-color: rgb(75, 75, 75);
+    color: white;
+}
+
+.nav2 p{
+    font-weight: bold;
+    font-size: 160%;
+    margin: 0;
+    padding: 0;
+}
+
+
+#NoProduct{
+    color: red;
+    font-weight: bold;
+    
+}
+
+#tabla{
+    text-align: center;
+}
