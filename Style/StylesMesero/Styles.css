@@ -38,9 +38,6 @@
     margin: 3px;
 }
 
-#bodyProductos{
-    margin-top: 10px;
-}
 
 #BotonCategoriaProductos{
     margin-top: 10px;
@@ -78,3 +75,32 @@
 #tabla{
     text-align: center;
 }
+
+#ColumNombreProduc{
+    min-width: 150px;
+}
+#ColumNombrePrecio{
+    min-width: 80px;
+}
+
+#ColumNombreCantidad{
+    max-width: 50px;
+}
+
+#CabeceraPedido{
+    margin-top: 0.4em;
+}
+
+.tablecss{
+    font-size: 12px;
+    border: 1px solid rgb(177, 177, 177);
+}
+
+.tablecss th, td{
+
+    vertical-align: top;
+    border: 1px solid  rgb(177, 177, 177);
+    margin: 0;
+    border-spacing: 0;
+}
+

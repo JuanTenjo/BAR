@@ -59,14 +59,15 @@ class Model_pedidos extends CI_Model
     }
   }
 
-  public function RegistrarDetalle($array = null,$total){
+  public function RegistrarDetalle($array = null, $total = null){
     try {
       
       //Detalle del pedido
 
-      $sql = "INSERT INTO detallepedido(num_pedido,producto,categoria,cantidad,precio,total) VALUES ('$array[Consecutivo]','$array[Mesero]',($array[Mesa]),($array[IDzona]),'$array[Fecha]')";
-
+      $sql = "INSERT INTO detallepedido(num_pedido,producto,categoria,cantidad,precio,total) VALUES ('$array[Consecutivo]','$array[NombreProduc]','($array[Categoria])',($array[Cantidad]),$array[Precio],$total)";
       $query = $this->db->query($sql);
+
+      
 
     } catch (Exception $e) {
       echo $e->getMessage();
@@ -133,35 +134,62 @@ class Model_pedidos extends CI_Model
       }
   
 
-    
-
     } catch (Exception $e) {
       echo $e->getMessage();
     }
   }
 
 
-  public function registro_Detalle_Pedidos($producto = null, $precio = null, $cantidad = null, $num_factura = null, $categoria = null, $total = null)
+  public function EliminarDetallePedido($IdDetallePedido = null, $Consecutivo = null)
   {
-    $sql = "INSERT INTO detalle_pedidos(num_pedido,producto,tipo,cantidad,precio,total) VALUES ('$num_factura','$producto','$categoria','$cantidad','$precio','$total')";
+    try{
+      
+    $sql = "DELETE FROM detallepedido WHERE iddetalle_pedidos = '$IdDetallePedido' AND num_pedido='$Consecutivo';";
+
+
     $query = $this->db->query($sql);
-    redirect("" . base_url() . "index.php/mesero/recargar");
+
+    $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+
+    if($bandera){
+      return true;
+    }else{
+      return "No se pudo eliminar este producto del detalle del pedido";
+    }
+
+    }catch (Exception $e) {
+      echo $e->getMessage();
+    }
+
   }
 
-  public function MostrarPedido($num_pedido = null)
+
+    
+  public function Confirmar_Pedido($Consecutivo = null, $mesa = null,  $idzona = null)
   {
-    $query = $this->db->query("SELECT * FROM detalle_pedidos as dp where dp.num_pedido=('$num_pedido')");
-    if ($query->num_rows() > 0) {
-      return $query;
-    } else {
-      false;
+    try{
+      $bandera = FALSE;
+
+      $sql = "UPDATE pedidos SET confirmado = true WHERE num_pedido = '$Consecutivo';";
+      $query = $this->db->query($sql);
+  
+      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+  
+  
+      $query2 = $this->db->query("UPDATE mesas SET numpedido = '$Consecutivo' WHERE idzonas = '$idzona' AND nummesa = '$mesa' AND numpedido = 0;");
+  
+      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+  
+      if($bandera == false){      
+        return "Se presento un problema al confirmar el pedido";
+      }else{    
+        return true;
+      }
+
+    }catch (Exception $e) {
+      echo $e->getMessage();
     }
-  }
-  public function eliminar_pedido($id = null, $num_pedido = null)
-  {
-    $sql = "DELETE FROM detalle_pedidos WHERE iddetalle_pedidos = '$id' AND num_pedido='$num_pedido';";
-    $query = $this->db->query($sql);
-    redirect("" . base_url() . "index.php/mesero/recargar");
+
   }
 
   public function MostrarPedidos()
@@ -177,10 +205,15 @@ class Model_pedidos extends CI_Model
     $query = $this->db->query($sql);
     return $query;
   }
+
+
+
+
+
   public function Mostrarzonas()
   {
 
-    $query = $this->db->query("SELECT * FROM zonas;");
+    $query = $this->db->query("SELECT * FROM zonas WHERE Habilitada = 1;");
     return $query;
   }
 
@@ -189,22 +222,7 @@ class Model_pedidos extends CI_Model
     $query = $this->db->query("SELECT * FROM mesas;");
     return $query;
   }
-  public function Confirmar_Pedido($num_pedido = null, $mesa = null,  $idzona = null)
-  {
-    $bandera = FALSE;
-
-    $sql = "UPDATE pedidos SET confirmado = true WHERE num_pedido = '$num_pedido';";
-    $query = $this->db->query($sql);
-    $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
 
 
-    $query2 = $this->db->query("UPDATE mesas SET numpedido = '$num_pedido' WHERE idzonas = '$idzona' AND nummesa = '$mesa';");
-    $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
 
-    if ($bandera == true) {
-      redirect("" . base_url() . "index.php/inicie_sesion/carga_mesero");
-    } else {
-      redirect("" . base_url() . "index.php/inicie_sesion/carga_mesero");
-    }
-  }
 }

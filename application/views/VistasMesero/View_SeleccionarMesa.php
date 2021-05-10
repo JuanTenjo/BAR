@@ -13,6 +13,12 @@
 
   <body>
 
+  <?php
+
+    $mesero =$this->session->userdata('USUARIO');
+
+  ?>
+
     <div class="container-fluid">
       <div class="row">
         <article class="col-12">
@@ -51,6 +57,7 @@
                       <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
                       <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
                       <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
+                      <input type="hidden" name="mesero" value="<?php echo  $mesero ?>" style="display:none" />
                       <button type="submit" class="btn btn-outline-success" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Disponible</button>
                     </form>
 
@@ -61,7 +68,7 @@
                       <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
                       <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
                       <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
-                      <input type="number" name="pedido" value="<?php echo $col->numpedido ?>" style="display:none" />
+                      <input type="text" name="Consecutivo" value="<?php echo $col->numpedido ?>" style="display:none" />
                       <button type="submit" class="btn btn-outline-danger" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Ocupada</button>
                     </form>
               <?php

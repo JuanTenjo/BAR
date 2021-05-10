@@ -39,15 +39,29 @@
             </article>
         </div>
 
-        <div class="row" id="bodyProductos">
+        <div class="row" id="CabeceraPedido">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr style="text-align: center;">
+                                <th  scope="row">Mesero <?php echo $mesero; ?></th>
+                                <th scope="row">Mesa <?php echo $mesa; ?></th>
+                                <th scope="row">Zona <?php echo $zona; ?></th>
+                                <th scope="row">Pedido <?php echo $Consecutivo; ?></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
 
             <article class="col-sm-12 col-md-12 col-lg-6">
 
                 <?php if (isset($Productos)) { ?>
-
-                    <h5>Despliega los productos por categoria.</h5>
-                    <p></p>
-
+                    <hr>
 
                     <?php foreach ($Categorias->result() as $raw) { ?>
 
@@ -76,17 +90,17 @@
                                                         <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarDetallePedido" method="post" data-ajax="false">
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input type="text" required name="NombreProduc" readonly="readonly" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
+                                                                    <input id="ColumNombreProduc" type="text" required name="NombreProduc" readonly="readonly" value="<?php echo ($row->NombreProducto) ?>" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input type="text" required name="Precio" readonly="readonly" value="<?php echo ($row->Precio) ?>" class="form-control">
+                                                                    <input id="ColumNombrePrecio" type="text" required name="Precio" readonly="readonly" value="<?php echo number_format(($row->Precio),0) ?>" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input type="text" name="Cantidad" minlength="1" maxlength="2" min="1" max="2" value="1" pattern=[1-20]+ title="Un valor entre 1 y 20" required pattern="" class="form-control">
+                                                                    <input id="ColumNombreCantidad" type="text" name="Cantidad" minlength="1" maxlength="2" value="1" pattern=[1-9] title="Un valor entre 1 y 9" required pattern="" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -116,30 +130,20 @@
                     <p></p>
                 <?php } ?>
 
+
             </article>
 
             <article class="col-sm-12 col-md-12 col-lg-6">
                 <div id="pedido">
                     <hr>
                     <div id="tabla">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="row">Mesero: <?php echo $mesero; ?></th>
-                                        <th scope="row">Mesa: <?php echo $mesa; ?></th>
-                                        <th scope="row">Zona: <?php echo $zona; ?></th>
-                                        <th scope="row">Pedido: <?php echo $Consecutivo; ?></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+
                         <div class="table-responsive">
                             <table class="table  table-hover  table-bordered">
                                 <tr class="table-secondary">
                                     <th scope="row">Producto</th>
                                     <th scope="row">Precio</th>
-                                    <th scope="row">Cantidad</th>
+                                    <th scope="row">#</th>
                                     <th scope="row">Total</th>
                                     <th scope="row">Eliminar</th>
                                 </tr>
@@ -152,13 +156,14 @@
                                     ?>
                                         <tr>
                                             <td scope="col"><?php echo ($row->producto); ?></td>
-                                            <td scope="col"><?php echo ($row->precio); ?></td>
+                                            <td id="ColumNombrePrecio" scope="col"><?php echo ($row->precio); ?></td>
                                             <td scope="col"><?php echo ($row->cantidad); ?></td>
-                                            <td scope="col"><?php echo ($row->total); ?></td>
+                                            <td id="ColumNombrePrecio" scope="col"><?php echo number_format(($row->total),0); ?></td>
                                             <?php $total = $total + ($row->total); ?>
-                                            <form action="<?php echo base_url() ?>index.php/mesero/eliminarPedido" method="post" data-ajax="false">
-                                                <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="id" style="display: none;">
-                                                <td scope="col"><button type="submit" class="btn btn-danger">Quitar</button></td>
+                                            <form action="<?php echo base_url() ?>index.php/mesero/EliminarPedido" method="post" data-ajax="false">
+                                                <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="IdDetallePedido" style="display: none;">
+                                                <input type="hidden" value="<?php echo ($Consecutivo); ?>" name="Consecutivo" style="display: none;">
+                                                <td scope="col"><button type="submit" class="btn btn-danger"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button></td>
                                             </form>
                                         </tr>
                                 <?php
@@ -172,43 +177,63 @@
 
 
                 <div class="opciones">
-                    <h5> Total: <?php echo $total ?></h5>       
+                    <h5> Total: <?php 
+                         
+                    $decimales = number_format($total,2);
+
+                    echo $decimales 
+               
+                    
+                    ?></h5>
                     <a href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-block" role="button" aria-pressed="true">Confirmar</a>
-
                 </div>
 
+                <hr>
+
+                <div class="botones">
+                    <div class="table-responsive">
+                        <table class="tablecss">
+                            <thead class="">
+                                <tr style="text-align: center;">
+                                    <th scope="row">Salir</th>
+                                    <th scope="row">Rehacer</th>
+                                    <th scope="row">Copia</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center;">
+                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/factura.png" alt=""></a></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr>
 
             </article>
 
         </div>
 
-        <div class="row" id="BotonSalir">
-            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                <div class="form-group">
-                    <a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn btn-danger btn-block" role="button" aria-pressed="true">Salir</a>
-                </div>
-            </article>
-        </div>
     </div>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Control de confirmación</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Control de ejecucion</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h6> Confirmara este pedido, ¿Esta seguro? </h6>
+                    <h6> Confirmara el pedido <?php echo $Consecutivo ?> , ¿Esta seguro? </h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
-                    <form action="<?php echo base_url() ?>index.php/mesero/confirmarPedido" method="POST" data-ajax="false">
-                        <input type="text" value="<?php echo $Consecutivo ?>" name="num_pedido" style="display: none;">
+                    <form action="<?php echo base_url() ?>index.php/mesero/ConfirmarPedido" method="POST" data-ajax="false">
+                        <input type="text" value="<?php echo $Consecutivo ?>" name="Consecutivo" style="display: none;">
                         <input type="text" value="<?php echo $mesa ?>" name="mesa" style="display: none;">
                         <input type="text" value="<?php echo $idzona ?>" name="idzona" style="display: none;">
                         <button type="submit" class="btn btn-success">Confirmar</button>
