@@ -95,7 +95,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="form-group">
-                                                                    <input id="ColumNombrePrecio" type="text" required name="Precio" readonly="readonly" value="<?php echo number_format(($row->Precio),0) ?>" class="form-control">
+                                                                    <input id="ColumNombrePrecio" type="text" required name="Precio" readonly="readonly" value="<?php echo ($row->Precio) ?>" class="form-control">
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -198,15 +198,17 @@
                                     <th scope="row">Salir</th>
                                     <th scope="row">Rehacer</th>
                                     <th scope="row">Copia</th>
+									<th scope="row">Otro Pedido</th>
                                 </tr>
                             </thead>
                             <tbody style="text-align: center;">
-                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/mesero/Salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
                                 <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
-                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/factura.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
+								<td><a href="<?php echo base_url() ?>index.php/inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
                             </tbody>
                         </table>
-                    </div>
+                    </div>	
                 </div>
                 <hr>
 

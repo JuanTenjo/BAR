@@ -78,7 +78,7 @@ class Model_pedidos extends CI_Model
   public function MostrarCategorias()
   {
     try {
-      $query = $this->db->query("SELECT * FROM categorias;");
+      $query = $this->db->query("SELECT * FROM categorias order by NombreCate	asc;");
       if ($query->num_rows() > 0) {
         return $query;
       } else {
@@ -92,7 +92,7 @@ class Model_pedidos extends CI_Model
   public function MostrarProductos()
   {
     try {
-      $query = $this->db->query("SELECT * FROM producto;");
+      $query = $this->db->query("SELECT * FROM producto order by NombreProducto asc;");
       if ($query->num_rows() > 0) {
         return $query;
       } else {
@@ -213,7 +213,7 @@ class Model_pedidos extends CI_Model
   public function Mostrarzonas()
   {
 
-    $query = $this->db->query("SELECT * FROM zonas WHERE Habilitada = 1;");
+    $query = $this->db->query("SELECT * FROM zonas WHERE Habilitada = 1 order by nombre asc ;");
     return $query;
   }
 

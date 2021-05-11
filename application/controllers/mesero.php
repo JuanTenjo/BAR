@@ -173,7 +173,7 @@ class Mesero extends CI_Controller
     }
 
 
-    public function salir()
+    public function Salir()
     {
 
         $this->session->sess_destroy();
