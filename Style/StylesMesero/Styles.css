@@ -87,6 +87,9 @@
     max-width: 50px;
 }
 
+#ColumFecha{
+    min-width: 180px;
+}
 #CabeceraPedido{
     margin-top: 0.4em;
 }

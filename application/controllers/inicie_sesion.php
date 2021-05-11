@@ -14,6 +14,38 @@ class Inicie_Sesion extends CI_Controller {
 		//header
 		$this->load->view('view_iniciesesion');
 	}
+
+	public function Form(){
+
+		$this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('usuario', 'Usuario', 'required',
+				array('required' => 'Debes ingresar un  %s')
+	);
+
+		$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|min_length[8]',
+				array(
+					'required' => 'Debes ingresar una  %s.',
+					'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
+				)	
+		);
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$datos = array(
+				'sms' => null
+			); 
+			$this->load->view('View_Inicio',$datos);
+		}
+		else
+		{
+				$this->load->view('formsuccess');
+		}
+
+	}
+
 	
 	public function recarga_inicio(){
 		$this->load->view('inicio');

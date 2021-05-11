@@ -106,7 +106,7 @@ class Model_pedidos extends CI_Model
   public function MostrarCabeceraPedido($Consecutivo = null){
     try {
 
-      $sql = "SELECT p.num_pedido, p.mesero, p.mesa, p.zona, z.nombre as nombreZona, p.fecha FROM pedidos as p, zonas as z
+      $sql = "SELECT p.num_pedido, p.mesero, p.mesa, p.zona, z.nombre as nombreZona, p.fecha, p.confirmado, p.pagado FROM pedidos as p, zonas as z
       WHERE p.num_pedido = '$Consecutivo' and p.zona = z.idzonas";
 
       $query=$this->db->query($sql);
@@ -146,7 +146,6 @@ class Model_pedidos extends CI_Model
       
     $sql = "DELETE FROM detallepedido WHERE iddetalle_pedidos = '$IdDetallePedido' AND num_pedido='$Consecutivo';";
 
-
     $query = $this->db->query($sql);
 
     $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
@@ -165,13 +164,24 @@ class Model_pedidos extends CI_Model
 
 
     
-  public function Confirmar_Pedido($Consecutivo = null, $mesa = null,  $idzona = null)
+  public function Confirmar_Pedido($Consecutivo = null, $mesa = null,  $idzona = null, $fecha = null, $MeseroModi = null)
   {
     try{
       $bandera = FALSE;
 
-      $sql = "UPDATE pedidos SET confirmado = true WHERE num_pedido = '$Consecutivo';";
-      $query = $this->db->query($sql);
+      if($MeseroModi <> null){
+
+        $sql = "UPDATE pedidos SET confirmado = true, FechaModi = '$fecha', ModiPor = '$MeseroModi' WHERE num_pedido = '$Consecutivo';";
+        $query = $this->db->query($sql);
+
+      }else{
+
+        $sql = "UPDATE pedidos SET confirmado = true WHERE num_pedido = '$Consecutivo';";
+        $query = $this->db->query($sql);
+
+      }
+
+
   
       $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
   

@@ -46,22 +46,31 @@
             <img src="<?php echo base_url() ?>Imagenes/LogoSinFondo2.png" width="80%" class="rounded img-fluid" alt="...">
           </div>
 
-          <form action="<?php echo base_url() ?>index.php/Inicie_sesion/inicio" method="post" data-ajax="false">
+
+          <?php echo form_open(base_url().'index.php/Inicie_sesion/Form'); ?>
+
+            <!--<form action="<?php echo base_url() ?>index.php/Inicie_sesion/inicio" method="post" data-ajax="false"> -->
+
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" name="usuario" aria-describedby="emailHelp">
+              <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo set_value('usuario'); ?>" name="usuario" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" name="contrasena" id="exampleInputPassword1">
+              <input type="password" class="form-control" name="contrasena" value="<?php echo set_value('contrasena'); ?>" id="exampleInputPassword1">
             </div>
+            <h6 style="color: red;"><?php echo validation_errors(); ?></h6>
             <?php
             if ($sms <> null) { ?>
               <small><?php echo $sms; ?></small>
             <?php } ?>
 
             <button type="submit" id="Ingresar" class="btn btn-danger btn-lg btn-block">Ingresar</button>
+
           </form>
+
+   
+
 
           <!-- Button trigger modal -->
           <p id="Registrate">¿No tienes usuario? <a style="color: red;" role="button" data-bs-toggle="modal" data-bs-target="#RegistrateModal"> Registrate </a> </p>

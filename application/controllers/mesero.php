@@ -11,6 +11,9 @@ class Mesero extends CI_Controller
         $this->load->model('model_mostrar_productos');
     }
 
+    public function index(){
+
+    }
 
     public function RegistrarPedido()
     {
@@ -82,6 +85,8 @@ class Mesero extends CI_Controller
                         'Mesa' => $Pedido->mesa,
                         'Idzona' => $Pedido->zona,
                         'NombreZona' => $Pedido->nombreZona,
+                        'Estado' => $Pedido->confirmado,
+                        'Pagado' => $Pedido->pagado,
                         'Fecha' => $Pedido->fecha
                     );
         
@@ -128,11 +133,17 @@ class Mesero extends CI_Controller
     public function ConfirmarPedido()
     {
         try{
+
+            date_default_timezone_set('America/Bogota');
+
+            $fecha_actual = date("Y/m/d H:i:s");
+
             $num_pedido = $this->input->post("Consecutivo");
             $mesa = $this->input->post("mesa");
             $idzona = $this->input->post("idzona");
-    
-            $ConfirmarPedido = $this->Model_pedidos->Confirmar_Pedido($num_pedido, $mesa, $idzona);
+            $MeseroModi = $this->input->post("MeseroModi");
+
+            $ConfirmarPedido = $this->Model_pedidos->Confirmar_Pedido($num_pedido, $mesa, $idzona, $fecha_actual, $MeseroModi);
 
             if($ConfirmarPedido){
                 redirect("" . base_url() . "index.php/inicie_sesion/Carga_mesero");
@@ -169,6 +180,18 @@ class Mesero extends CI_Controller
         }catch (Exception $e) {
             echo 'Lo siento pero se ha presentado un error en el Controller Administrador en la funcion: EliminarPedido. Error: ' . $e->getMessage();
         }
+
+    }
+
+    public function Copias(){
+
+
+
+        $string = '<p>Here
+         is a paragraph & an entity (&#123;).</p>';
+
+        $string = xml_convert($string);
+        
 
     }
 

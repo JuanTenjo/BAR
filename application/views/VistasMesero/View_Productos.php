@@ -20,7 +20,7 @@
         $mesa = $Mesa;
         $Consecutivo = $Consecutivo;
         $mesero = $Mesero;
-        $fecha_actual =  $Fecha;
+        $FechaPedido =  $Fecha;
 
         ?>
 
@@ -42,15 +42,37 @@
         <div class="row" id="CabeceraPedido">
             <div class="col-12">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-sm  table-hover">
                         <thead class="thead-dark">
                             <tr style="text-align: center;">
-                                <th  scope="row">Mesero <?php echo $mesero; ?></th>
-                                <th scope="row">Mesa <?php echo $mesa; ?></th>
-                                <th scope="row">Zona <?php echo $zona; ?></th>
-                                <th scope="row">Pedido <?php echo $Consecutivo; ?></th>
+                                <th scope="row">Mesero</th>
+                                <th scope="row">Mesa</th>
+                                <th scope="row">Zona</th>
+                                <th scope="row">Pedido</th>
+                                <th scope="row">Estado</th>
+                                <th scope="row">Fecha</th>
                             </tr>
                         </thead>
+                        <tbody style="text-align: center;">
+                            <td><?php echo $mesero; ?></td>
+                            <td><?php echo $mesa; ?></td>
+                            <td><?php echo $zona; ?></td>
+                            <td><?php echo $Consecutivo; ?></td>
+                            <td>
+                                <?php
+                                if ($Estado == 1 And $Pagado == 0) { ?>
+                                    🟢
+                                <?php  } 
+                                elseif($Estado == 0 And $Pagado == 0) { ?>
+                                    🟡
+                                <?php }elseif ($Estado == 1 And $Pagado == 1){
+                                    echo "Pagado ";
+                                }
+                                ?>
+
+                            </td>
+                            <td id="ColumFecha"><?php echo $FechaPedido; ?></td>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -158,7 +180,7 @@
                                             <td scope="col"><?php echo ($row->producto); ?></td>
                                             <td id="ColumNombrePrecio" scope="col"><?php echo ($row->precio); ?></td>
                                             <td scope="col"><?php echo ($row->cantidad); ?></td>
-                                            <td id="ColumNombrePrecio" scope="col"><?php echo number_format(($row->total),0); ?></td>
+                                            <td id="ColumNombrePrecio" scope="col"><?php echo number_format(($row->total), 0); ?></td>
                                             <?php $total = $total + ($row->total); ?>
                                             <form action="<?php echo base_url() ?>index.php/mesero/EliminarPedido" method="post" data-ajax="false">
                                                 <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="IdDetallePedido" style="display: none;">
@@ -177,15 +199,20 @@
 
 
                 <div class="opciones">
-                    <h5> Total: <?php 
-                         
-                    $decimales = number_format($total,2);
+                    <h5> Total: <?php  echo number_format($total, 2); ?></h5>
 
-                    echo $decimales 
-               
+                    <?php if($Estado == 0 And $Pagado == 0) { ?> 
+                        <a href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-block" role="button" aria-pressed="true">Confirmar</a>
+                    <?php } ?>
                     
-                    ?></h5>
-                    <a href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-block" role="button" aria-pressed="true">Confirmar</a>
+                    <?php if($Estado == 1 And $Pagado == 0) { ?> 
+                        <a href="" data-toggle="modal" data-target="#exampleModalMofificar" class="btn btn-warning btn-block" role="button" aria-pressed="true">Modificar</a>
+                    <?php } ?>
+                    
+                    <?php if($Estado == 1 And $Pagado == 1) { ?> 
+                        <a href="#" class="btn btn-danger btn-block" role="button" aria-pressed="true">Pedido ya fue pago</a>
+                    <?php } ?>
+ 
                 </div>
 
                 <hr>
@@ -198,17 +225,17 @@
                                     <th scope="row">Salir</th>
                                     <th scope="row">Rehacer</th>
                                     <th scope="row">Copia</th>
-									<th scope="row">Otro Pedido</th>
+                                    <th scope="row">Otro Pedido</th>
                                 </tr>
                             </thead>
                             <tbody style="text-align: center;">
                                 <td><a href="<?php echo base_url() ?>index.php/mesero/Salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
                                 <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
-                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
-								<td><a href="<?php echo base_url() ?>index.php/inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/mesero/Copias" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
                             </tbody>
                         </table>
-                    </div>	
+                    </div>
                 </div>
                 <hr>
 
@@ -239,6 +266,36 @@
                         <input type="text" value="<?php echo $mesa ?>" name="mesa" style="display: none;">
                         <input type="text" value="<?php echo $idzona ?>" name="idzona" style="display: none;">
                         <button type="submit" class="btn btn-success">Confirmar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="exampleModalMofificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Control de ejecucion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6> Modificara el pedido <?php echo $Consecutivo ?> , ¿Esta seguro? </h6>
+                    <small>Se guarda el mesero y la fecha de la modificación</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+
+                    <form action="<?php echo base_url() ?>index.php/mesero/ConfirmarPedido" method="POST" data-ajax="false">
+                        <input type="text" value="<?php echo $Consecutivo ?>" name="Consecutivo" style="display: none;">
+                        <input type="text" value="<?php echo $Mesero ?>" name="MeseroModi" style="display: none;">
+                        <input type="text" value="<?php echo $mesa ?>" name="mesa" style="display: none;">
+                        <input type="text" value="<?php echo $idzona ?>" name="idzona" style="display: none;">
+                        <button type="submit" class="btn btn-warning">Modificar</button>
                     </form>
 
                 </div>
