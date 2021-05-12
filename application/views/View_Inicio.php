@@ -52,14 +52,14 @@
             <!--<form action="<?php echo base_url() ?>index.php/Inicie_sesion/inicio" method="post" data-ajax="false"> -->
 
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" value="<?php echo set_value('usuario'); ?>" name="usuario" aria-describedby="emailHelp">
+              <label for="exampleInputEmail1"  class="form-label">Usuario</label>
+              <input type="text" required minlength="4" maxlength="10" class="form-control" id="exampleInputEmail1" value="<?php echo set_value('usuario'); ?>" name="usuario" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" name="contrasena" value="<?php echo set_value('contrasena'); ?>" id="exampleInputPassword1">
+              <input type="password" required minlength="8" maxlength="10" class="form-control" name="contrasena" value="<?php echo set_value('contrasena'); ?>" id="exampleInputPassword1">
             </div>
-            <h6 style="color: red;"><?php echo validation_errors(); ?></h6>
+            <h6 style="color: white;"><?php echo validation_errors(); ?></h6>
             <?php
             if ($sms <> null) { ?>
               <small><?php echo $sms; ?></small>

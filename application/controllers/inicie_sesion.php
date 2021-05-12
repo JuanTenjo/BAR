@@ -21,16 +21,34 @@ class Inicie_Sesion extends CI_Controller {
 
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('usuario', 'Usuario', 'required',
-				array('required' => 'Debes ingresar un  %s')
+		$config = array(
+			array(
+					'field' => 'usuario',
+					'label' => 'Usuario',
+					'rules' => 'required',
+					'errors' => array(
+							'required' => 'Debes ingresar un  %s.',
+					),
+			),
+			array(
+					'field' => 'contrasena',
+					'label' => 'Contraseña',
+					'rules' => 'trim|required|min_length[8]',
+					'errors' => array(
+							'required' => 'Debes ingresar una  %s.',
+							'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
+					),
+			)
 	);
 
-		$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|min_length[8]',
-				array(
-					'required' => 'Debes ingresar una  %s.',
-					'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
-				)	
-		);
+	$this->form_validation->set_rules($config);
+
+	// 	$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|min_length[8]',
+	// 			array(
+	// 				'required' => 'Debes ingresar una  %s.',
+	// 				'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
+	// 			)	
+	// 	);
 		
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -43,6 +61,10 @@ class Inicie_Sesion extends CI_Controller {
 		{
 				$this->load->view('formsuccess');
 		}
+
+	}
+
+	public function Loggeo($str){
 
 	}
 
