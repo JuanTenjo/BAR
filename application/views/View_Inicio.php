@@ -47,7 +47,7 @@
           </div>
 
 
-          <?php echo form_open(base_url().'index.php/Inicie_sesion/Form'); ?>
+          <?php echo form_open(base_url().'index.php/Inicie_sesion/Inicio'); ?>
 
             <!--<form action="<?php echo base_url() ?>index.php/Inicie_sesion/inicio" method="post" data-ajax="false"> -->
 
@@ -89,20 +89,26 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form action="<?php echo base_url() ?>index.php/Registro/Registro" method="post" data-ajax="false">
+                  <!-- <form action="<?php echo base_url() ?>index.php/Registro/Registro" method="post" data-ajax="false"> -->
+                  <?php echo form_open(base_url().'index.php/Registro/Registro'); ?>
+                  <h6 style="color: white;"><?php echo validation_errors(); ?></h6>
                     <div class="form-group">
                       <label>Correo electrónico</label>
                       <input type="email" minlength="11" maxlength="50" name="correo" required class="form-control" placeholder="Ejemplo: juantenjo@gmail.com">
                     </div>
                     <div class="form-group">
                       <label>Usuario</label>
-                      <input type="Text" minlength="5" maxlength="50" name="user" required class="form-control" placeholder="Ejemplo: JuanTenjo">
+                      <input type="Text"  minlength="5" maxlength="15" name="user" required class="form-control" placeholder="Ejemplo: JuanTenjo">
                     </div>
                     <div class="form-group">
                       <label>Contraseña</label>
-                      <input type="password" minlength="8" maxlength="20" name="pass" required id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Ejemplo: juan423534 ">
+                      <input type="password" minlength="8" maxlength="15" name="pass" required id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Ejemplo: juan423534 ">
+                      <p></p>
+                      <label>Confirmar Contraseña</label>
+                      <input type="password" minlength="8" maxlength="15" name="passconfirm" required id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Confirmar Contraseña">
                       <small id="passwordHelpBlock" class="form-text text-muted">
-                        Su contraseña debe tener entre 8 y 20 caracteres, contener letras y números, y no debe contener espacios, caracteres especiales o emoji.
+                        Su contraseña debe tener entre 8 y 15 caracteres, contener letras y números, y no debe contener espacios, caracteres especiales o emoji.
+                        
                       </small>
                     </div>
                     <div class="form-group">
@@ -120,6 +126,9 @@
                       <label>Fecha de nacimiento</label>
                       <input type="date" name="fecha_nacimiento" name="fecha_nacimiento" max="3000-12-31" min="1900-01-01" class="form-control" required />
                     </div>
+
+             
+
                     <button type="submit" class="btn btn-danger btn-lg btn-block shadow-none p-3 mb-5rounded">Registrate</button>
                   </form>
 

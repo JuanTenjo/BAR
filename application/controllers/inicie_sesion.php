@@ -152,46 +152,92 @@ class Inicie_Sesion extends CI_Controller {
 		}
 	}
 
-	public function inicio(){
-		$usuario=$this->input->post('usuario');
-		$contrasena=$this->input->post('contrasena');
+	public function Inicio(){
 
-		$re = $this->model_inicio->inicio($usuario,$contrasena);
-		if($re->cuenta == 1){
-			$result = $this->model_inicio->con_usuario($usuario,$contrasena);
-			//echo "correcto";
-			$session = array(
-				'ID' => $result->id,
-				'USUARIO' => $result->user,
-				'CONTRASENA' => $result->pass,
-				'ROL' => $result->nombre_rol,
-				'is_logged_in' => TRUE,
-			);
-			$this->session->set_userdata($session);
-			if ($result->nombre_rol == "sinAsignar") {
+		$this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation');
+
+		//crypt ( string $str , string $salt = ? ) : string
+
+		$config = array(
+			array(
+					'field' => 'usuario',
+					'label' => 'Usuario',
+					'rules' => 'required',
+					'errors' => array(
+							'required' => 'Debes ingresar un  %s.',
+					),
+			),
+			array(
+					'field' => 'contrasena',
+					'label' => 'Contraseña',
+					'rules' => 'trim|required|min_length[8]',
+					'errors' => array(
+							'required' => 'Debes ingresar una  %s.',
+							'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
+					),
+			)
+		);
+
+		$this->form_validation->set_rules($config);
+
+		// 	$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|min_length[8]',
+		// 			array(
+		// 				'required' => 'Debes ingresar una  %s.',
+		// 				'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
+		// 			)	
+		// 	);
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$datos = array(
+					'sms' => null
+				); 
+				$this->load->view('View_Inicio',$datos);
+			}
+			else
+			{
+				$usuario=$this->input->post('usuario');
+				$contrasena=$this->input->post('contrasena');
+		
+				$re = $this->model_inicio->inicio($usuario,$contrasena);
+				if($re->cuenta == 1){
+					$result = $this->model_inicio->con_usuario($usuario,$contrasena);
+					//echo "correcto";
+					$session = array(
+						'ID' => $result->id,
+						'USUARIO' => $result->user,
+						'CONTRASENA' => $result->pass,
+						'ROL' => $result->nombre_rol,
+						'is_logged_in' => TRUE,
+					);
+					$this->session->set_userdata($session);
+					if ($result->nombre_rol == "sinAsignar") {
+							$datos = array(
+								'sms' => "No tienes asignado ningun permiso"
+							); 
+							$this->load->view('View_Inicio',$datos);
+					}
+					elseif ($result->nombre_rol == "admin") {
+						if ($this->session->userdata('is_logged_in')) {
+							redirect("".base_url()."index.php/inicie_sesion/Carga_admin");
+						}
+					}elseif ($result->nombre_rol == "mesero") {
+						if ($this->session->userdata('is_logged_in')) {
+							redirect("".base_url()."index.php/inicie_sesion/Carga_mesero");
+						}
+					}elseif ($result->nombre_rol == "facturador") {
+						if ($this->session->userdata('is_logged_in')) {
+							redirect("".base_url()."index.php/inicie_sesion/Carga_facturador");
+						}
+					}
+				}else{
 					$datos = array(
-						'sms' => "No tienes asignado ningun permiso"
+						'sms' => "Contrasena o usuario incorrecto."
 					); 
 					$this->load->view('View_Inicio',$datos);
-			}
-			elseif ($result->nombre_rol == "admin") {
-				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/Carga_admin");
-				}
-			}elseif ($result->nombre_rol == "mesero") {
-				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/Carga_mesero");
-				}
-			}elseif ($result->nombre_rol == "facturador") {
-				if ($this->session->userdata('is_logged_in')) {
-					redirect("".base_url()."index.php/inicie_sesion/Carga_facturador");
 				}
 			}
-		}else{
-			$datos = array(
-				'sms' => "Contrasena o usuario incorrecto."
-			); 
-			$this->load->view('View_Inicio',$datos);
-		}
 	}
 }
