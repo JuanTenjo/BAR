@@ -1,0 +1,61 @@
+* {
+	font-family: "Oswal", sans-serif;
+}
+
+.nav {
+	background-color: 'red';
+}
+
+.pedidos tr {
+	text-align: center;
+}
+
+.pedidos input {
+	width: 40%;
+}
+
+.operaciones {
+	background-color: #A2ADB8;
+	padding: 12px;
+	text-align: center;
+}
+
+.operaciones input {
+	width: 100%;
+}
+
+.correcto {
+	background-color: #79B849;
+	color: white;
+}
+
+.incorrecto {
+	background-color: #D82B2B;
+	color: white;
+}
+
+.tablaDetalle td {
+	height: 20px;
+}
+
+.nav{
+	padding: 10px;
+}
+.menu a {
+	background-color: transparent;
+	text-align: center;  
+	padding: 10px; 
+	color: black;
+	text-decoration:none;
+	border-radius: 8px;
+}
+.menu a:hover {
+	background-color:royalblue;
+	color: white;
+	text-decoration:none;
+}
+.menu .salir:hover {
+	background-color:#D82B2B;
+	color: white;
+	text-decoration:none;
+}

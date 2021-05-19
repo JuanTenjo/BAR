@@ -39,7 +39,6 @@
         <article class="col-12" id="ZonasMesas">
           <?php
 
-          $pedido = rand(1, 9999);
           foreach ($zonas->result() as $row) {
 
           ?>

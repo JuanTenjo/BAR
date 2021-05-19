@@ -6,15 +6,28 @@ class  Model_Inicio extends CI_Model {
   function __construct(){
     parent::__construct();
   }
-  public function inicio($usuario = null, $contrasena=null){
-    $sql = "SELECT COUNT(*) cuenta FROM usuario WHERE USER='$usuario' AND PASS='$contrasena';";
+  public function Inicio($usuario = null, $contrasena=null){
+
+
+    $sql = "SELECT * FROM usuario WHERE USER='$usuario' or correo = '$usuario';";
     $query=$this->db->query($sql);
-    return $query->row();
+
+		$result =  $query->row();
+
+		$hash = $result->pass;
+
+		if (password_verify($contrasena , $hash)){
+		    return 1;
+		}else{
+			return 0;
+		}
+
+
   }
-  public function con_usuario($usuario = null, $contrasena=null){
+  public function con_usuario($usuario = null){
     $sql = "SELECT u.id, u.user,u.pass, r.nombre_rol FROM usuario u, roles r
     WHERE u.id_rol = r.id_rol
-    AND USER='$usuario' AND PASS='$contrasena';";
+    AND USER='$usuario';";
     $query=$this->db->query($sql);
     return $query->row();
   }

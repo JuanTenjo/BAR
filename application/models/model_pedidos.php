@@ -181,11 +181,8 @@ class Model_pedidos extends CI_Model
 
       }
 
-
-  
       $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-  
-  
+
       $query2 = $this->db->query("UPDATE mesas SET numpedido = '$Consecutivo' WHERE idzonas = '$idzona' AND nummesa = '$mesa' AND numpedido = 0;");
   
       $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
@@ -199,7 +196,6 @@ class Model_pedidos extends CI_Model
     }catch (Exception $e) {
       echo $e->getMessage();
     }
-
   }
 
   public function MostrarPedidos()
@@ -207,11 +203,12 @@ class Model_pedidos extends CI_Model
     $query = $this->db->query("SELECT * FROM pedidos_confirmados;");
     return $query;
   }
+
   public function MostrarPedidosAFacturar()
   {
     date_default_timezone_set('America/Bogota');
-    $fecha_actual = Date("Y/m/d");
-    $sql = "SELECT * FROM pedidos as p  WHERE p.fecha = '$fecha_actual' and p.confirmado = 1 and pagado = 0";
+    $fecha_actual = Date("Y-m-d");
+    $sql = "SELECT * FROM pedidos as p  WHERE p.fecha BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59'	and p.confirmado = 1 and pagado = 0 order by p.fecha asc ";
     $query = $this->db->query($sql);
     return $query;
   }

@@ -230,8 +230,8 @@
                             </thead>
                             <tbody style="text-align: center;">
                                 <td><a href="<?php echo base_url() ?>index.php/mesero/Salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
-                                <td><a href="<?php echo base_url() ?>index.php/mesero/salir" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
-                                <td><a href="<?php echo base_url() ?>index.php/mesero/Copias" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
+                                <td><a href="#" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
+                                <td><a href="#" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
                                 <td><a href="<?php echo base_url() ?>index.php/inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
                             </tbody>
                         </table>

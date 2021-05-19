@@ -15,65 +15,13 @@ class Inicie_Sesion extends CI_Controller {
 		$this->load->view('view_iniciesesion');
 	}
 
-	public function Form(){
 
-		$this->load->helper(array('form', 'url'));
-
-		$this->load->library('form_validation');
-
-		$config = array(
-			array(
-					'field' => 'usuario',
-					'label' => 'Usuario',
-					'rules' => 'required',
-					'errors' => array(
-							'required' => 'Debes ingresar un  %s.',
-					),
-			),
-			array(
-					'field' => 'contrasena',
-					'label' => 'Contraseña',
-					'rules' => 'trim|required|min_length[8]',
-					'errors' => array(
-							'required' => 'Debes ingresar una  %s.',
-							'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
-					),
-			)
-	);
-
-	$this->form_validation->set_rules($config);
-
-	// 	$this->form_validation->set_rules('contrasena', 'Contraseña', 'trim|required|min_length[8]',
-	// 			array(
-	// 				'required' => 'Debes ingresar una  %s.',
-	// 				'min_length' => 'Debes ingresar minimo 8 caracteres en la %s',
-	// 			)	
-	// 	);
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-			$datos = array(
-				'sms' => null
-			); 
-			$this->load->view('View_Inicio',$datos);
-		}
-		else
-		{
-				$this->load->view('formsuccess');
-		}
-
-	}
-
-	public function Loggeo($str){
-
-	}
-
-	
 	public function recarga_inicio(){
 		$this->load->view('inicio');
 	}
 	public function modificar()
 	{
+			
 		$id=$this->input->post('id');
 		$act = $this->model_inicio->modificar($id);
 			$datos = array(
@@ -88,6 +36,8 @@ class Inicie_Sesion extends CI_Controller {
 			);
 		$this->load->view('view_editar_registro',$datos);
 	}
+
+
 	public function modificar_registro(){
 		$id = $this->input->post("id");
 		$usuario = $this->input->post("usuario");
@@ -116,25 +66,26 @@ class Inicie_Sesion extends CI_Controller {
 		if ($this->session->userdata('is_logged_in')) {
 			$datos = array(
 				'zonas' => $this->model_pedidos->Mostrarzonas(),
-				'mesas' => $this->model_pedidos->Mostrarmesas(),
-				'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar()
+				'mesas' => $this->model_pedidos->Mostrarmesas()
 			);
 			$this->load->view('VistasMesero/View_SeleccionarMesa',$datos);
 		}else{	
 			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
+
 	public function Carga_facturador()
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$data = array(
 				'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar()
 			);
-			$this->load->view('view_facturador',$data);
+			$this->load->view('VistasFacturador/View_facturador',$data);
 		}else{	
 			echo "Sesion Caducada por favor ingrese nuevamente";
 		}
 	}
+
 	public function olvidar_contra()
 	{
 		$this->load->view('view_olvidar');
@@ -201,9 +152,10 @@ class Inicie_Sesion extends CI_Controller {
 				$usuario=$this->input->post('usuario');
 				$contrasena=$this->input->post('contrasena');
 		
-				$re = $this->model_inicio->inicio($usuario,$contrasena);
-				if($re->cuenta == 1){
-					$result = $this->model_inicio->con_usuario($usuario,$contrasena);
+				$re = $this->model_inicio->Inicio($usuario,$contrasena);
+
+				if($re == 1){
+					$result = $this->model_inicio->con_usuario($usuario);
 					//echo "correcto";
 					$session = array(
 						'ID' => $result->id,
