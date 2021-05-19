@@ -9,7 +9,9 @@ class  Model_facturas extends CI_Model {
   
 
   public function Mostrar_Detalle($num_pedido = null){
-      $sql = "SELECT * FROM detalle_pedidos WHERE num_pedido = '$num_pedido'";
+      $sql = "SELECT detallepedido.*, pedidos.mesa, pedidos.zona 
+      FROM detallepedido LEFT JOIN pedidos ON detallepedido.num_pedido = pedidos.num_pedido
+      WHERE detallepedido.num_pedido = '$num_pedido'";
       $query = $this->db->query($sql);
       if ($query->num_rows() > 0) {
         return $query;
@@ -18,7 +20,7 @@ class  Model_facturas extends CI_Model {
       }
   }
 
-  public function facturar($num_pedido){
+  public function Facturar($num_pedido){
   
     $this->db->query("UPDATE pedidos SET pagado = 1 WHERE num_pedido = '$num_pedido'");
 

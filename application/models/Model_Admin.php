@@ -53,9 +53,10 @@ class Model_Admin extends CI_Model{
 
 		$sql = "UPDATE usuario SET id_rol = ($array[ID_Rol]) ,user = ('$array[usuario]'),correo = ('$array[Email]'),genero = ('$array[Genero]'),fecha_nacimiento = ('$array[FechaNacimiento]') WHERE id = ($array[ID_Usuario])";
 
-		$query = $this->db->query($sql);
+    echo $sql;
+		// $query = $this->db->query($sql);
 
-		redirect("".base_url()."index.php/Administrador/Usuarios");
+		// redirect("".base_url()."index.php/Administrador/Usuarios");
 		
 	}
 

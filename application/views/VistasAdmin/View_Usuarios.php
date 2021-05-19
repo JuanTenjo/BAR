@@ -36,7 +36,7 @@
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Mesas" tabindex="-1" aria-disabled="true">Zonas y mesas</a>
 								</li>
-                                <li class="nav-item">
+								<li class="nav-item">
 									<a class="nav-link active" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
 								</li>
 								<li class="nav-item">
@@ -55,69 +55,73 @@
 		<div class="row">
 			<h5>Cree un usuario</h5>
 			<div class="table-responsive">
-				<form action="<?php echo base_url() ?>index.php/Administrador/RegistrarUsuario" method="post">
-					<table class="table table-hover">
-						<thead class="table-dark head">
-							<tr>
-                                <th scope="col">Rol</th>
-								<th scope="col">Usuario</th>
-								<th scope="col">Contraseña</th>
-								<th scope="col">Correo</th>
-                                <th scope="col">Genero</th>
-                                <th scope="col">FechaNacimiento</th>
-                                <th scope="col">Guardar</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<div class="form-group">
-                                        <select required name="ID_Rol" class="form-control" id="exampleFormControlSelect1">
-                                            <option value="1" disabled selected>Rol</option>
-                                            <?php foreach ($Roles->result() as $row) { ?>
-                                                <option value="<?php echo ($row->id_rol); ?>"><?php echo ($row->nombre_rol); ?></option>
-                                            <?php } ?>
-                                        </select>
-									</div>
-								</td>
-                                <td>
-									<div class="form-group">
-										<input type="text" required class="form-control" name="usuario" placeholder="Usuario">
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input type="password" pattern=".{5,}" required class="form-control" name="password" placeholder="Contraseña">
-                                        <small>Debera contener minimo 5 carácteres</small>
-									</div>
-								</td>
-                                <td>
-									<div class="form-group">
-										<input type="Email" required class="form-control" name="Email" placeholder="Correo electronico">
-									</div>
-								</td>
-                                <td>
-									<div class="form-group">
-                                        <select required name="Genero" class="form-control" id="exampleFormControlSelect1">
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Otro">Otro</option>
-                                        </select>
-									</div>
-								</td>
-                                <td>
-									<div class="form-group">
-										<input class="form-control" required type="date" name="FechaNacimiento" id="example-date-input">
-									</div>
-								</td>
-								<td>
-									<div class="form-group" id="CentrarBotonEnTabla">
-										<button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Guardar.png" alt=""></button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				<!--	<form action="<?php echo base_url() ?>index.php/Administrador/RegistrarUsuario" method="post"> -->
+				<?php echo form_open(base_url() . 'index.php/Administrador/RegistrarUsuario'); ?>
+
+				<h6 style="color: red;"><?php echo validation_errors(); ?></h6>
+
+				<table class="table table-hover">
+					<thead class="table-dark head">
+						<tr>
+							<th scope="col">Rol</th>
+							<th scope="col">Usuario</th>
+							<th scope="col">Contraseña</th>
+							<th scope="col">Correo</th>
+							<th scope="col">Genero</th>
+							<th scope="col">FechaNacimiento</th>
+							<th scope="col">Guardar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="form-group">
+									<select required name="ID_Rol" class="form-control">
+										<option value="1" disabled selected>Rol</option>
+										<?php foreach ($Roles->result() as $row) { ?>
+											<option value="<?php echo ($row->id_rol); ?>"><?php echo ($row->nombre_rol); ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" value="<?php echo set_value('usuario'); ?>" required class="form-control" name="usuario" placeholder="Usuario">
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="password" value="<?php echo set_value('password'); ?>" required class="form-control" name="password" placeholder="Contraseña">
+									<small>Debera contener minimo 8 carácteres</small>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="Email" value="<?php echo set_value('Email'); ?>" required class="form-control" name="Email" placeholder="Correo electronico">
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<select required name="Genero" value="<?php echo set_value('Genero'); ?>" class="form-control">
+										<option value="Masculino">Masculino</option>
+										<option value="Femenino">Femenino</option>
+										<option value="Otro">Otro</option>
+									</select>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input class="form-control" value="<?php echo set_value('FechaNacimiento'); ?>" required type="date" name="FechaNacimiento" id="example-date-input">
+								</div>
+							</td>
+							<td>
+								<div class="form-group" id="CentrarBotonEnTabla">
+									<button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Guardar.png" alt=""></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				</form>
 			</div>
 		</div>
@@ -130,67 +134,69 @@
 				<h5>Lista de Usuarios</h5>
 
 				<div class="table-responsive">
-					<form action="#" method="post">
-						<table class="table">
-							<thead class="head">
-								<tr>
-                                <th scope="col">Rol</th>
+					<table class="table">
+						<thead class="head">
+							<tr>
+								<th scope="col">Rol</th>
 								<th scope="col">Usuario</th>
 								<th scope="col">Correo</th>
-                                <th scope="col">Genero</th>
-                                <th scope="col">FechaNacimiento</th>
-                                <th scope="col">Modificar</th>
-                                <th scope="col">Eliminar</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-								foreach ($Usuarios->result() as $row) {
-								?>
+								<th scope="col">Genero</th>
+								<th scope="col">FechaNacimiento</th>
+								<th scope="col">Modificar</th>
+								<th scope="col">Eliminar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							foreach ($Usuarios->result() as $row) {
+							?>
 
-									<form action="<?php echo base_url() ?>index.php/Administrador/ActualizarUsuario" method="post" data-ajax="false">
-										<tr>
-											<th scope="row">
-												<div class="form-group">
-                                                    <select name="ID_Rol" class="form-control" required>
-                                                        <option value="<?php echo ($row->id_rol); ?>" selected ><?php echo ($row->nombre_rol); ?></option>
-                                                        <?php foreach ($Roles->result() as $rew) { ?>
-                                                            <option value="<?php echo ($rew->id_rol); ?>"><?php echo ($rew->nombre_rol); ?></option>
-                                                        <?php } ?>
-													</select>
-												</div>
-											</th>
-											<td>
-												<div class="form-group">
-													<input type="text" name="usuario" value="<?php echo ($row->user) ?>" class="form-control">
-												</div>
-											</td>
-                                            <td>
-												<div class="form-group">
-													<input type="text" name="Email" value="<?php echo ($row->correo) ?>" class="form-control">
-												</div>
-											</td>
-                                            <td>
-												<div class="form-group">
-                                                <select required name="Genero" class="form-control" id="exampleFormControlSelect1">
-                                                    <option value="<?php echo ($row->genero) ?>" selected><?php echo ($row->genero) ?></option>
-                                                    <option value="Masculino">Masculino</option>
-                                                    <option value="Femenino">Femenino</option>
-                                                    <option value="Otro">Otro</option>
-                                                </select>
-												</div>
-											</td>
-                                            <td>
-												<div class="form-group">
-												    <input class="form-control" name="FechaNacimiento" type="date" value="<?php echo ($row->FechaNacimiento) ?>" id="example-date-input">
-												</div>
-											</td>                                        
-											<td>
-												<div class="form-group" id="CentrarBotonEnTabla">
-													<input type="text" name="ID_Usuario" value="<?php echo ($row->IdUsuario) ?>" style="display: none;">
-													<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
-												</div>
-											</td>
+								<!-- <form action="<?php echo base_url() ?>index.php/Administrador/ActualizarUsuario" method="post" data-ajax="false"> -->
+
+								<?php echo form_open(base_url() . 'index.php/Administrador/ActualizarUsuario'); ?>
+
+								<tr>
+									<th scope="row">
+										<div class="form-group">
+											<select name="ID_RolAct" class="form-control" required>
+												<option value="<?php echo ($row->id_rol); ?>" selected><?php echo ($row->nombre_rol); ?></option>
+												<?php foreach ($Roles->result() as $rew) { ?>
+													<option value="<?php echo ($rew->id_rol); ?>"><?php echo ($rew->nombre_rol); ?></option>
+												<?php } ?>
+											</select>
+										</div>
+									</th>
+									<td>
+										<div class="form-group">
+											<input type="text" readonly name="usuarioAct" value="<?php echo ($row->user) ?>" class="form-control">
+										</div>
+									</td>
+									<td>
+										<div class="form-group">
+											<input type="text" readonly name="EmailAct" value="<?php echo ($row->correo) ?>" class="form-control">
+										</div>
+									</td>
+									<td>
+										<div class="form-group">
+											<select required name="GeneroAct" class="form-control">
+												<option value="<?php echo ($row->genero) ?>" selected><?php echo ($row->genero) ?></option>
+												<option value="Masculino">Masculino</option>
+												<option value="Femenino">Femenino</option>
+												<option value="Otro">Otro</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<div class="form-group">
+											<input class="form-control" name="FechaNacimientoAct" type="date" value="<?php echo ($row->FechaNacimiento) ?>">
+										</div>
+									</td>
+									<td>
+										<div class="form-group" id="CentrarBotonEnTabla">
+											<input type="text" name="ID_Usuario" value="<?php echo ($row->IdUsuario) ?>" style="display: none;">
+											<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
+										</div>
+									</td>
 									</form>
 									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarUsuario" method="post" data-ajax="false">
 										<td>
@@ -200,10 +206,12 @@
 											</div>
 										</td>
 									</form>
-									</tr>
-								<?php } ?>
-							</tbody>
-						</table>
+								
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+					
 					</form>
 				</div>
 			<?php } else { ?>

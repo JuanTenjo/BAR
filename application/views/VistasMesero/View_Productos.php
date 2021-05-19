@@ -182,7 +182,7 @@
                                             <td scope="col"><?php echo ($row->cantidad); ?></td>
                                             <td id="ColumNombrePrecio" scope="col"><?php echo number_format(($row->total), 0); ?></td>
                                             <?php $total = $total + ($row->total); ?>
-                                            <form action="<?php echo base_url() ?>index.php/mesero/EliminarPedido" method="post" data-ajax="false">
+                                            <form action="<?php echo base_url() ?>index.php/Mesero/EliminarPedido" method="post" data-ajax="false">
                                                 <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="IdDetallePedido" style="display: none;">
                                                 <input type="hidden" value="<?php echo ($Consecutivo); ?>" name="Consecutivo" style="display: none;">
                                                 <td scope="col"><button type="submit" class="btn btn-danger"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button></td>
@@ -229,10 +229,10 @@
                                 </tr>
                             </thead>
                             <tbody style="text-align: center;">
-                                <td><a href="<?php echo base_url() ?>index.php/mesero/Salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/Mesero/Salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
                                 <td><a href="#" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
                                 <td><a href="#" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
-                                <td><a href="<?php echo base_url() ?>index.php/inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
+                                <td><a href="<?php echo base_url() ?>index.php/Inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
                             </tbody>
                         </table>
                     </div>
@@ -261,7 +261,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
-                    <form action="<?php echo base_url() ?>index.php/mesero/ConfirmarPedido" method="POST" data-ajax="false">
+                    <form action="<?php echo base_url() ?>index.php/Mesero/ConfirmarPedido" method="POST" data-ajax="false">
                         <input type="text" value="<?php echo $Consecutivo ?>" name="Consecutivo" style="display: none;">
                         <input type="text" value="<?php echo $mesa ?>" name="mesa" style="display: none;">
                         <input type="text" value="<?php echo $idzona ?>" name="idzona" style="display: none;">
@@ -290,7 +290,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
-                    <form action="<?php echo base_url() ?>index.php/mesero/ConfirmarPedido" method="POST" data-ajax="false">
+                    <form action="<?php echo base_url() ?>index.php/Mesero/ConfirmarPedido" method="POST" data-ajax="false">
                         <input type="text" value="<?php echo $Consecutivo ?>" name="Consecutivo" style="display: none;">
                         <input type="text" value="<?php echo $Mesero ?>" name="MeseroModi" style="display: none;">
                         <input type="text" value="<?php echo $mesa ?>" name="mesa" style="display: none;">

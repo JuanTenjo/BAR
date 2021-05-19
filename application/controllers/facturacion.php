@@ -4,40 +4,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Facturacion extends CI_Controller {
     function __construct(){
         parent::__construct();
-        $this->load->model('model_facturas');
-        $this->load->model('model_pedidos');
-    }
-	public function index()
-	{
-		$this->load->view('welcome_message');
+        $this->load->model('Model_facturas');
+        $this->load->model('Model_pedidos');
     }
 
-    public function MostrarVistaFacturador(){
+
+    public function Facturador(){
+
         $datos = array(
-            'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar(),
+            'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar(),
         );
-        $this->load->view('view_facturador',$datos);
-    }
+        $this->load->view('VistasFacturador/View_facturador',$datos);
 
-    public function facturar(){
-        $num_pedido = $this->input->post('num_pedido');
-        $bandera = 0;
-        $facturar = $this->model_facturas->facturar($num_pedido);
-        $bandera = 1;
-/*if ($bandera == 1){
-            $result = $this->model_facturas->MostrarDatosFacturaRealizada($num_pedido);
-            $datos = array(
-                'num_pedido' => $result->num_pedido,
-                'mesero' => $result->mesero,
-                'mesa' => $result->mesa,
-                'zona' => $result->zona,
-                'fecha' => $result->fecha,
-                'detallePedidos' => $this->model_facturas->MostrarDatosFacturaRealizada($num_pedido),       
-            );
-            $this->load->view('impresion',$datos);
-        }*/
+    }
+    
+    public function Pendientes(){
+
+        $data = array(
+            'pendientes' => $this->Model_facturas->MostrarPedidosPendiente(),
+        );
+        $this->load->view('VistasFacturador/View_historial', $data);
+
+    }
 
         
+    public function Historial(){
+        $data = array(
+            'pedidos' => $this->Model_facturas->MostrarHistorialDePedidos(),
+        );
+        $this->load->view('VistasFacturador/View_pendientes', $data);
+    }
+
+    
+    public function MostrarDetalle(){
+        $num_pedido = $this->input->post('num_pedido');
+        $datos = array(
+            'detallePedidos' => $this->Model_facturas->Mostrar_Detalle($num_pedido),
+            'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar(),
+        );
+        $this->load->view('VistasFacturador/View_facturador',$datos);
+    }
+
+
+
+
+
+    public function facturar(){
+
+        $num_pedido = $this->input->post('num_pedido');
+        $bandera = 0;
+        $facturar = $this->Model_facturas->Facturar($num_pedido);
+        $bandera = 1;
 
         redirect("".base_url()."index.php/facturacion/MostrarDetalle");
 
@@ -49,14 +66,6 @@ class Facturacion extends CI_Controller {
         redirect("".base_url()."index.php/facturacion/MostrarDetallePedidosPendientes");
     }
 
-    public function MostrarDetalle(){
-        $num_pedido = $this->input->post('num_pedido');
-        $datos = array(
-            'detallePedidos' => $this->model_facturas->Mostrar_Detalle($num_pedido),
-            'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar(),
-        );
-        $this->load->view('view_facturador',$datos);
-    }
     
     public function MostrarDetallePedidosPendientes(){
         $num_pedido = $this->input->post('num_pedido');
@@ -76,20 +85,7 @@ class Facturacion extends CI_Controller {
         $this->load->view('view_historial',$datos);
     }
     
-    
-    public function historial(){
-        $data = array(
-            'pedidos' => $this->model_facturas->MostrarHistorialDePedidos(),
-        );
-        $this->load->view('view_historial', $data);
-    }
 
-    public function pendientes(){
-        $data = array(
-            'pendientes' => $this->model_facturas->MostrarPedidosPendiente(),
-        );
-        $this->load->view('view_pendientes', $data);
-    }
 
     public function Filtros(){
 
@@ -125,6 +121,12 @@ class Facturacion extends CI_Controller {
 
 
     public function Salir(){
-        $this->load->view('view_iniciesesion');
+
+        $this->session->sess_destroy();
+        $datos = array(
+            'sms' => null
+        );
+        $this->load->view('View_Inicio', $datos);
+
     }
 }

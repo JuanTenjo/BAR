@@ -5,8 +5,6 @@ class Administrador extends CI_Controller {
 
     function __construct(){
         parent::__construct();
-        $this->load->model('model_registro');
-        $this->load->model('model_mostrar_productos');
 		$this->load->model('Model_Admin');
     }
 
@@ -69,17 +67,96 @@ class Administrador extends CI_Controller {
 
 	public function RegistrarUsuario(){
 		try{
-			
-			$array = [
-				'ID_Rol' => $this->input->post('ID_Rol'),
-				'usuario' => $this->input->post('usuario'),
-				'password' => $this->input->post('password'),
-				'Email' => $this->input->post('Email'),
-				'Genero' => $this->input->post('Genero'),
-				'FechaNacimiento' => $this->input->post('FechaNacimiento')
-			];
 
-			$re = $this->Model_Admin->RegistraUsuario($array);
+			$this->load->helper(array('form', 'url'));
+
+			$this->load->library('form_validation');
+	
+			$config = array(
+				array(
+					'field' => 'usuario',
+					'label' => 'Usuario',
+					'rules' => 'required|min_length[5]|max_length[15]|is_unique[usuario.user]',
+					'errors' => array(
+						'required' => 'Debes ingresar un  %s.',
+						'min_length' => 'Debes ingresar minimo 5 caracteres en el %s',
+						'is_unique' => 'El usuario que ingresaste no esta disponible',
+					),
+				),
+				array(
+					'field' => 'Email',
+					'label' => 'Correo electronico',
+					'rules' => 'required|valid_email|is_unique[usuario.correo]',
+					'errors' => array(
+						'required' => 'Debes ingresar una  %s.',
+						'valid_email' => 'Debes ingresar un %s valido.',
+						'is_unique' => 'El correo %s ya se encuentra registrado',
+					),
+				),
+				array(
+					'field' => 'password',
+					'label' => 'Contraseña',
+					'rules' => 'required|min_length[8]|max_length[15]',
+					'errors' => array(
+						'required' => 'Debes ingresar una  %s.',
+						'min_length' => 'Debes ingresar minimo 8 caracteres en la %s.',
+					),
+				),
+				array(
+					'field' => 'Genero',
+					'label' => 'Genero',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar un %s.',
+					),
+				),
+				array(
+					'field' => 'FechaNacimiento',
+					'label' => 'Fecha de nacimiento',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar una %s.',
+					),
+				),
+				array(
+					'field' => 'ID_Rol',
+					'label' => 'ID ROL',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar una %s.',
+					),
+				)
+			);
+
+			$this->form_validation->set_rules($config);
+
+			if ($this->form_validation->run() == FALSE) {
+
+				$data = array(
+					'Usuarios' => $this->Model_Admin->MostrarUsuario(),
+					'Roles' => $this->Model_Admin->MostrarRoles()
+				);	
+				$this->load->view('VistasAdmin/View_Usuarios',$data);
+
+			} else {
+
+				$pass = $this->input->post('password');
+	
+				$hash =  password_hash($pass , PASSWORD_DEFAULT);
+	
+				$array = [
+					'ID_Rol' => $this->input->post('ID_Rol'),
+					'usuario' => $this->input->post('usuario'),
+					'password' => $hash,
+					'Email' => $this->input->post('Email'),
+					'Genero' => $this->input->post('Genero'),
+					'FechaNacimiento' => $this->input->post('FechaNacimiento')
+				];
+	
+				$re = $this->Model_Admin->RegistraUsuario($array);
+
+			}
+
 
 		}catch(Exception $e){
 
@@ -90,17 +167,87 @@ class Administrador extends CI_Controller {
 	}
 	public function ActualizarUsuario(){
 		try{
-			
-			$array = [
-				'ID_Usuario' => $this->input->post('ID_Usuario'),
-				'ID_Rol' => $this->input->post('ID_Rol'),
-				'usuario' => $this->input->post('usuario'),
-				'Email' => $this->input->post('Email'),
-				'Genero' => $this->input->post('Genero'),
-				'FechaNacimiento' => $this->input->post('FechaNacimiento')
-			];
+			$this->load->helper(array('form', 'url'));
 
-			$re = $this->Model_Admin->ActualizarUsuario($array);
+			$this->load->library('form_validation');
+	
+			$config = array(
+				array(
+					'field' => 'usuarioAct',
+					'label' => 'Usuario',
+					'rules' => 'required|min_length[5]|max_length[15]',
+					'errors' => array(
+						'required' => 'Debes ingresar un  %s.',
+						'min_length' => 'Debes ingresar minimo 5 caracteres en el %s'			
+					),
+				),
+				array(
+					'field' => 'EmailAct',
+					'label' => 'Correo electronico',
+					'rules' => 'required|valid_email',
+					'errors' => array(
+						'required' => 'Debes ingresar una  %s.',
+						'valid_email' => 'Debes ingresar un %s valido.'
+					),
+				),
+				array(
+					'field' => 'GeneroAct',
+					'label' => 'Genero',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar un %s.',
+					),
+				),
+				array(
+					'field' => 'FechaNacimientoAct',
+					'label' => 'Fecha de nacimiento',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar una %s.',
+					),
+				),
+				array(
+					'field' => 'ID_RolAct',
+					'label' => 'ID ROL',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar una %s.',
+					),
+				),
+				array(
+					'field' => 'ID_Usuario',
+					'label' => 'ID usuario',
+					'rules' => 'required',
+					'errors' => array(
+						'required' => 'Debes ingresar una %s.',
+					),
+				)
+			);
+
+			$this->form_validation->set_rules($config);
+
+			if ($this->form_validation->run() == FALSE) {
+
+				$data = array(
+					'Usuarios' => $this->Model_Admin->MostrarUsuario(),
+					'Roles' => $this->Model_Admin->MostrarRoles()
+				);	
+				$this->load->view('VistasAdmin/View_Usuarios',$data);
+
+			} else {
+				$array = [
+					'ID_Usuario' => $this->input->post('ID_Usuario'),
+					'ID_Rol' => $this->input->post('ID_RolAct'),
+					'usuario' => $this->input->post('usuarioAct'),
+					'Email' => $this->input->post('EmailAct'),
+					'Genero' => $this->input->post('GeneroAct'),
+					'FechaNacimiento' => $this->input->post('FechaNacimientoAct')
+				];
+				
+				$re = $this->Model_Admin->ActualizarUsuario($array);
+
+			}
+
 
 		}catch(Exception $e){
 

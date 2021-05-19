@@ -86,7 +86,7 @@
 
       <div class="row">
         <article class="col-12">
-          <a role="button" class="btn btn-danger btn-block" href="<?php echo base_url() ?>index.php/mesero/salir">Cerrar Sesión</a>
+          <a role="button" class="btn btn-danger btn-block" href="<?php echo base_url() ?>index.php/Mesero/Salir">Cerrar Sesión</a>
         </article>
       </div>
 

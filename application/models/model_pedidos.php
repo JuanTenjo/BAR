@@ -64,7 +64,7 @@ class Model_pedidos extends CI_Model
       
       //Detalle del pedido
 
-      $sql = "INSERT INTO detallepedido(num_pedido,producto,categoria,cantidad,precio,total) VALUES ('$array[Consecutivo]','$array[NombreProduc]','($array[Categoria])',($array[Cantidad]),$array[Precio],$total)";
+      $sql = "INSERT INTO detallepedido(num_pedido,producto,categoria,cantidad,precio,total) VALUES ('$array[Consecutivo]','$array[NombreProduc]','$array[Categoria]',$array[Cantidad],$array[Precio],$total)";
       $query = $this->db->query($sql);
 
       
@@ -208,7 +208,7 @@ class Model_pedidos extends CI_Model
   {
     date_default_timezone_set('America/Bogota');
     $fecha_actual = Date("Y-m-d");
-    $sql = "SELECT * FROM pedidos as p  WHERE p.fecha BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59'	and p.confirmado = 1 and pagado = 0 order by p.fecha asc ";
+    $sql = "SELECT * FROM pedidos as p  WHERE p.fecha BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59' or p.FechaModi BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59'	and p.confirmado = 1 and pagado = 0 order by p.fecha desc, p.FechaModi desc ";
     $query = $this->db->query($sql);
     return $query;
   }

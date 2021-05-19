@@ -5,9 +5,8 @@ class Inicie_Sesion extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-		$this->load->model('model_inicio');
-		$this->load->model('model_pedidos');
-		$this->load->model('model_mostrar_productos');
+		$this->load->model('Model_inicio');
+		$this->load->model('Model_pedidos');
 	}
 	public function index()
 	{
@@ -23,7 +22,7 @@ class Inicie_Sesion extends CI_Controller {
 	{
 			
 		$id=$this->input->post('id');
-		$act = $this->model_inicio->modificar($id);
+		$act = $this->Model_inicio->modificar($id);
 			$datos = array(
 				'id' => $act->id,
 				'correo' =>$act->correo,
@@ -46,11 +45,11 @@ class Inicie_Sesion extends CI_Controller {
 		$fecha = $this->input->post("fecha");
 		$contrasena = $this->input->post("contrasena");
 		$rol = $this->input->post("rol");
-		$mof = $this->model_inicio->modificar_registro($id,$usuario,$correo,$contrasena,$rol,$genero,$fecha);
+		$mof = $this->Model_inicio->modificar_registro($id,$usuario,$correo,$contrasena,$rol,$genero,$fecha);
 	}
 	public function eliminar_registro(){
 		$id=$this->input->post("id");
-		$eli = $this->model_inicio->eliminar_registro($id);
+		$eli = $this->Model_inicio->eliminar_registro($id);
 	}
 	public function Carga_admin()
 	{
@@ -65,8 +64,8 @@ class Inicie_Sesion extends CI_Controller {
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$datos = array(
-				'zonas' => $this->model_pedidos->Mostrarzonas(),
-				'mesas' => $this->model_pedidos->Mostrarmesas()
+				'zonas' => $this->Model_pedidos->Mostrarzonas(),
+				'mesas' => $this->Model_pedidos->Mostrarmesas()
 			);
 			$this->load->view('VistasMesero/View_SeleccionarMesa',$datos);
 		}else{	
@@ -78,7 +77,7 @@ class Inicie_Sesion extends CI_Controller {
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$data = array(
-				'pedidos' => $this->model_pedidos->MostrarPedidosAFacturar()
+				'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar()
 			);
 			$this->load->view('VistasFacturador/View_facturador',$data);
 		}else{	
@@ -96,9 +95,9 @@ class Inicie_Sesion extends CI_Controller {
 		$nueva_con=$this->input->post('nueva_con');
 		$con_contra=$this->input->post('con_contra');
 		if ($nueva_con == $con_contra) {
-			$re = $this->model_inicio->cambia_con($usuario);
+			$re = $this->Model_inicio->cambia_con($usuario);
 			if($re->cuenta == 1){
-				$result = $this->model_inicio->act_usuario($usuario,$nueva_con);
+				$result = $this->Model_inicio->act_usuario($usuario,$nueva_con);
 			}
 		}
 	}
@@ -152,10 +151,10 @@ class Inicie_Sesion extends CI_Controller {
 				$usuario=$this->input->post('usuario');
 				$contrasena=$this->input->post('contrasena');
 		
-				$re = $this->model_inicio->Inicio($usuario,$contrasena);
+				$re = $this->Model_inicio->Inicio($usuario,$contrasena);
 
 				if($re == 1){
-					$result = $this->model_inicio->con_usuario($usuario);
+					$result = $this->Model_inicio->con_usuario($usuario);
 					//echo "correcto";
 					$session = array(
 						'ID' => $result->id,

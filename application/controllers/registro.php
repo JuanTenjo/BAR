@@ -7,7 +7,7 @@ class registro extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_registro');
+		$this->load->model('Model_registro');
 	}
 
 	public function index()
@@ -95,7 +95,7 @@ class registro extends CI_Controller
 
 			$hash =  password_hash($pass, PASSWORD_DEFAULT);
 
-			$re = $this->model_registro->registroUser($user, $hash, $correo, $genero, $fecha_nacimiento);
+			$re = $this->Model_registro->RegistroUser($user, $hash, $correo, $genero, $fecha_nacimiento);
 
 			$datos = array(
 				'sms' => "Registro exitoso, ingresa con tus datos."

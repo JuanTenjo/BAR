@@ -8,7 +8,6 @@ class Mesero extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Model_pedidos');
-        $this->load->model('model_mostrar_productos');
     }
 
     public function index(){
