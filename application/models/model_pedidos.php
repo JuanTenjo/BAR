@@ -107,11 +107,18 @@ class Model_pedidos extends CI_Model
     try {
 
       $sql = "SELECT p.num_pedido, p.mesero, p.mesa, p.zona, z.nombre as nombreZona, p.fecha, p.confirmado, p.pagado FROM pedidos as p, zonas as z
-      WHERE p.num_pedido = '$Consecutivo' and p.zona = z.idzonas";
+      WHERE p.num_pedido = '$Consecutivo' and p.zona = z.idzonas and  p.pagado = 0";
 
       $query=$this->db->query($sql);
 
-      return $query->row();
+      if ($query->num_rows() > 0) {
+
+        return $query->row();
+
+      }else{
+        echo "Lo siento, pero no se encontro el pedido o ya fue cancelado en caja";
+      }
+ 
 
     } catch (Exception $e) {
       echo $e->getMessage();
@@ -128,9 +135,13 @@ class Model_pedidos extends CI_Model
       $query=$this->db->query($sql);
 
       if ($query->num_rows() > 0) {
+
         return $query;
+
       }else{
-        return null;
+
+        echo "Lo siento, pero no se encontro el detalle del pedido o ya fue cancelado en caja";
+
       }
   
 
@@ -198,11 +209,6 @@ class Model_pedidos extends CI_Model
     }
   }
 
-  public function MostrarPedidos()
-  {
-    $query = $this->db->query("SELECT * FROM pedidos_confirmados;");
-    return $query;
-  }
 
   public function MostrarPedidosAFacturar()
   {
@@ -215,8 +221,19 @@ class Model_pedidos extends CI_Model
 		and p.confirmado = 1
 		and pagado = 0
 		order by p.fecha desc, p.FechaModi desc ";
+
     $query = $this->db->query($sql);
-    return $query;
+
+    if ($query->num_rows() > 0) {
+     
+      return $query;
+
+    }else{
+
+      return null;
+
+    }
+
   }
 
 

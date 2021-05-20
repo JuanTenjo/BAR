@@ -13,13 +13,14 @@
 
   <body>
 
-  <?php
+    <?php
 
-    $mesero =$this->session->userdata('USUARIO');
+    $mesero = $this->session->userdata('USUARIO');
 
-  ?>
+    ?>
 
     <div class="container-fluid">
+
       <div class="row">
         <article class="col-12">
           <nav class="navbar nav">
@@ -35,47 +36,70 @@
         </article>
       </div>
 
+    </div>
+    <div class="container-fluid">
       <div class="row">
         <article class="col-12" id="ZonasMesas">
+
           <?php
-
           foreach ($zonas->result() as $row) {
-
           ?>
-
             <div class="alert" id="BarraZonas" role="alert">
               <p>Zona <?php echo ($row->nombre); ?></p>
             </div>
-            <div id="Mesas">
+            <!-- class="card-group" -->
+            <!-- <div   class="card-group" id="CardGroup"> -->
               <?php
+
               foreach ($mesas->result() as $col) {
                 if ($row->idzonas == $col->idzonas) {
                   if ($col->numpedido == 0) {
               ?>
-                    <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarPedido" method="post" data-ajax="false" style="display:inline">
+
+
+                    <div class="card" id="Card">
+                      <button type="submit" style="border:0"><img src="<?php echo base_url() ?>Imagenes/MesaActiva.png" class="card-img-top" alt="..."></button>
+                      <div class="card-body" id="NumeroDeMesaCardBody">
+          
+                            <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
+   
+                      </div>
+                    </div>
+
+                    <!-- <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarPedido" method="post" data-ajax="false" style="display:inline">
                       <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
                       <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
                       <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
                       <input type="hidden" name="mesero" value="<?php echo  $mesero ?>" style="display:none" />
                       <button type="submit" class="btn btn-outline-success" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Disponible</button>
-                    </form>
+                    </form> -->
 
                   <?php
                   } else {
                   ?>
-                   <form action="<?php echo base_url() ?>index.php/Mesero/ModificarPedido" method="post" data-ajax="false" style="display:inline">
+
+                    <div class="card" id="Card">
+                      <button type="submit" style="border:0"><img  src="<?php echo base_url() ?>Imagenes/MesaInactiva.png" class="card-img-top" alt="..."></button>
+                      <div class="card-body" id="NumeroDeMesaCardBody">   
+                        <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
+                      </div>
+                    </div>
+
+
+                    <!-- <form action="<?php echo base_url() ?>index.php/Mesero/ModificarPedido" method="post" data-ajax="false" style="display:inline">
                       <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
                       <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
                       <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
                       <input type="text" name="Consecutivo" value="<?php echo $col->numpedido ?>" style="display:none" />
                       <button type="submit" class="btn btn-outline-danger" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Ocupada</button>
-                    </form>
+                    </form> -->
+
               <?php
                   }
                 }
               }
               ?>
-            </div>
+            <!-- </div> -->
             <hr>
           <?PHP
           }
@@ -83,22 +107,26 @@
 
         </article>
       </div>
+    </div>
 
+
+
+    <div class="container-fluid">
       <div class="row">
         <article class="col-12">
           <a role="button" class="btn btn-danger btn-block" href="<?php echo base_url() ?>index.php/Mesero/Salir">Cerrar Sesión</a>
         </article>
       </div>
-
+      <p>
     </div>
-    <script type="text/javascript">
 
+
+    <script type="text/javascript">
       // function actualizar() {
       //   location.reload(true);
       // }
       // //Función para actualizar cada 10 segundos(10000 milisegundos)
       // setInterval("actualizar()", 10000);
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>

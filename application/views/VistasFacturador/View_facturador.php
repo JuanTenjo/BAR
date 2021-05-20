@@ -48,46 +48,6 @@
     </div>
     <br>
 
-
-    <!-- 
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="toast correcto" style="position: absolute; top: 0; right: 0;" data-delay="20000">
-                    <div class="toast-header">
-                        <img src="<?php echo base_url() ?>index.php/../imagenes/logo.png" width="12%" height="15%" class="rounded mr-2" alt="...">
-                        <strong class="mr-auto">Craft Burger</strong>
-
-                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="toast-body">
-                        Pedido facturado correctamente!
-                    </div>
-                </div>
-            <div class="toast incorrecto" style="position: absolute; top: 0; right: 0;" data-delay="20000">
-                    <div class="toast-header">
-                        <img src="<?php echo base_url() ?>index.php/../imagenes/logo.png" width="12%" height="15%" class="rounded mr-2" alt="...">
-                        <strong class="mr-auto">Craft Burger</strong>
-
-                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="toast-body">
-                        Pedido facturado incorrectamente!
-                    </div>
-            </div>
-
-
-
- 
-            </div>
-        </div><br>
-    </div> -->
-
     <div class="container-fluid">
         <div class="row pedidos">
 
@@ -96,7 +56,7 @@
                 <h4>Pedidos Actuales</h4>
                 <div class="table-responsive">
                     <table id="tableFacturacion" class="table table-hover">
-						
+
                         <caption>Lista de pedidos sin pagar con la fecha actual y los modificados en la fecha actual.</caption>
                         <thead>
                             <tr>
@@ -120,7 +80,7 @@
 
 
                                 foreach ($pedidos->result() as $col) {
-                      
+
                             ?>
                                     <form action="<?php echo base_url() ?>index.php/Facturacion/MostrarDetalle" method="POST" data-ajax="false">
                                         <tr>
@@ -135,13 +95,13 @@
                                                 <?php echo ($col->mesa); ?>
                                             </td>
                                             <td>
-                                            	 <?php echo ($col->nombreZona); ?>
+                                                <?php echo ($col->nombreZona); ?>
                                             </td>
                                             <td id="ColumDate">
-                                               <div id="ColumDate"> <?php echo ($col->fecha); ?></div>
+                                                <div id="ColumDate"> <?php echo ($col->fecha); ?></div>
                                             </td>
                                             <td id="ColumDate">
-											<div id="ColumDate"><?php echo ($col->FechaModi); ?></div>
+                                                <div id="ColumDate"><?php echo ($col->FechaModi); ?></div>
                                             </td>
                                             <td>
                                                 <?php echo ($col->ModiPor); ?>
@@ -158,9 +118,9 @@
 
                         </tbody>
                     </table>
-					
+
                 </div>
-				<p>
+                <p>
 
             </div>
 
@@ -180,7 +140,6 @@
                         </thead>
                         <tbody>
                             <?php
-                            $num_factura = 0;
                             if (empty($detallePedidos)) {
                                 echo "Selecciona un pedido para mostrar su detalle";
                                 $total = 0;
@@ -224,38 +183,70 @@
 
                     <div class="form-row">
                         <div class="col">
-                            <h5>Efectivo</h5>
-                            <input type="TEXT" id="efectivo" class="form-control" required>
-                            <h5 style="margin:12px">Cambio</h5>
-                            <h6 id="cambio"><b>$ </b></h6>
-                        </div>
-                        <div class="col">
-                            <h5>Total</h5>
-                            <input type="text" value="<?php echo number_format($total, 0) ?>" class="form-control" readonly="readonly" require>
-                            <input type="hidden" id="total" value="<?php echo ($total) ?>" class="form-control" readonly="readonly" require>
-                        </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="col">
-                            <form action="<?php echo base_url() ?>index.php/Facturacion/Facturar" method="POST" data-ajax="false">
-                               <input type="hidden" name="num_pedido" value=" <?php echo $num_factura; ?>">
-							   <input type="hidden" name="mesa" value=" <?php echo $num_factura; ?>">
-							   <input type="hidden" name="num_pedido" value=" <?php  
-							   if (empty($Zona) == false) {echo $Zona; }
-									
-				 				?>">
-								
-                                <button type="submit" onclick="alerta()" class="btn btn-block btn-success">Facturar</button>
+                            <?php echo form_open(base_url() . 'index.php/Facturacion/PagarPedido'); ?>
+
+                            <input type="hidden" required name="num_pedido" value=" <?php if (empty($num_factura) == false) {
+                                                                                        echo $num_factura;
+                                                                                    } ?>">
+                            <input type="hidden" required name="IDZona" value=" <?php if (empty($Zona) == false) {
+                                                                                    echo $Zona;
+                                                                                } ?>">
+                            <input type="hidden" required name="Mesa" value=" <?php if (empty($Mesa) == false) {
+                                                                                    echo $Mesa;
+                                                                                } ?>">
+
+
+                            <h3 >Total: <?php echo number_format($total, 0) ?></h3>
+
+                            <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                                
+                            </div>
+                            <input type="number" min="100" id="Efectivo" name="Efectivo" class="form-control" required>
+                            </div>
+
+                            <input type="hidden" id="total" value="<?php echo ($total) ?>" class="form-control" readonly="readonly" require>
+
+                            <input type="hidden"  id="CambioDePago" name="CambioDePago"  value="" class="form-control" require>
+
+
+
+                            <h4 style="margin:12px">Cambio</h4>
+                            <h6 id="cambio"><b>$ </b></h6>
+
+                            <h6 style="color: red;margin-top:10px"><?php echo validation_errors(); ?></h6>
+
+                            <button type="submit" class="btn btn-block btn-success">Facturar</button>
+
                             </form>
                         </div>
+
+                    </div>
+                    <!-- 
+                    <div class="form-row">
+                        <div class="col">   
+
+                     
+       
+                         
+                        </div>
+                        </form>
                         <div class="col">
-                            <form action="<?php echo base_url() ?>index.php/facturacion/facturar" method="POST" data-ajax="false">
-                                <input type="hidden" name="num_pedido"  value=" <?php echo $num_factura; ?>">
-                                <button type="submit" onclick="alerta()" class="btn btn-block btn-danger">Borrar pedido</button>
+                            <form action="<?php echo base_url() ?>index.php/Facturacion/BorrarPedido" method="POST" data-ajax="false">
+                            <input type="hidden" required name="num_pedido" value=" <?php if (empty($num_factura) == false) {
+                                                                                        echo $num_factura;
+                                                                                    } ?>">
+                                <button type="submit" class="btn btn-block btn-danger">Borrar pedido</button>
                             </form>
                         </div>
                     </div>
+                    <div class="form-row">
+                    <div class="col" >
+                        <h6 style="color: red;margin-top:10px"><?php echo validation_errors(); ?></h6>
+                    </div>                   
+                    </div> -->
 
                 </div>
 
@@ -273,49 +264,36 @@
             window.history.replaceState(null, null, window.location.href);
         }
 
-        function alerta() {
-            const efectivo2 = document.getElementById("efectivo").value;
-            if (efectivo2.length == 0) {
-                // const alerta = document.querySelector('#alerta')
-                //alerta.addEventListener('click', () => {
-                $('.incorrecto').toast('show');
-                $('.correcto').toast('hide');
-                // })
-            } else {
-                // const alerta = document.querySelector('#alerta')
-                // alerta.addEventListener('click', () => {
-                $('.correcto').toast('show');
-                $('.incorrecto').toast('hide')
-                // })
-            }
-        }
 
-
-
-
-        const CampoEfectivo = document.getElementById('efectivo');
+        const CampoEfectivo = document.getElementById('Efectivo');
         CampoEfectivo.addEventListener('keyup', calculos)
         //CampoEfectivo.addEventListener('keydown', calculos)
 
         const total = document.getElementById("total").value;
-        const efectivo = document.getElementById("efectivo").value;
-
+        const efectivo = document.getElementById("Efectivo").value;
 
 
         function calculos(event) {
+
+         
+
             var key = event.keyCode || event.which;
-            const efectivo = document.getElementById("efectivo").value;
+            const efectivo = document.getElementById("Efectivo").value;
             const total2 = parseInt(total);
             console.log(total2);
             const cambio = (efectivo - total);
 
             if (cambio > 0) {
+            
                 document.getElementById('cambio').innerHTML = "$" + (cambio);
+                document.getElementById('CambioDePago').value = cambio;
             } else {
                 if (cambio < 0) {
-                    document.getElementById('cambio').innerHTML = "Digite un valor mayor al total";
+                    document.getElementById('cambio').innerHTML = "Digite un valor mayor o igual al total";
+                    document.getElementById('CambioDePago').value = cambio;
                 } else {
                     document.getElementById('cambio').innerHTML = "Completo";
+                    document.getElementById('CambioDePago').value = cambio;
                 }
             }
 

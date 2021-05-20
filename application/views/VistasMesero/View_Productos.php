@@ -88,7 +88,7 @@
                     <?php foreach ($Categorias->result() as $raw) { ?>
 
                         <a class="btn btn-primary btn-block " id="BotonCategoriaProductos" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
-                            <label id="NombreCate2"><?php echo ($raw->NombreCate); ?> ↓</label>
+                            <div id="NombreCate2"><?php echo ($raw->NombreCate); ?> ↓</div>
                         </a>
 
                         <div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">
@@ -185,7 +185,7 @@
                                             <form action="<?php echo base_url() ?>index.php/Mesero/EliminarPedido" method="post" data-ajax="false">
                                                 <input type="text" value="<?php echo ($row->iddetalle_pedidos); ?>" name="IdDetallePedido" style="display: none;">
                                                 <input type="hidden" value="<?php echo ($Consecutivo); ?>" name="Consecutivo" style="display: none;">
-                                                <td scope="col"><button type="submit" class="btn btn-danger"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button></td>
+                                                <td scope="col"><button type="submit" style="padding: 3px;width:35px" class="btn btn-danger"><img width="12px" class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button></td>
                                             </form>
                                         </tr>
                                 <?php
