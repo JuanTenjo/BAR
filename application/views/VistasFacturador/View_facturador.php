@@ -95,8 +95,9 @@
 
                 <h4>Pedidos Actuales</h4>
                 <div class="table-responsive">
-                    <table class="table table-hover">
-                        <caption>Lista de pedidos con la fecha actual y los modificados en la fecha actual.</caption>
+                    <table id="tableFacturacion" class="table table-hover">
+						
+                        <caption>Lista de pedidos sin pagar con la fecha actual y los modificados en la fecha actual.</caption>
                         <thead>
                             <tr>
                                 <th scope="col">Pedido</th>
@@ -125,28 +126,28 @@
                                         <tr>
                                             <input type="text" name="num_pedido" value="<?php echo ($col->num_pedido); ?>" style="display:none">
                                             <td>
-                                                <p><?php echo ($col->num_pedido); ?></p>
+                                                <?php echo ($col->num_pedido); ?>
                                             </td>
                                             <td>
-                                                <p><?php echo ($col->mesero); ?></p>
+                                                <?php echo ($col->mesero); ?>
+                                            </td>
+                                            <td id="ColumMesa">
+                                                <?php echo ($col->mesa); ?>
                                             </td>
                                             <td>
-                                                <p><?php echo ($col->mesa); ?></p>
-                                            </td>
-                                            <td>
-                                                <p><?php echo ($col->zona); ?></p>
+                                            	 <?php echo ($col->nombreZona); ?>
                                             </td>
                                             <td id="ColumDate">
-                                                <p><?php echo ($col->fecha); ?></p>
+                                               <div id="ColumDate"> <?php echo ($col->fecha); ?></div>
                                             </td>
                                             <td id="ColumDate">
-                                                <p><?php echo ($col->FechaModi); ?></p>
+											<div id="ColumDate"><?php echo ($col->FechaModi); ?></div>
                                             </td>
                                             <td>
-                                                <p><?php echo ($col->ModiPor); ?></p>
+                                                <?php echo ($col->ModiPor); ?>
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-outline-primary">
+                                                <button type="submit" style="padding: 2px;" class="btn btn-outline-primary">
                                                     <img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Detalle.png" alt="">
                                                 </button>
                                             </td>
@@ -157,15 +158,16 @@
 
                         </tbody>
                     </table>
+					
                 </div>
-
+				<p>
 
             </div>
 
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <h4>Detalle Pedido</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered  table-hover tablaDetalle">
+                    <table id="tableFacturacion" class="table table-bordered  table-hover tablaDetalle">
                         <thead>
                             <tr>
                                 <th scope="col">Pedido</th>
@@ -193,23 +195,23 @@
                             ?>
                                     <tr>
                                         <td>
-                                            <p><?php echo ($row->num_pedido); ?></p>
+                                            <?php echo ($row->num_pedido); ?>
                                         </td>
 
                                         <td>
-                                            <p><?php echo ($row->producto); ?></p>
+                                            <?php echo ($row->producto); ?>
                                         </td>
                                         <td>
-                                            <p><?php echo ($row->categoria); ?></p>
+                                            <?php echo ($row->categoria); ?>
                                         </td>
                                         <td>
-                                            <p><?php echo ($row->cantidad) ?></p>
+                                            <?php echo ($row->cantidad) ?>
                                         </td>
                                         <td>
-                                            <p><?php echo number_format($row->precio, 0); ?></p>
+                                            <?php echo number_format($row->precio, 0); ?>
                                         </td>
                                         <td>
-                                            <p><?php echo number_format($row->total, 0); ?></p>
+                                            <?php echo number_format($row->total, 0); ?>
                                         </td>
                                     </tr>
                         </tbody>
@@ -237,7 +239,13 @@
                     <div class="form-row">
                         <div class="col">
                             <form action="<?php echo base_url() ?>index.php/Facturacion/Facturar" method="POST" data-ajax="false">
-                                <input type="hidden" name="num_pedido" value=" <?php echo $num_factura; ?>">
+                               <input type="hidden" name="num_pedido" value=" <?php echo $num_factura; ?>">
+							   <input type="hidden" name="mesa" value=" <?php echo $num_factura; ?>">
+							   <input type="hidden" name="num_pedido" value=" <?php  
+							   if (empty($Zona) == false) {echo $Zona; }
+									
+				 				?>">
+								
                                 <button type="submit" onclick="alerta()" class="btn btn-block btn-success">Facturar</button>
                             </form>
                         </div>

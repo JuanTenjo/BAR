@@ -208,7 +208,13 @@ class Model_pedidos extends CI_Model
   {
     date_default_timezone_set('America/Bogota');
     $fecha_actual = Date("Y-m-d");
-    $sql = "SELECT * FROM pedidos as p  WHERE p.fecha BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59' or p.FechaModi BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59'	and p.confirmado = 1 and pagado = 0 order by p.fecha desc, p.FechaModi desc ";
+    $sql = "SELECT p.*, z.nombre as nombreZona
+		FROM pedidos as p LEFT JOIN zonas as z ON p.zona = z.idzonas  WHERE  p.fecha
+		BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59' or p.FechaModi
+		BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59'	
+		and p.confirmado = 1
+		and pagado = 0
+		order by p.fecha desc, p.FechaModi desc ";
     $query = $this->db->query($sql);
     return $query;
   }
