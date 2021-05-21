@@ -77,7 +77,9 @@ class Inicie_Sesion extends CI_Controller {
 	{
 		if ($this->session->userdata('is_logged_in')) {
 			$data = array(
-				'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar()
+				'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar(),
+				'zonas' => $this->Model_pedidos->MostrarzonasConPedidos(),
+				'mesas' => $this->Model_pedidos->Mostrarmesas()
 			);
 			$this->load->view('VistasFacturador/View_facturador',$data);
 		}else{	

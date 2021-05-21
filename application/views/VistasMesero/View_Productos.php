@@ -60,12 +60,11 @@
                             <td><?php echo $Consecutivo; ?></td>
                             <td>
                                 <?php
-                                if ($Estado == 1 And $Pagado == 0) { ?>
+                                if ($Estado == 1 and $Pagado == 0) { ?>
                                     🟢
-                                <?php  } 
-                                elseif($Estado == 0 And $Pagado == 0) { ?>
+                                <?php  } elseif ($Estado == 0 and $Pagado == 0) { ?>
                                     🟡
-                                <?php }elseif ($Estado == 1 And $Pagado == 1){
+                                <?php } elseif ($Estado == 1 and $Pagado == 1) {
                                     echo "Pagado ";
                                 }
                                 ?>
@@ -199,20 +198,20 @@
 
 
                 <div class="opciones">
-                    <h5> Total: <?php  echo number_format($total, 2); ?></h5>
+                    <h5> Total: <?php echo number_format($total, 2); ?></h5>
 
-                    <?php if($Estado == 0 And $Pagado == 0) { ?> 
+                    <?php if ($Estado == 0 and $Pagado == 0) { ?>
                         <a href="" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-block" role="button" aria-pressed="true">Confirmar</a>
                     <?php } ?>
-                    
-                    <?php if($Estado == 1 And $Pagado == 0) { ?> 
+
+                    <?php if ($Estado == 1 and $Pagado == 0) { ?>
                         <a href="" data-toggle="modal" data-target="#exampleModalMofificar" class="btn btn-warning btn-block" role="button" aria-pressed="true">Modificar</a>
                     <?php } ?>
-                    
-                    <?php if($Estado == 1 And $Pagado == 1) { ?> 
+
+                    <?php if ($Estado == 1 and $Pagado == 1) { ?>
                         <a href="#" class="btn btn-danger btn-block" role="button" aria-pressed="true">Pedido ya fue pago</a>
                     <?php } ?>
- 
+
                 </div>
 
                 <hr>
@@ -223,6 +222,7 @@
                             <thead class="">
                                 <tr style="text-align: center;">
                                     <th scope="row">Salir</th>
+                                    <th scope="row">Anular</th>
                                     <th scope="row">Rehacer</th>
                                     <th scope="row">Copia</th>
                                     <th scope="row">Otro Pedido</th>
@@ -230,6 +230,7 @@
                             </thead>
                             <tbody style="text-align: center;">
                                 <td><a href="<?php echo base_url() ?>index.php/Mesero/Salir" class="btn  " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/cerrar.png" alt=""></a></td>
+                                <td><a data-toggle="modal" data-target="#exampleModalAnular" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Anular.png" alt=""></a></td>
                                 <td><a href="#" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/rehacer.png" alt=""></a></td>
                                 <td><a href="#" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/facturacolor.png" alt=""></a></td>
                                 <td><a href="<?php echo base_url() ?>index.php/Inicie_sesion/Carga_mesero" class="btn " role="button" aria-pressed="true"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/IconCrear.png" alt=""></a></td>
@@ -273,7 +274,7 @@
         </div>
     </div>
 
-    
+
     <div class="modal fade" id="exampleModalMofificar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -302,6 +303,39 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="exampleModalAnular" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <form action="<?php echo base_url() ?>index.php/Mesero/AnularPedido" method="POST" data-ajax="false">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Control de ejecucion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6> Anulara el pedido <?php echo $Consecutivo ?> , ¿Esta seguro? </h6>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Ingrese la razon de anulamiento</label>
+                            <textarea name="RazonAnul" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <small>Se guarda el mesero y la fecha de la anulacion</small>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" value="<?php echo $Consecutivo ?>" name="Consecutivo" style="display: none;">
+                        <input type="hidden" value="<?php echo $Mesero ?>" name="MeseroAnul" style="display: none;">
+                        <input type="hidden" value="<?php echo $mesa ?>" name="mesa" style="display: none;">
+                        <input type="hidden" value="<?php echo $idzona ?>" name="idzona" style="display: none;">
+                        <button type="submit" class="btn btn-danger">Anular</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 
     <script>
         function imprimir() {

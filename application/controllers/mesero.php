@@ -49,10 +49,12 @@ class Mesero extends CI_Controller
         try {
             
             $Consecutivo = $this->input->post("Consecutivo");
+            if($Consecutivo <> null){
 
-            $this->session->set_flashdata('Consecutivo', $Consecutivo);
-
-            redirect("" . base_url() . "index.php/mesero/CargarPedido");
+                $this->session->set_flashdata('Consecutivo', $Consecutivo);
+                redirect("" . base_url() . "index.php/mesero/CargarPedido");
+    
+            }
 
 
         } catch (Exception $e) {
@@ -74,22 +76,25 @@ class Mesero extends CI_Controller
                 }else{
 
                     $Pedido = $this->Model_pedidos->MostrarCabeceraPedido($Consecutivo);
-    
-                    $data = array(
-                        'Categorias' => $this->Model_pedidos->MostrarCategorias(),
-                        'Productos' => $this->Model_pedidos->MostrarProductos(),
-                        'DetallePedido' => $this->Model_pedidos->MostrarDetallePedido($Consecutivo),
-                        'Consecutivo' => $Pedido->num_pedido,
-                        'Mesero' => $Pedido->mesero,
-                        'Mesa' => $Pedido->mesa,
-                        'Idzona' => $Pedido->zona,
-                        'NombreZona' => $Pedido->nombreZona,
-                        'Estado' => $Pedido->confirmado,
-                        'Pagado' => $Pedido->pagado,
-                        'Fecha' => $Pedido->fecha
-                    );
-        
-                    $this->load->view('VistasMesero/View_Productos', $data);
+                    
+                    if($Pedido <> null){
+                        $data = array(
+                            'Categorias' => $this->Model_pedidos->MostrarCategorias(),
+                            'Productos' => $this->Model_pedidos->MostrarProductos(),
+                            'DetallePedido' => $this->Model_pedidos->MostrarDetallePedido($Consecutivo),
+                            'Consecutivo' => $Pedido->num_pedido,
+                            'Mesero' => $Pedido->mesero,
+                            'Mesa' => $Pedido->mesa,
+                            'Idzona' => $Pedido->zona,
+                            'NombreZona' => $Pedido->nombreZona,
+                            'Estado' => $Pedido->confirmado,
+                            'Pagado' => $Pedido->pagado,
+                            'Fecha' => $Pedido->fecha
+                        );
+            
+                        $this->load->view('VistasMesero/View_Productos', $data);
+                    }
+
                 }
 
             }else{	
@@ -158,6 +163,27 @@ class Mesero extends CI_Controller
 
 
     }
+
+    public function AnularPedido(){
+
+
+        $data = array(
+            'Consecutivo' => $this->input->post("Consecutivo"),
+            'MeseroAnul' => $this->input->post("MeseroAnul"),
+            'mesa' => $this->input->post("mesa"),
+            'idzona' =>  $this->input->post("idzona"),
+            'RazonAnul' =>  $this->input->post("RazonAnul")
+        );
+        $AnularPedido = $this->Model_pedidos->AnularPedido($data);
+
+        if($AnularPedido){
+            redirect("" . base_url() . "index.php/inicie_sesion/Carga_mesero");
+        }else{
+            echo $AnularPedido;
+        }
+
+    }
+
 
     public function EliminarPedido()
     {

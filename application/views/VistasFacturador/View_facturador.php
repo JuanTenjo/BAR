@@ -28,13 +28,13 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active " aria-current="page" href="<?php echo base_url() ?>index.php/facturacion/Facturador">Facturar</a>
+                                    <a class="nav-link active " aria-current="page" href="<?php echo base_url() ?>index.php/facturacion/Facturador">Pagar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url() ?>index.php/facturacion/pendientes">Pendientes</a>
+                                    <a class="nav-link" href="<?php echo base_url() ?>index.php/facturacion/historial" tabindex="-1" aria-disabled="true">Ventas</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?php echo base_url() ?>index.php/facturacion/historial" tabindex="-1" aria-disabled="true">Historial</a>
+                                    <a class="nav-link" href="<?php echo base_url() ?>index.php/facturacion/historial" tabindex="-1" aria-disabled="true">Cierre de caja</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?php echo base_url() ?>index.php/facturacion/Salir" tabindex="-1" aria-disabled="true">Salir</a>
@@ -54,7 +54,61 @@
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
 
                 <h4>Pedidos Actuales</h4>
-                <div class="table-responsive">
+
+
+                <?php
+                if (empty($pedidos)) {
+                    echo "No hay ninguna mesa con pedido aun";
+                }else{                
+                foreach ($zonas->result() as $row) {
+                ?>
+                    <div class="alert" id="BarraZonas" role="alert">
+                        <p>Zona <?php echo ($row->nombre); ?></p>
+                    </div>
+
+
+                    <div id="MesasFere">
+
+                        <?php
+
+                        foreach ($mesas->result() as $col) {
+                            if ($row->idzonas == $col->idzonas) {
+                                if ($col->numpedido <> 0) {
+                        ?>
+
+                                    <form action="<?php echo base_url() ?>index.php/Facturacion/MostrarDetalle" method="post" data-ajax="false">
+                                        <input type="hidden" name="zona" value="<?php echo ($row->nombre); ?>" />
+                                        <input type="hidden" name="idzona" value="<?php echo ($row->idzonas); ?>" />
+                                        <input type="hidden" name="mesa" value="<?php echo $col->nummesa ?>" />
+                                        <input type="hidden" name="Consecutivo" value="<?php echo $col->numpedido ?>" />
+                                        <div class="card" id="Card">
+                                            <button type="submit" id="BotonMesa"> <img src="<?php echo base_url() ?>Imagenes/MesaActiva.png" class="card-img-top" alt="..."></button>
+                                            <div class="card-body" id="NumeroDeMesaCardBody">
+                                                <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
+                                            </div>
+                                            <div class="card-body" id="InformacionMesaOcupada">
+                                                <h5 class="card-title"><?php echo $col->mesero ?></h5>
+                                            </div>
+                                            <div class="card-body" id="InformacionMesaOcupada">
+                                                <button type="button" style="font-size: 10px;" ><img src="<?php echo base_url() ?>Imagenes/Factura.png" alt="">Comanda</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                <?php
+                                }
+                                ?>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <hr>
+
+                <?PHP
+                }}
+                ?>
+                <!-- <div class="table-responsive">
                     <table id="tableFacturacion" class="table table-hover">
 
                         <caption>Lista de pedidos sin pagar con la fecha actual y los modificados en la fecha actual.</caption>
@@ -120,7 +174,7 @@
                     </table>
 
                 </div>
-                <p>
+                <p> -->
 
             </div>
 
@@ -141,7 +195,7 @@
                         <tbody>
                             <?php
                             if (empty($detallePedidos)) {
-                                echo "Selecciona un pedido para mostrar su detalle";
+                                echo "No tiene detalle";
                                 $total = 0;
                             } else {
                                 $total = 0;
@@ -197,19 +251,19 @@
                                                                                 } ?>">
 
 
-                            <h3 >Total: <?php echo number_format($total, 0) ?></h3>
+                            <h3>Total: <?php echo number_format($total, 0) ?></h3>
 
                             <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">$</span>
-                                
-                            </div>
-                            <input type="number" min="100" id="Efectivo" name="Efectivo" class="form-control" required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+
+                                </div>
+                                <input type="number" min="100" id="Efectivo" name="Efectivo" class="form-control" required>
                             </div>
 
                             <input type="hidden" id="total" value="<?php echo ($total) ?>" class="form-control" readonly="readonly" require>
 
-                            <input type="hidden"  id="CambioDePago" name="CambioDePago"  value="" class="form-control" require>
+                            <input type="hidden" id="CambioDePago" name="CambioDePago" value="" class="form-control" require>
 
 
 
@@ -218,7 +272,7 @@
 
                             <h6 style="color: red;margin-top:10px"><?php echo validation_errors(); ?></h6>
 
-                            <button type="submit" class="btn btn-block btn-success">Facturar</button>
+                            <button type="submit" class="btn btn-block btn-success">Pagar</button>
 
                             </form>
                         </div>
@@ -275,7 +329,7 @@
 
         function calculos(event) {
 
-         
+
 
             var key = event.keyCode || event.which;
             const efectivo = document.getElementById("Efectivo").value;
@@ -284,7 +338,7 @@
             const cambio = (efectivo - total);
 
             if (cambio > 0) {
-            
+
                 document.getElementById('cambio').innerHTML = "$" + (cambio);
                 document.getElementById('CambioDePago').value = cambio;
             } else {

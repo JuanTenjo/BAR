@@ -73,7 +73,7 @@
 								</td>
 								<td>
 									<div class="form-group">
-										<input type="text" required class="form-control" minlength="1" maxlength="2"  pattern="^[0-20]+" name="NumeroMesas" placeholder="Numero de mesas">
+										<input type="number" required class="form-control" minlength="1" maxlength="2"  name="NumeroMesas" placeholder="Numero de mesas">
 										<small>Valor numerico</small>
 									</div>
 								</td>
@@ -121,7 +121,7 @@
 											</th>
 											<td>
 												<div class="form-group">
-													<input type="text" required name="NumeroDeMesas" value="<?php echo ($row->numMesas) ?>" class="form-control">
+													<input type="number" required name="NumeroDeMesas" value="<?php echo ($row->numMesas) ?>" class="form-control">
 												</div>
 											</td>
 											<td>

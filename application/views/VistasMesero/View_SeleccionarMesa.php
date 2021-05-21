@@ -26,10 +26,7 @@
           <nav class="navbar nav">
             <ul class="nav justify-content-end">
               <li class="nav-item">
-                <a class="navbar-brand" href="<?php echo base_url() ?>index.php/Inicie_sesion/Carga_mesero"><img src="<?php echo base_url() ?>Imagenes/FondoBlanco.png" alt="Logo Cielo Abierto" width="35" height="30"></a>
-              </li>
-              <li class="nav-item">
-                <p>Seleccionar mesa</p>
+                Seleccionar mesa
               </li>
             </ul>
           </nav>
@@ -37,6 +34,7 @@
       </div>
 
     </div>
+    
     <div class="container-fluid">
       <div class="row">
         <article class="col-12" id="ZonasMesas">
@@ -47,8 +45,10 @@
             <div class="alert" id="BarraZonas" role="alert">
               <p>Zona <?php echo ($row->nombre); ?></p>
             </div>
-            <!-- class="card-group" -->
-            <!-- <div   class="card-group" id="CardGroup"> -->
+
+
+            <div id="MesasFere">
+
               <?php
 
               foreach ($mesas->result() as $col) {
@@ -56,51 +56,46 @@
                   if ($col->numpedido == 0) {
               ?>
 
-
-                    <div class="card" id="Card">
-                      <button type="submit" style="border:0"><img src="<?php echo base_url() ?>Imagenes/MesaActiva.png" class="card-img-top" alt="..."></button>
-                      <div class="card-body" id="NumeroDeMesaCardBody">
-          
-                            <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
-   
+                    <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarPedido" method="post" data-ajax="false">
+                      <input type="hidden" name="zona" value="<?php echo ($row->nombre); ?>" />
+                      <input type="hidden" name="idzona" value="<?php echo ($row->idzonas); ?>"  />
+                      <input type="hidden" name="mesa" value="<?php echo $col->nummesa ?>"  />
+                      <input type="hidden" name="mesero" value="<?php echo  $mesero ?>"  />
+                      <div class="card" id="Card">
+                        <button type="submit"  id="BotonMesa"> <img src="<?php echo base_url() ?>Imagenes/MesaInactiva.png" class="card-img-top" alt="..."></button>
+                        <div class="card-body" id="NumeroDeMesaCardBody">
+                          <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
+                        </div>
                       </div>
-                    </div>
-
-                    <!-- <form action="<?php echo base_url() ?>index.php/Mesero/RegistrarPedido" method="post" data-ajax="false" style="display:inline">
-                      <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
-                      <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
-                      <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
-                      <input type="hidden" name="mesero" value="<?php echo  $mesero ?>" style="display:none" />
-                      <button type="submit" class="btn btn-outline-success" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Disponible</button>
-                    </form> -->
+                    </form>
 
                   <?php
                   } else {
                   ?>
 
-                    <div class="card" id="Card">
-                      <button type="submit" style="border:0"><img  src="<?php echo base_url() ?>Imagenes/MesaInactiva.png" class="card-img-top" alt="..."></button>
-                      <div class="card-body" id="NumeroDeMesaCardBody">   
-                        <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
+                    <form action="<?php echo base_url() ?>index.php/Mesero/ModificarPedido" method="post" data-ajax="false">
+                      <input type="hidden" name="zona" value="<?php echo ($row->nombre); ?>"/>
+                      <input type="hidden" name="idzona" value="<?php echo ($row->idzonas); ?>" />
+                      <input type="hidden" name="mesa" value="<?php echo $col->nummesa ?>" />
+                      <input type="hidden" name="Consecutivo" value="<?php echo $col->numpedido ?>" />
+                      <div class="card" id="Card">
+                        <button type="submit" id="BotonMesa" > <img src="<?php echo base_url() ?>Imagenes/MesaActiva.png" class="card-img-top" alt="..."></button>
+                        <div class="card-body" id="NumeroDeMesaCardBody">
+                          <h5 class="card-title">MESA <?php echo $col->nummesa ?></h5>
+                        </div>
+                        <div class="card-body" id="InformacionMesaOcupada">
+                          <h5 class="card-title"><?php echo $col->mesero ?></h5>
+                          <h5 class="card-title"><?php  echo number_format(($col->total), 0); ?></h5>
+                        </div>
                       </div>
-                    </div>
-
-
-                    <!-- <form action="<?php echo base_url() ?>index.php/Mesero/ModificarPedido" method="post" data-ajax="false" style="display:inline">
-                      <input type="text" name="zona" value="<?php echo ($row->nombre); ?>" style="display:none" />
-                      <input type="text" name="idzona" value="<?php echo ($row->idzonas); ?>" style="display:none" />
-                      <input type="text" name="mesa" value="<?php echo $col->nummesa ?>" style="display:none" />
-                      <input type="text" name="Consecutivo" value="<?php echo $col->numpedido ?>" style="display:none" />
-                      <button type="submit" class="btn btn-outline-danger" id="BotonMesa">Mesa <b><?php echo $col->nummesa ?></b>: Ocupada</button>
-                    </form> -->
-
+                    </form>
               <?php
                   }
                 }
               }
               ?>
-            <!-- </div> -->
-            <hr>
+            </div>
+
           <?PHP
           }
           ?>
@@ -114,7 +109,8 @@
     <div class="container-fluid">
       <div class="row">
         <article class="col-12">
-          <a role="button" class="btn btn-danger btn-block" href="<?php echo base_url() ?>index.php/Mesero/Salir">Cerrar Sesión</a>
+          <a role="button" id="BotonSalirMesero" class="btn  btn-block" href="<?php echo base_url() ?>index.php/Mesero/Salir">Cerrar Sesión</a>
+          <p>
         </article>
       </div>
       <p>

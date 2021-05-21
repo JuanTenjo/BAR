@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2021 a las 04:54:21
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.5
+-- Tiempo de generación: 21-05-2021 a las 18:12:18
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -61,7 +61,7 @@ CREATE TABLE `consecutivos` (
 --
 
 INSERT INTO `consecutivos` (`id_consecutivo`, `Prefijo`, `Numero`, `Descripción`) VALUES
-(1, 'CL', 133, 'Consecutivo Pedidos');
+(1, 'CL', 140, 'Consecutivo Pedidos');
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,15 @@ INSERT INTO `detallepedido` (`iddetalle_pedidos`, `num_pedido`, `producto`, `cat
 (52, 'CL127', 'KinKong', 'Hamburguesas', 1, 15000, 15000, NULL),
 (53, 'CL133', 'Arroz con pollo', 'Almuerzos', 1, 5000, 5000, NULL),
 (54, 'CL133', 'KinKong', 'Hamburguesas', 1, 15000, 15000, NULL),
-(55, 'CL133', 'Cocacola', 'Bebidas', 1, 2000, 2000, NULL);
+(55, 'CL133', 'Cocacola', 'Bebidas', 1, 2000, 2000, NULL),
+(56, 'CL136', 'Cocacola', 'Bebidas', 1, 2000, 2000, NULL),
+(57, 'CL136', 'Arroz con pollo', 'Almuerzos', 1, 5000, 5000, NULL),
+(58, 'CL136', 'asd', 'Malteadas', 1, 3444, 3444, NULL),
+(59, 'CL136', 'Cocacola', 'Bebidas', 1, 2000, 2000, NULL),
+(60, 'CL136', 'KinKong', 'Hamburguesas', 1, 15000, 15000, NULL),
+(61, 'CL137', 'Cocacola', 'Bebidas', 1, 2000, 2000, NULL),
+(62, 'CL137', 'asd', 'Malteadas', 1, 3444, 3444, NULL),
+(63, 'CL139', 'KinKong', 'Hamburguesas', 1, 15000, 15000, NULL);
 
 -- --------------------------------------------------------
 
@@ -138,13 +146,38 @@ CREATE TABLE `mesas` (
 
 INSERT INTO `mesas` (`idmesas`, `idzonas`, `nummesa`, `numpedido`) VALUES
 (2, 1, 1, '0'),
-(3, 1, 2, 'CL132'),
-(4, 1, 3, 'CL127'),
-(5, 3, 1, '0'),
-(6, 3, 2, 'CL133'),
-(7, 3, 3, 'CL128'),
-(8, 3, 4, 'CL130'),
-(9, 3, 5, 'CL129');
+(3, 1, 2, 'CL136'),
+(4, 1, 3, '0'),
+(5, 3, 1, 'CL139'),
+(6, 3, 2, '0'),
+(7, 3, 3, 'CL137'),
+(8, 3, 4, 'CL140'),
+(9, 3, 5, 'CL138'),
+(10, 5, 1, '0'),
+(11, 5, 2, '0'),
+(12, 5, 3, '0'),
+(13, 5, 4, '0'),
+(14, 5, 5, '0'),
+(15, 5, 6, '0'),
+(16, 5, 7, '0'),
+(17, 5, 8, '0'),
+(18, 5, 9, '0'),
+(19, 5, 10, '0'),
+(20, 5, 11, '0'),
+(21, 5, 12, '0'),
+(22, 5, 13, '0'),
+(23, 5, 14, '0'),
+(24, 5, 15, '0'),
+(25, 5, 16, '0'),
+(26, 5, 17, '0'),
+(27, 5, 18, '0'),
+(28, 5, 19, '0'),
+(29, 5, 20, '0'),
+(30, 6, 1, '0'),
+(31, 6, 2, '0'),
+(32, 6, 3, '0'),
+(33, 6, 4, '0'),
+(34, 6, 5, '0');
 
 -- --------------------------------------------------------
 
@@ -162,58 +195,68 @@ CREATE TABLE `pedidos` (
   `confirmado` int(11) NOT NULL DEFAULT 0,
   `pagado` int(11) NOT NULL DEFAULT 0,
   `FechaModi` datetime DEFAULT NULL,
-  `ModiPor` varchar(50) DEFAULT NULL
+  `ModiPor` varchar(50) DEFAULT NULL,
+  `Anulada` tinyint(1) NOT NULL DEFAULT 0,
+  `RazonAnul` varchar(255) NOT NULL DEFAULT 'No ha sido anulada',
+  `FechaAnul` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`idpedidos`, `num_pedido`, `mesero`, `mesa`, `zona`, `fecha`, `confirmado`, `pagado`, `FechaModi`, `ModiPor`) VALUES
-(1, '8769', 'Adriana', 1, '0', '2020-11-07 00:00:00', 0, 0, NULL, NULL),
-(2, '4367', 'Adriana', 1, '0', '2020-11-13 00:00:00', 0, 0, NULL, NULL),
-(3, '181', 'Adriana', 1, '0', '2020-11-13 00:00:00', 1, 1, NULL, NULL),
-(4, '7377', 'Adriana', 1, '0', '2020-11-19 00:00:00', 1, 1, NULL, NULL),
-(5, '8873', 'Adriana', 1, '0', '2021-01-31 00:00:00', 1, 1, NULL, NULL),
-(6, '2898', 'Adriana', 2, '0', '2021-01-31 00:00:00', 1, 0, NULL, NULL),
-(7, '8027', 'Adriana', 1, '0', '2021-01-31 00:00:00', 0, 0, NULL, NULL),
-(8, '197', 'Adriana', 1, '0', '2021-02-01 00:00:00', 1, 1, NULL, NULL),
-(9, '942', 'Adriana', 3, '0', '2021-02-01 00:00:00', 0, 0, NULL, NULL),
-(10, '7654', 'Adriana', 3, '0', '2021-02-01 00:00:00', 0, 0, NULL, NULL),
-(11, '908', 'Adriana', 3, '0', '2021-02-01 00:00:00', 0, 0, NULL, NULL),
-(12, '1831', 'Adriana', 3, '0', '2021-02-26 00:00:00', 0, 0, NULL, NULL),
-(13, '1', 'Adriana', 3, '3', '2021-05-06 14:16:52', 0, 0, NULL, NULL),
-(14, 'CL101', 'Adriana', 3, '1', '2021-05-06 14:17:59', 0, 0, NULL, NULL),
-(15, 'CL102', 'Adriana', 2, '3', '2021-05-06 14:38:28', 0, 0, NULL, NULL),
-(16, 'CL103', 'Adriana', 5, '3', '2021-05-06 14:41:16', 0, 0, NULL, NULL),
-(17, 'CL104', 'Adriana', 1, '1', '2021-05-06 14:41:33', 0, 0, NULL, NULL),
-(18, 'CL105', 'Adriana', 1, '3', '2021-05-06 14:43:20', 0, 0, NULL, NULL),
-(19, 'CL106', 'Adriana', 4, '3', '2021-05-06 14:43:24', 0, 0, NULL, NULL),
-(20, 'CL107', 'Adriana', 2, '1', '2021-05-06 14:47:34', 0, 0, NULL, NULL),
-(21, 'CL108', 'Adriana', 3, '1', '2021-05-06 14:49:10', 0, 0, NULL, NULL),
-(22, 'CL109', 'Adriana', 3, '1', '2021-05-06 14:51:52', 0, 0, NULL, NULL),
-(23, 'CL110', 'Adriana', 3, '1', '2021-05-06 14:54:03', 0, 0, NULL, NULL),
-(24, 'CL111', 'Adriana', 3, '1', '2021-05-06 14:55:57', 0, 0, NULL, NULL),
-(25, 'CL112', 'Adriana', 3, '1', '2021-05-06 14:56:36', 0, 0, NULL, NULL),
-(26, 'CL113', 'Adriana', 3, '1', '2021-05-06 14:57:24', 0, 0, NULL, NULL),
-(27, 'CL114', 'Juan', 3, '1', '2021-05-06 14:59:19', 0, 0, NULL, NULL),
-(28, 'CL115', 'Juan', 3, '1', '2021-05-06 15:04:21', 0, 0, NULL, NULL),
-(29, 'CL116', 'Juan', 3, '1', '2021-05-06 15:04:47', 0, 0, NULL, NULL),
-(30, 'CL117', 'Juan', 3, '1', '2021-05-06 15:05:22', 0, 0, NULL, NULL),
-(31, 'CL118', 'Juan', 3, '1', '2021-05-06 15:06:19', 0, 0, NULL, NULL),
-(32, 'CL119', 'Juan', 3, '1', '2021-05-06 15:06:34', 0, 0, NULL, NULL),
-(33, 'CL120', 'Juan', 3, '1', '2021-05-06 15:06:43', 0, 0, NULL, NULL),
-(34, 'CL121', 'Juan', 3, '1', '2021-05-06 15:09:20', 0, 0, NULL, NULL),
-(35, 'CL122', 'Adriana', 3, '3', '2021-05-06 16:25:40', 1, 0, NULL, NULL),
-(36, 'CL123', 'Adriana', 5, '3', '2021-05-06 17:00:52', 0, 0, NULL, NULL),
-(37, 'CL124', 'Adriana', 1, '1', '2021-05-07 08:29:37', 0, 0, NULL, NULL),
-(38, 'CL125', 'Adriana', 4, '3', '2021-05-07 14:58:24', 0, 0, NULL, NULL),
-(39, 'CL126', 'Adriana', 1, '3', '2021-05-10 23:32:54', 1, 0, NULL, NULL),
-(40, 'CL127', 'Adriana', 3, '1', '2021-05-10 23:44:14', 1, 0, '2021-05-19 19:44:30', 'Adriana'),
-(41, 'CL128', 'Adriana', 3, '3', '2021-05-15 16:58:36', 1, 0, '2021-05-19 19:44:43', 'Adriana'),
-(42, 'CL129', 'JuanTenjo', 5, '3', '2021-05-18 21:35:42', 1, 0, '2021-05-19 19:43:54', 'JuanTenjo'),
-(43, 'CL130', 'Adriana', 4, '3', '2021-05-19 19:43:40', 1, 0, '2021-05-19 19:43:51', 'Adriana'),
-(45, 'CL133', 'Adriana', 2, '3', '2021-05-19 20:51:48', 1, 0, NULL, NULL);
+INSERT INTO `pedidos` (`idpedidos`, `num_pedido`, `mesero`, `mesa`, `zona`, `fecha`, `confirmado`, `pagado`, `FechaModi`, `ModiPor`, `Anulada`, `RazonAnul`, `FechaAnul`) VALUES
+(1, '8769', 'Adriana', 1, '0', '2020-11-07 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(2, '4367', 'Adriana', 1, '0', '2020-11-13 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(3, '181', 'Adriana', 1, '0', '2020-11-13 00:00:00', 1, 1, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(4, '7377', 'Adriana', 1, '0', '2020-11-19 00:00:00', 1, 1, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(5, '8873', 'Adriana', 1, '0', '2021-01-31 00:00:00', 1, 1, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(6, '2898', 'Adriana', 2, '0', '2021-01-31 00:00:00', 1, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(7, '8027', 'Adriana', 1, '0', '2021-01-31 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(8, '197', 'Adriana', 1, '0', '2021-02-01 00:00:00', 1, 1, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(9, '942', 'Adriana', 3, '0', '2021-02-01 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(10, '7654', 'Adriana', 3, '0', '2021-02-01 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(11, '908', 'Adriana', 3, '0', '2021-02-01 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(12, '1831', 'Adriana', 3, '0', '2021-02-26 00:00:00', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(13, '1', 'Adriana', 3, '3', '2021-05-06 14:16:52', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(14, 'CL101', 'Adriana', 3, '1', '2021-05-06 14:17:59', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(15, 'CL102', 'Adriana', 2, '3', '2021-05-06 14:38:28', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(16, 'CL103', 'Adriana', 5, '3', '2021-05-06 14:41:16', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(17, 'CL104', 'Adriana', 1, '1', '2021-05-06 14:41:33', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(18, 'CL105', 'Adriana', 1, '3', '2021-05-06 14:43:20', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(19, 'CL106', 'Adriana', 4, '3', '2021-05-06 14:43:24', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(20, 'CL107', 'Adriana', 2, '1', '2021-05-06 14:47:34', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(21, 'CL108', 'Adriana', 3, '1', '2021-05-06 14:49:10', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(22, 'CL109', 'Adriana', 3, '1', '2021-05-06 14:51:52', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(23, 'CL110', 'Adriana', 3, '1', '2021-05-06 14:54:03', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(24, 'CL111', 'Adriana', 3, '1', '2021-05-06 14:55:57', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(25, 'CL112', 'Adriana', 3, '1', '2021-05-06 14:56:36', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(26, 'CL113', 'Adriana', 3, '1', '2021-05-06 14:57:24', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(27, 'CL114', 'Juan', 3, '1', '2021-05-06 14:59:19', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(28, 'CL115', 'Juan', 3, '1', '2021-05-06 15:04:21', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(29, 'CL116', 'Juan', 3, '1', '2021-05-06 15:04:47', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(30, 'CL117', 'Juan', 3, '1', '2021-05-06 15:05:22', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(31, 'CL118', 'Juan', 3, '1', '2021-05-06 15:06:19', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(32, 'CL119', 'Juan', 3, '1', '2021-05-06 15:06:34', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(33, 'CL120', 'Juan', 3, '1', '2021-05-06 15:06:43', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(34, 'CL121', 'Juan', 3, '1', '2021-05-06 15:09:20', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(35, 'CL122', 'Adriana', 3, '3', '2021-05-06 16:25:40', 1, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(36, 'CL123', 'Adriana', 5, '3', '2021-05-06 17:00:52', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(37, 'CL124', 'Adriana', 1, '1', '2021-05-07 08:29:37', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(38, 'CL125', 'Adriana', 4, '3', '2021-05-07 14:58:24', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(39, 'CL126', 'Adriana', 1, '3', '2021-05-10 23:32:54', 1, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(40, 'CL127', 'Adriana', 3, '1', '2021-05-10 23:44:14', 1, 0, '2021-05-19 19:44:30', 'Adriana', 0, 'No ha sido anulada', NULL),
+(41, 'CL128', 'Adriana', 3, '3', '2021-05-15 16:58:36', 1, 0, '2021-05-19 19:44:43', 'Adriana', 0, 'No ha sido anulada', NULL),
+(42, 'CL129', 'JuanTenjo', 5, '3', '2021-05-18 21:35:42', 1, 0, '2021-05-19 19:43:54', 'JuanTenjo', 0, 'No ha sido anulada', NULL),
+(43, 'CL130', 'Adriana', 4, '3', '2021-05-19 19:43:40', 1, 0, '2021-05-19 19:43:51', 'Adriana', 0, 'No ha sido anulada', NULL),
+(45, 'CL133', 'Adriana', 2, '3', '2021-05-19 20:51:48', 1, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(46, 'CL134', 'Adriana', 1, '1', '2021-05-21 08:23:23', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(47, 'CL135', 'Adriana', 1, '3', '2021-05-21 08:23:40', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(48, 'CL136', 'Adriana', 2, '1', '2021-05-21 08:32:35', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(49, 'CL137', 'Adriana', 3, '3', '2021-05-21 08:33:02', 1, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(50, 'CL138', 'Adriana', 5, '3', '2021-05-21 08:35:37', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(51, 'CL139', 'Adriana', 1, '3', '2021-05-21 08:36:29', 1, 0, NULL, NULL, 0, 'No ha sido anulada', NULL),
+(52, 'CL140', 'Adriana', 4, '3', '2021-05-21 08:36:45', 0, 0, NULL, NULL, 0, 'No ha sido anulada', NULL);
 
 -- --------------------------------------------------------
 
@@ -306,7 +349,9 @@ CREATE TABLE `zonas` (
 
 INSERT INTO `zonas` (`idzonas`, `nombre`, `numMesas`, `Habilitada`) VALUES
 (1, 'Central', '3', 1),
-(3, 'Patio', '5', 1);
+(3, 'Patio', '5', 1),
+(5, 'VIP', '20', 1),
+(6, 'Alcoba', '5', 1);
 
 --
 -- Índices para tablas volcadas
@@ -386,19 +431,19 @@ ALTER TABLE `consecutivos`
 -- AUTO_INCREMENT de la tabla `detallepedido`
 --
 ALTER TABLE `detallepedido`
-  MODIFY `iddetalle_pedidos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `iddetalle_pedidos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `idmesas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `idmesas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `idpedidos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idpedidos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -422,7 +467,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `zonas`
 --
 ALTER TABLE `zonas`
-  MODIFY `idzonas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idzonas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

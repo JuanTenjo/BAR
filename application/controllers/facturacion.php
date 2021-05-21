@@ -41,10 +41,12 @@ class Facturacion extends CI_Controller
 
     public function MostrarDetalle()
     {
-        $num_pedido = $this->input->post('num_pedido');
+        $Consecutivo = $this->input->post('Consecutivo');
         $datos = array(
-            'detallePedidos' => $this->Model_facturas->Mostrar_Detalle($num_pedido),
+            'detallePedidos' => $this->Model_facturas->Mostrar_Detalle($Consecutivo),
             'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar(),
+            'zonas' => $this->Model_pedidos->MostrarzonasConPedidos(),
+            'mesas' => $this->Model_pedidos->Mostrarmesas()
         );
         $this->load->view('VistasFacturador/View_facturador', $datos);
     }

@@ -4,12 +4,13 @@
 }
 
 .nav{
-    background-color: rgb(26, 29, 224);
+    background-color: rgb(50, 177, 118);
     color: white;
+    
 }
-.nav p{
+.nav{
     font-weight: bold;
-    font-size: 160%;
+    color: rgb(255, 255, 255);
     margin: 0;
     padding: 0;
 }
@@ -19,13 +20,15 @@
 }
 
 #BarraZonas{
-    background-color:  rgb(75, 75, 75);
+    background-color:  rgb(114, 114, 114);
     margin: 0;
+    padding: 0;
 }
 
 #BarraZonas p{
+    
     font-weight: bold;
-    margin: 0;
+    margin: 4px;
     color: rgb(255, 255, 255);
 }
 
@@ -122,32 +125,37 @@
 
 #Card h5{
     font-size: 12px;
-}
-
-#Card h5{
-    font-size: 12px;
-
     color: rgb(168, 168, 168);
     margin: 5px;
     font-weight: bold;
-
 }
 
 #Card button{
     background-color: white;
     width: 10px;
 }
+#Card button:hover{
+    background-color: rgba(201, 201, 201, 0.425);
 
-#Card{
-    margin-top: 5px;
-    margin-left: 5px;
-    width: 110px;
-	dis
-    
 }
 
-#Card img{
-    width: 90px;
+#Card{
+    margin-top: 4px;
+    margin-left: 5px;
+}
+
+
+#Card button{
+    border: 0;
+    width: 100px;
+}
+
+
+#MesasFere{
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+  
 }
 
 
@@ -158,8 +166,22 @@
 
 }
 
-#CardGroup {
-    display: flex;
-    align-items: center;
+#InformacionMesaOcupada {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color:rgb(50, 177, 118); 
+}
+
+#InformacionMesaOcupada h5{
+    color: white;
+}
+
+#BotonSalirMesero{
+    color: rgb(122, 122, 122);
+}
+#BotonSalirMesero:hover{
+    background-color: rgb(68, 68, 68);
+    color: white;
 }
 

@@ -59,20 +59,17 @@ class Model_pedidos extends CI_Model
     }
   }
 
-  public function RegistrarDetalle($array = null, $total = null){
+  public function RegistrarDetalle($array = null, $total = null)
+  {
     try {
-      
+
       //Detalle del pedido
 
       $sql = "INSERT INTO detallepedido(num_pedido,producto,categoria,cantidad,precio,total) VALUES ('$array[Consecutivo]','$array[NombreProduc]','$array[Categoria]',$array[Cantidad],$array[Precio],$total)";
       $query = $this->db->query($sql);
-
-      
-
     } catch (Exception $e) {
       echo $e->getMessage();
     }
-
   }
 
   public function MostrarCategorias()
@@ -103,48 +100,42 @@ class Model_pedidos extends CI_Model
     }
   }
 
-  public function MostrarCabeceraPedido($Consecutivo = null){
+  public function MostrarCabeceraPedido($Consecutivo = null)
+  {
     try {
 
       $sql = "SELECT p.num_pedido, p.mesero, p.mesa, p.zona, z.nombre as nombreZona, p.fecha, p.confirmado, p.pagado FROM pedidos as p, zonas as z
       WHERE p.num_pedido = '$Consecutivo' and p.zona = z.idzonas and  p.pagado = 0";
 
-      $query=$this->db->query($sql);
+
+      $query = $this->db->query($sql);
 
       if ($query->num_rows() > 0) {
 
         return $query->row();
+      } else {
 
-      }else{
         echo "Lo siento, pero no se encontro el pedido o ya fue cancelado en caja";
+        return null;
       }
- 
-
     } catch (Exception $e) {
       echo $e->getMessage();
     }
-
   }
 
-  public function MostrarDetallePedido($Consecutivo = null){
+  public function MostrarDetallePedido($Consecutivo = null)
+  {
     try {
 
       $sql = "SELECT * FROM detallepedido
       WHERE num_pedido = '$Consecutivo'";
 
-      $query=$this->db->query($sql);
+      $query = $this->db->query($sql);
 
       if ($query->num_rows() > 0) {
 
         return $query;
-
-      }else{
-
-        echo "Lo siento, pero no se encontro el detalle del pedido o ya fue cancelado en caja";
-
       }
-  
-
     } catch (Exception $e) {
       echo $e->getMessage();
     }
@@ -153,60 +144,95 @@ class Model_pedidos extends CI_Model
 
   public function EliminarDetallePedido($IdDetallePedido = null, $Consecutivo = null)
   {
-    try{
-      
-    $sql = "DELETE FROM detallepedido WHERE iddetalle_pedidos = '$IdDetallePedido' AND num_pedido='$Consecutivo';";
+    try {
+
+      $sql = "DELETE FROM detallepedido WHERE iddetalle_pedidos = '$IdDetallePedido' AND num_pedido='$Consecutivo';";
+
+      $query = $this->db->query($sql);
+
+      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+
+      if ($bandera) {
+        return true;
+      } else {
+        return "No se pudo eliminar este producto del detalle del pedido";
+      }
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    }
+  }
+
+
+
+  public function Confirmar_Pedido($Consecutivo = null, $mesa = null,  $idzona = null, $fecha = null, $MeseroModi = null)
+  {
+    try {
+      $bandera = FALSE;
+
+      if ($MeseroModi <> null) {
+
+        $sql = "UPDATE pedidos SET confirmado = true, FechaModi = '$fecha', ModiPor = '$MeseroModi' WHERE num_pedido = '$Consecutivo';";
+        $query = $this->db->query($sql);
+      } else {
+
+        $sql = "UPDATE pedidos SET confirmado = true WHERE num_pedido = '$Consecutivo';";
+        $query = $this->db->query($sql);
+      }
+
+      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+
+      $query2 = $this->db->query("UPDATE mesas SET numpedido = '$Consecutivo' WHERE idzonas = '$idzona' AND nummesa = '$mesa' AND numpedido = 0;");
+
+      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+
+      if ($bandera == false) {
+        return "Se presento un problema al confirmar el pedido";
+      } else {
+        return true;
+      }
+    } catch (Exception $e) {
+      echo $e->getMessage();
+    }
+  }
+
+
+  public function AnularPedido($data = null)
+  {
+    $bandera = false;
+    
+    date_default_timezone_set('America/Bogota');
+
+    $Date = date("Y/m/d");
+
+    $sql = "UPDATE pedidos SET Anulada = 1, RazonAnul = '$data[RazonAnul]', AnulPor = '$data[MeseroAnul]', FechaAnul = '$Date' WHERE num_pedido = '$data[Consecutivo]';";
 
     $query = $this->db->query($sql);
 
     $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
 
     if($bandera){
+
+    $query2 = $this->db->query("UPDATE mesas SET numpedido = 0 WHERE idzonas = $data[idzona] AND nummesa = $data[mesa];");
+
+    $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+
+    if($bandera){
+
       return true;
+
     }else{
-      return "No se pudo eliminar este producto del detalle del pedido";
+
+      echo "Error al actualizar la mesa, a la hora de anular el pedido";
+      return false;
+
     }
 
-    }catch (Exception $e) {
-      echo $e->getMessage();
+    }else{
+      echo "Error al actualizar el pedido, no se pudo anular";
+      return false;
     }
 
-  }
-
-
-    
-  public function Confirmar_Pedido($Consecutivo = null, $mesa = null,  $idzona = null, $fecha = null, $MeseroModi = null)
-  {
-    try{
-      $bandera = FALSE;
-
-      if($MeseroModi <> null){
-
-        $sql = "UPDATE pedidos SET confirmado = true, FechaModi = '$fecha', ModiPor = '$MeseroModi' WHERE num_pedido = '$Consecutivo';";
-        $query = $this->db->query($sql);
-
-      }else{
-
-        $sql = "UPDATE pedidos SET confirmado = true WHERE num_pedido = '$Consecutivo';";
-        $query = $this->db->query($sql);
-
-      }
-
-      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-
-      $query2 = $this->db->query("UPDATE mesas SET numpedido = '$Consecutivo' WHERE idzonas = '$idzona' AND nummesa = '$mesa' AND numpedido = 0;");
   
-      $bandera = ($this->db->affected_rows() > 0) ? TRUE : FALSE;
-  
-      if($bandera == false){      
-        return "Se presento un problema al confirmar el pedido";
-      }else{    
-        return true;
-      }
-
-    }catch (Exception $e) {
-      echo $e->getMessage();
-    }
   }
 
 
@@ -214,10 +240,8 @@ class Model_pedidos extends CI_Model
   {
     date_default_timezone_set('America/Bogota');
     $fecha_actual = Date("Y-m-d");
-    $sql = "SELECT p.*, z.nombre as nombreZona
-		FROM pedidos as p LEFT JOIN zonas as z ON p.zona = z.idzonas  WHERE  p.fecha
-		BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59' or p.FechaModi
-		BETWEEN '$fecha_actual 00:00:00' and '$fecha_actual 23:59:59'	
+    $sql = "SELECT * FROM pedidos WHERE DATE_FORMAT(fecha, '%Y/%m/%d') = DATE_FORMAT('2021/05/06', '%Y/%m/%d')
+
 		and p.confirmado = 1
 		and pagado = 0
 		order by p.fecha desc, p.FechaModi desc ";
@@ -225,18 +249,24 @@ class Model_pedidos extends CI_Model
     $query = $this->db->query($sql);
 
     if ($query->num_rows() > 0) {
-     
-      return $query;
 
-    }else{
+      return $query;
+    } else {
 
       return null;
-
     }
-
   }
 
+  public function MostrarzonasConPedidos()
+  {
+    $query = $this->db->query("SELECT zonas.* FROM zonas INNER JOIN mesas ON zonas.idzonas = mesas.idzonas WHERE mesas.numpedido <> '0'  GROUP BY zonas.idzonas");
 
+    if ($query->num_rows() > 0) {
+      return $query;
+    } else {
+      return null;
+    }
+  }
 
 
 
@@ -249,10 +279,13 @@ class Model_pedidos extends CI_Model
 
   public function Mostrarmesas()
   {
-    $query = $this->db->query("SELECT * FROM mesas;");
+    $query = $this->db->query("SELECT idmesas, idzonas, nummesa, numpedido, mesero, sum(total) as total
+                              FROM mesas left join detallepedido on mesas.numpedido = detallepedido.num_pedido 
+                              left join pedidos on mesas.numpedido = pedidos.num_pedido 
+                              group by idmesas, idzonas, nummesa, numpedido, mesero");
+
+    // $query = $this->db->query("SELECT mesas.*, pedidos.mesero FROM
+    // mesas left join pedidos on mesas.numpedido = pedidos.num_pedido");
     return $query;
   }
-
-
-
 }
