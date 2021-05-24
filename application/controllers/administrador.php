@@ -65,6 +65,102 @@ class Administrador extends CI_Controller {
 		}
     }
 
+	public function TipoPagos(){
+		if ($this->session->userdata('is_logged_in')) {
+			$data = array(
+				'TiposDePago' => $this->Model_Admin->MostrarTipoPagos()
+			);	
+			$this->load->view('VistasAdmin/View_TipoPago',$data);
+		}else{	
+			echo "Sesion Caducada por favor ingrese nuevamente";
+		}
+	}
+
+	public function RegistrarTipoPago(){
+
+		$this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation');
+
+		$config = array(
+			array(
+				'field' => 'NombreTipo',
+				'label' => 'Nombre Tipo Pago',
+				'rules' => 'required',
+				'errors' => array(
+					'required' => 'Debes ingresar un  %s.',
+				),
+			),
+		);
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run() == FALSE) {
+			$data = array(
+				'TiposDePago' => $this->Model_Admin->MostrarTipoPagos()
+			);	
+			$this->load->view('VistasAdmin/View_TipoPago',$data);
+		}else{
+
+			$array = [
+				'NombreTipo' => $this->input->post('NombreTipo'),
+				'NumCuenta' => $this->input->post('NumCuenta'),
+			];
+			
+			$re = $this->Model_Admin->RegistrarTipoPago($array);
+
+			if($re){	
+				redirect("" . base_url() . "index.php/Administrador/TipoPagos");
+			}
+
+		}
+	}
+	
+
+	public function ActualizarTipoPago(){
+
+		$this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation');
+
+		$config = array(
+			array(
+				'field' => 'NombreTipo',
+				'label' => 'Nombre Tipo Pago',
+				'rules' => 'required',
+				'errors' => array(
+					'required' => 'Debes ingresar un  %s.',
+				),
+			),
+		);
+
+		$this->form_validation->set_rules($config);
+
+		if ($this->form_validation->run() == FALSE) {
+			$data = array(
+				'TiposDePago' => $this->Model_Admin->MostrarTipoPagos()
+			);	
+			$this->load->view('VistasAdmin/View_TipoPago',$data);
+		}else{
+
+			$array = [
+				'NombreTipo' => $this->input->post('NombreTipo'),
+				'NumCuenta' => $this->input->post('NumCuenta'),
+				'Habilitado' => $this->input->post('Habilitado'),
+				'IdTiposPago' => $this->input->post('IdTiposPago'),
+			];
+			
+			$re = $this->Model_Admin->ActualizarTipoPago($array);
+
+			if($re){	
+				redirect("" . base_url() . "index.php/Administrador/TipoPagos");
+			}else{
+				redirect("" . base_url() . "index.php/Administrador/TipoPagos");
+			}
+
+		}
+	}
+
 	public function RegistrarUsuario(){
 		try{
 

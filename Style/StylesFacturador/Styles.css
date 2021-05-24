@@ -2,6 +2,14 @@
 	font-family: "Oswal", sans-serif;
 }
 
+#BotonPagar{
+	background-color: rgb(50, 177, 118);
+	color: white;
+}
+#BotonPagar:hover{
+	background-color: rgb(25, 102, 66);
+	color: white;
+}
 
 
 .pedidos tr {
@@ -52,7 +60,7 @@
 #Card h5{
     font-size: 12px;
     color: rgb(168, 168, 168);
-    margin: 5px;
+    margin: 1px;
     font-weight: bold;
 }
 
@@ -90,20 +98,19 @@
     background-color: rgb(255, 255, 255);
     text-align: center;
     padding: 0px;
-
 }
 
-#InformacionMesaOcupada{
-    text-align: left;
+#InformacionMesaOcupada {
+    text-align: center;
     margin: 0;
     padding: 0;
-
     background-color:rgb(50, 177, 118); 
-   
 }
 
 #InformacionMesaOcupada h5{
     color: white;
+    margin: 1;
+    font-size: 10px;
 }
 
 #BarraZonas{
@@ -112,8 +119,13 @@
     padding: 0;
 }
 
+#BotonImpreFactura{
+	padding: 0;
+	font-size: 10px;
+}
+
+
 #BarraZonas p{
-    
     font-weight: bold;
     margin: 4px;
     color: rgb(255, 255, 255);

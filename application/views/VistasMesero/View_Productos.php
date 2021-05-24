@@ -86,17 +86,17 @@
 
                     <?php foreach ($Categorias->result() as $raw) { ?>
 
-                        <a class="btn btn-primary btn-block " id="BotonCategoriaProductos" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
+                        <a class="btn btn-block " id="BotonCategoriaProductos" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
                             <div id="NombreCate2"><?php echo ($raw->NombreCate); ?> ↓</div>
                         </a>
 
                         <div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">
                             <div class="card card-body">
                                 <div class="table-responsive">
-                                    <table class="table" id="TableCate" style="text-align: center;">
+                                    <table class="table" id="TableCate" style="text-align: center;font-size: 14px;">
 
                                         <thead>
-                                            <tr id="CabecerasCateProductos">
+                                            <tr>
                                                 <th scope="col">Producto</th>
                                                 <th scope="col">Valor</th>
                                                 <th scope="col">Cantidad</th>

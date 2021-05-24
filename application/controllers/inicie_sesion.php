@@ -79,7 +79,9 @@ class Inicie_Sesion extends CI_Controller {
 			$data = array(
 				'pedidos' => $this->Model_pedidos->MostrarPedidosAFacturar(),
 				'zonas' => $this->Model_pedidos->MostrarzonasConPedidos(),
-				'mesas' => $this->Model_pedidos->Mostrarmesas()
+				'mesas' => $this->Model_pedidos->Mostrarmesas(),
+				'TipoPago' => $this->Model_pedidos->MostrarTipoPagos(),
+
 			);
 			$this->load->view('VistasFacturador/View_facturador',$data);
 		}else{	

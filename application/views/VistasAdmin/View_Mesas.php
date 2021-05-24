@@ -39,6 +39,16 @@
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
 								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mas
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">										
+										<a class="dropdown-item" href="#">Tipo de pagos</a>
+										<a class="dropdown-item" href="#">Reportes</a>
+										<div class="dropdown-divider"></div>
+									</div>
+								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Salir" tabindex="-1" aria-disabled="true">Salir</a>
 								</li>

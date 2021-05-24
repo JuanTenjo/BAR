@@ -39,6 +39,16 @@
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
 								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mas
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">										
+										<a class="dropdown-item" href="#">Tipo de pagos</a>
+										<a class="dropdown-item" href="#">Reportes</a>
+										<div class="dropdown-divider"></div>
+									</div>
+								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Salir" tabindex="-1" aria-disabled="true">Salir</a>
 								</li>
@@ -123,7 +133,7 @@
 				<?php foreach ($categorias->result() as $raw) { ?>
 
 					<a class="btn btn-outline-primary " id="BotonCategoria" data-toggle="collapse" href="#Categoria<?php echo $raw->ID_Categoria ?>" role="button" aria-expanded="false" aria-controls="Categoria<?php echo $raw->ID_Categoria ?>">
-						<label id="NombreCate"><?php echo ($raw->NombreCate); ?> ↓</label>
+						<div id="NombreCate"><?php echo ($raw->NombreCate); ?> ↓</div>
 					</a>
 
 					<div class="collapse" id="Categoria<?php echo $raw->ID_Categoria ?>">

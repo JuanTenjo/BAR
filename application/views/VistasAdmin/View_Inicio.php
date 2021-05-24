@@ -4,7 +4,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>Imagenes/FondoNegro.ico" />
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>/Style/StylesAdmin/style.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/Style/StylesAdmin/style.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
@@ -39,6 +39,17 @@
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
 								</li>
+
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Mas
+									</a>
+									<div class="dropdown-menu" aria-labelledby="navbarDropdown">										
+										<a class="dropdown-item" href="<?php echo base_url() ?>index.php/Administrador/TipoPagos">Tipo de pagos</a>
+										<a class="dropdown-item" href="#">Reportes</a>
+										<div class="dropdown-divider"></div>
+									</div>
+								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Salir" tabindex="-1" aria-disabled="true">Salir</a>
 								</li>
@@ -56,9 +67,10 @@
 		<div class="row">
 			<H1 class="SaludoAdministrador">Administrador <?php echo $Administrador ?></H1>
 			<p>
-				Desde aqui podrias gestionar, 
+				Desde aqui podrias gestionar,
 				insertar, actualizar y eliminar
-				todos los recursos de Cielo Abierto.<p>
+				todos los recursos de Cielo Abierto.
+			<p>
 			</p>
 		</div>
 	</div>

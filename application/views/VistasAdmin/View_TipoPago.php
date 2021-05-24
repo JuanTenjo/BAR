@@ -9,7 +9,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
-	<title>Gestion Categorias</title>
+	<title>Gestion Tipo Pagos</title>
 </head>
 
 <body>
@@ -28,23 +28,23 @@
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 								<li class="nav-item">
-									<a class="nav-link" aria-current="page" href="<?php echo base_url() ?>index.php/Administrador/Productos">Productos</a>
+									<a class="nav-link " aria-current="page" href="<?php echo base_url() ?>index.php/Administrador/Productos">Productos</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link active  " href="<?php echo base_url() ?>index.php/Administrador/Categorias">Categorias</a>
+									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Categorias">Categorias</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Mesas" tabindex="-1" aria-disabled="true">Zonas y mesas</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
+									<a class="nav-link " href="<?php echo base_url() ?>index.php/Administrador/Usuarios" tabindex="-1" aria-disabled="true">Usuarios</a>
 								</li>
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Mas
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">										
-										<a class="dropdown-item" href="#">Tipo de pagos</a>
+										<a class="dropdown-item active" href="#">Tipo de pagos</a>
 										<a class="dropdown-item" href="#">Reportes</a>
 										<div class="dropdown-divider"></div>
 									</div>
@@ -60,39 +60,44 @@
 		</div>
 	</div>
 	<br>
+
 	<div class="container-fluid">
 		<div class="row">
-			<h5>Cree un Categoria</h5>
+			<h5>Cree un tipo de pago</h5>
 			<div class="table-responsive">
-				<form action="<?php echo base_url() ?>index.php/Administrador/RegistraCategoria" method="post">
-					<table class="table ">
-						<thead class="table-dark head">
-							<tr>
-								<th scope="col">Nombre</th>
-								<th scope="col">Descripcion</th>
-								<th scope="col">Guardar</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<div class="form-group">
-										<input type="text" required class="form-control" name="nombreCategoria" placeholder="Nombre categoria">
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<input type="text" required class="form-control" name="descripcionCategoria" placeholder="Descripcion">
-									</div>
-								</td>
-								<td>
-									<div class="form-group" id="CentrarBotonEnTabla">
-										<button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Guardar.png" alt=""></button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				<!--	<form action="<?php echo base_url() ?>index.php/Administrador/RegistrarUsuario" method="post"> -->
+				<?php echo form_open(base_url() . 'index.php/Administrador/RegistrarTipoPago'); ?>
+
+				<h6 style="color: red;"><?php echo validation_errors(); ?></h6>
+
+				<table class="table table-hover">
+					<thead class="table-dark head">
+						<tr>
+							<th scope="col">Tipo</th>
+							<th scope="col">Numero</th>
+							<th scope="col">Guardar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<div class="form-group">
+									<input type="text" required value="" required class="form-control" name="NombreTipo" placeholder="Tipo de cuenta">
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input type="text" value=""  class="form-control" name="NumCuenta" placeholder="Numero de cuenta">
+								</div>
+							</td>
+							<td>
+								<div class="form-group" id="CentrarBotonEnTabla">
+									<button type="submit" class="btn btn-success center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Guardar.png" alt=""></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 				</form>
 			</div>
 		</div>
@@ -101,55 +106,67 @@
 
 
 		<div class="row">
-			<?php if (isset($categorias)) { ?>
-				<h5>Lista de categorias</h5>
+			<?php if (isset($TiposDePago)) { ?>
+				<h5>Lista de Tipos de cuentas</h5>
+
 				<div class="table-responsive">
-						<table class="table">
-							<thead class="head">
+					<table class="table">
+						<thead class="head">
+							<tr>
+								<th scope="col">Tipo</th>
+								<th scope="col">Cuenta</th>
+								<th scope="col">Habilitado</th>
+								<th scope="col">Modificar</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							foreach ($TiposDePago->result() as $row) {
+							?>
+
+								<!-- <form action="<?php echo base_url() ?>index.php/Administrador/ActualizarUsuario" method="post" data-ajax="false"> -->
+
+								<?php echo form_open(base_url() . 'index.php/Administrador/ActualizarTipoPago'); ?>
+
 								<tr>
-									<th scope="col">Nombre Categoria</th>
-									<th scope="col">Descripcion</th>
-									<th scope="col">Modificar</th>
-									<th scope="col">Eliminar</th>
+									<td>
+										<div class="form-group">
+											<input type="text" required name="NombreTipo" value="<?php echo ($row->NombreTipo) ?>" class="form-control">
+										</div>
+									</td>
+									<td>
+										<div class="form-group">
+											<input type="text" required name="NumCuenta" value="<?php echo ($row->NumCuenta) ?>" class="form-control">
+										</div>
+									</td>
+									<td>
+										<div class="form-group">
+											<select required name="Habilitado" class="form-control">
+												<option value="<?php echo ($row->Habilitado); ?>" selected><?php echo $Resul = $row->Habilitado == 1 ? "Si":"No" ?></option>
+												<option value="1">Si</option>
+												<option value="0">No</option>
+											</select>
+										</div>
+									</td>
+									<td>
+										<div class="form-group" id="CentrarBotonEnTabla">
+											<input type="text" name="IdTiposPago" value="<?php echo ($row->IdTiposPago) ?>" style="display: none;">
+											<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
+										</div>
+									</td>
+									</form>
+								
 								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($categorias->result() as $row) { ?>
-									<form action="<?php echo base_url() ?>index.php/Administrador/ModificarCategoria" method="post" data-ajax="false">
-										<tr>
-											<th scope="row">
-												<div class="form-group">
-													<input type="text" required name="NombreCate" value="<?php echo ($row->NombreCate) ?>" class="form-control" placeholder="Categoria">
-												</div>
-											</th>
-											<th scope="row">
-												<div class="form-group">
-													<input type="text" required name="Descripcion" value="<?php echo ($row->DescripcionCate) ?>" class="form-control" placeholder="Categoria">
-												</div>
-											</th>
-											<td>
-												<div class="form-group" id="CentrarBotonEnTabla">
-													<input type="text" required name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
-													<button type="submit" class="btn btn-warning center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Actualizar.png" alt=""></button>
-												</div>
-											</td>
-									</form>
-									<form action="<?php echo base_url() ?>index.php/Administrador/EliminarCategoria" method="post" data-ajax="false">
-										<td>
-											<div class="form-group" id="CentrarBotonEnTabla">
-												<input type="text" required name="ID_Categoria" value="<?php echo ($row->ID_Categoria) ?>" style="display: none;">
-												<button type="submit" class="btn btn-danger center-block"><img class="img-fluid" src="<?php echo base_url() ?>Imagenes/Eliminar.png" alt=""></button>
-											</div>
-										</td>
-									</form>
-									</tr>
-								<?php } ?>
-							</tbody>
-						</table>
+							<?php } ?>
+						</tbody>
+					</table>
+					
+					</form>
 				</div>
 			<?php } else { ?>
-				<p> No existe niguna categoria</p>
+				<p> No existen tipos de pago </p>
 			<?php } ?>
+
 		</div>
 	</div>
 
